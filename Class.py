@@ -16,7 +16,7 @@ class Aeroport:
         print(f"Altitude: {self.altitude} mètres")
 
 
-# Création d'un aéroport
+
 cdg = Aeroport(
     nom="Charles de Gaulle",
     code="CDG",
@@ -27,7 +27,7 @@ cdg = Aeroport(
 )
 
 
-# Affichage complet
+
 cdg.afficher_infos()
 
 # Class Piste
@@ -66,7 +66,7 @@ class Piste(Aeroport):
         print(f"Orientation: {self.orientation}°")
         print(f"Localisation: {self.nom} ({self.code}), {self.ville}, {self.pays}")
 
-# Création d'une piste
+
 piste1 = Piste(
     nom="Charles de Gaulle",
     code="CDG",
@@ -82,5 +82,5 @@ piste1 = Piste(
 )
 
 
-# Affichage complet
+
 piste1.afficher_infos_piste()
