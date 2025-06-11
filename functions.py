@@ -2,10 +2,6 @@ import requests
 import pandas as pd
 from io import StringIO
 import urllib3
-import certifi
-# Coordonnées de Québec (ville) ou modifiable selon besoin
-latitude = 45.5088
-longitude = -73.5878
 
 def recuperer_meteo(latitude,longitude):
 
@@ -68,4 +64,31 @@ def recuperer_runways():
     #Suppression de la colonne airport_ident en doublon
     runways_fusion = runways_fusion.drop(columns=["airport_ident"])
     return runways_fusion
+
+def obtenir_coordonnees(code, runways_df):
+    row = runways_df[runways_df["ident"] == code]
+    if not row.empty:
+        latitude = row.iloc[0]["latitude_deg"]
+        longitude = row.iloc[0]["longitude_deg"]
+        return (float(latitude), float(longitude))
+    else:
+        print("Aéroport non trouvé")
+
+def obtenir_data_piste(code, runways_df):
+    row = runways_df[runways_df["ident"] == code]
+    if not row.empty:
+        longueur = row.iloc[0]["length_ft"]
+        largeur = row.iloc[0]["width_ft"]
+        surface= row.iloc[0]["surface"]
+        return (float(longueur), float(largeur),str(surface))
+    else:
+        print("Aéroport non trouvé")
+
+code=input("Entrez le code d'un aéroport: ")
+runways_df=recuperer_runways()
+latitude=obtenir_coordonnees(code,runways_df)[0]
+longitude=obtenir_coordonnees(code, runways_df)[1]
+print(f"La piste mesure {obtenir_data_piste(code, runways_df)[0]} m de long et {obtenir_data_piste(code, runways_df)[1]} m de large")
+print(f"Sa surface est en: {obtenir_data_piste(code, runways_df)[2]}")
+print(f"La température est de {recuperer_meteo(latitude,longitude)[0]} °C et la pression est de {recuperer_meteo(latitude, longitude)[1]} hPA.")
 
