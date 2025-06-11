@@ -1,0 +1,43 @@
+from math import cos, sin, tan, radians
+from .avion import Avion
+
+class Commercial(Avion):
+
+    def __init__(self,code, poids_atterrissage, allongement, hauteur_aile, surface_alaire,
+                 coefficient_portance_max_atterrissage,meteo,piste
+                 ,coefficient_trainee_train = 0.1, coefficient_trainee_volets = 0.02,
+                 facteur_de_charge = 1.35,hauteur_obstacle = 35,
+                 coef_transition = 1.23):
+        super().__init__(code, poids_atterrissage, allongement, hauteur_aile, surface_alaire,
+                 coefficient_portance_max_atterrissage,meteo,piste
+                         ,coefficient_trainee_train,coefficient_trainee_volets)
+        self.n = facteur_de_charge
+        self.H_OBS = hauteur_obstacle
+        self.coef_TR = coef_transition
+
+    def calcul_V_TR(self):
+        V_stall = self.calcul_V_stall()
+        return self.coef_TR * V_stall
+
+    def calcul_R(self):
+        V_TR = self.calcul_V_TR()
+        return (V_TR**2)/(self.g*(self.n-1))
+
+    def calcul_H_TR(self):
+        R = self.calcul_R()
+        return R*(1-cos(radians(self.angle_de_descente)))
+
+    def calcul_S_A(self):
+        H_TR = self.calcul_H_TR()
+        return (H_TR-self.H_OBS)/tan(radians(self.angle_de_descente))
+
+    def calcul_S_TR(self):
+        R = self.calcul_R()
+        return -R*sin(radians(self.angle_de_descente))
+
+    def calcul_S_LA(self):
+        S_A = self.calcul_S_A()
+        S_TR = self.calcul_S_TR()
+        S_FR = self.calcul_S_FR()
+        S_B = self.calcul_S_B()
+        return 1.6*(S_A+S_TR+S_FR+S_B)
