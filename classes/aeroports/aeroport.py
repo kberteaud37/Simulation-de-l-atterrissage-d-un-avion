@@ -1,5 +1,4 @@
 # Class Aeroport
-
 class Aeroport:
     def __init__(self, code):
         self.code = code
@@ -36,8 +35,16 @@ class Aeroport:
         else:
             print("Aéroport non trouvé")
 
+    def pistes(self,runways_df):
+        filtre_code= runways_df[runways_df["ident"] == self.code]
+        if not filtre_code.empty:
+            pistes = [f"{row['le_ident']}-{row['he_ident']}" for index, row in filtre_code.iterrows()]
+            return pistes
+        else:
+            print("Aeroport non trouvé")
 
     def afficher_infos(self,runways_df):
         print(f"Aéroport: {self.nom(runways_df)} ({self.code})")
         print(f"Coordonnées: {self.latitude(runways_df)}, {self.longitude(runways_df)}")
         print(f"Altitude: {self.altitude(runways_df)} ft")
+
