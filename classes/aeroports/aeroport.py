@@ -1,28 +1,43 @@
 # Class Aeroport
-
+from fonctions_aeroport import *
 class Aeroport:
-    def __init__(self, nom, code, ville, coordonnees, altitude):
-        self.nom = nom
+    def __init__(self, code):
         self.code = code
-        self.ville = ville
-        self.coordonnees = coordonnees  # Tuple (latitude, longitude)
-        self.altitude = altitude  # en mètres
 
-    def afficher_infos(self):
-        print(f"Aéroport: {self.nom} ({self.code})")
-        print(f"Localisation: {self.ville}")
-        print(f"Coordonnées: {self.coordonnees[0]}°N, {self.coordonnees[1]}°E")
-        print(f"Altitude: {self.altitude} mètres")
+    def latitude(self, runways_df):
+        row = runways_df[runways_df["ident"] == self.code]
+        if not row.empty:
+            latitude = row.iloc[0]["latitude_deg"]
+            return float(latitude)
+        else:
+            print("Aéroport non trouvé")
+
+    def longitude(self, runways_df):
+        row = runways_df[runways_df["ident"] == self.code]
+        if not row.empty:
+            longitude = row.iloc[0]["longitude_deg"]
+            return float(longitude)
+        else:
+            print("Aéroport non trouvé")
+
+    def nom(self, runways_df):
+        row = runways_df[runways_df["ident"] == self.code]
+        if not row.empty:
+            nom = row.iloc[0]["name"]
+            return str(nom)
+        else:
+            print("Aéroport non trouvé")
+
+    def altitude(self, runways_df):
+        row = runways_df[runways_df["ident"] == self.code]
+        if not row.empty:
+            elevation = row.iloc[0]["elevation_ft"]
+            return float(elevation)
+        else:
+            print("Aéroport non trouvé")
 
 
-
-cdg = Aeroport(
-    nom="Charles de Gaulle",
-    code="CDG",
-    ville="Paris",
-    coordonnees=(49.0128, 2.5500),
-    altitude=119
-)
-
-
-cdg.afficher_infos()
+    def afficher_infos(self,runways_df):
+        print(f"Aéroport: {self.nom(runways_df)} ({self.code})")
+        print(f"Coordonnées: {self.latitude(runways_df)}, {self.longitude(runways_df)}")
+        print(f"Altitude: {self.altitude(runways_df)} ft")
