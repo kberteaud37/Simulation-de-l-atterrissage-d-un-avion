@@ -84,11 +84,3 @@ def obtenir_data_piste(code, runways_df):
     else:
         print("Aéroport non trouvé")
 
-code=input("Entrez le code d'un aéroport: ")
-runways_df=recuperer_runways()
-latitude=obtenir_coordonnees(code,runways_df)[0]
-longitude=obtenir_coordonnees(code, runways_df)[1]
-print(f"La piste mesure {obtenir_data_piste(code, runways_df)[0]} m de long et {obtenir_data_piste(code, runways_df)[1]} m de large")
-print(f"Sa surface est en: {obtenir_data_piste(code, runways_df)[2]}")
-print(f"La température est de {recuperer_meteo(latitude,longitude)[0]} °C et la pression est de {recuperer_meteo(latitude, longitude)[1]} hPA.")
-
