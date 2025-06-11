@@ -7,4 +7,6 @@
 Cours MGA802, Session Été 2025
 """
 
+chemin_fichier = r'.\Ressources\data_avions.csv'
+
 #PROGRAMME PRINCIPAL
