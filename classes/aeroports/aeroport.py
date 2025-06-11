@@ -1,5 +1,5 @@
 # Class Aeroport
-from fonctions_aeroport import *
+
 class Aeroport:
     def __init__(self, code):
         self.code = code
