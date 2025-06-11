@@ -56,3 +56,9 @@ class Avion:
         f2 = self.calcul_f2()
         V_TD = self.calcul_V_TD()
         return (1/(2*self.g*f2))*log(1+((f2*V_TD**2)/f1))
+
+    def calcul_deceleration(self):
+        V_TD = self.calcul_V_TD()
+        S_B = self.calcul_S_B()
+        return - (V_TD**2)/(2*S_B)
+
