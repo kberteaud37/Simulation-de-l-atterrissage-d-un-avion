@@ -3,19 +3,14 @@ from .aeroport import Aeroport
 # Class Piste
 
 class Piste(Aeroport):
-    def __init__(self, nom, code, ville, coordonnees, altitude,
-                 numero_piste, surface, largeur, longueur, orientation):
+    def __init__(self,code,num_piste):
 
         # Appel du constructeur parent
-        super().__init__(nom, code, ville, coordonnees, altitude)
-
-        self.numero_piste = numero_piste
-        self.surface = surface.lower()  # Normalisation en minuscules
-        self.largeur = largeur  # en mètres
-        self.longueur = longueur  # en mètres
-        self.orientation = orientation  # en degrés
+        super().__init__(code)
+        self.n_piste=num_piste
 
         # Dictionnaire des coefficients de friction
+        """
         self.coef_friction = {
             'asphalte': 0.5,
             'asphalte mouillee': 0.3,
@@ -25,6 +20,32 @@ class Piste(Aeroport):
             'gazon mou': 0.2,
             'gazon mouille': 0.2,
         }
+        """
+    def longueur(self, runways_df):
+        row = runways_df[runways_df["ident"] == self.code]
+        if not row.empty:
+            longueur = row.iloc[0]["length_ft"]
+            return float(longueur)
+        else:
+            print("Aéroport non trouvé")
+
+    def largeur(self, runways_df):
+        row = runways_df[runways_df["ident"] == self.code]
+        if not row.empty:
+            largeur = row.iloc[0]["width_ft"]
+            return float(largeur)
+        else:
+            print("Aéroport non trouvé")
+
+    def surface(self, runways_df):
+        row = runways_df[runways_df["ident"] == self.code]
+        if not row.empty:
+            longueur = row.iloc[0]["length_ft"]
+            largeur = row.iloc[0]["width_ft"]
+            surface = row.iloc[0]["surface"]
+            return (float(longueur), float(largeur), str(surface))
+        else:
+            print("Aéroport non trouvé")
 
     def ajout_coefficient_friction(self):
         return self.coef_friction.get(self.surface, 0.5)
@@ -37,19 +58,3 @@ class Piste(Aeroport):
         print(f"Localisation: {self.nom} ({self.code}), {self.ville}")
 
 
-piste1 = Piste(
-    nom="Charles de Gaulle",
-    code="CDG",
-    ville="Paris",
-    coordonnees=(49.0128, 2.5500),
-    altitude=119,
-    numero_piste="09L/27R",
-    surface="asphalte",
-    largeur=45,
-    longueur=2700,
-    orientation=90
-)
-
-
-
-piste1.afficher_infos_piste()
