@@ -22,7 +22,7 @@ class Avion:
         self.piste = piste
         self.mu = self.piste.ajout_coefficient_friction()
         self.meteo = meteo
-        self.density = self.meteo.density()
+        self.density = self.meteo.calcul_densite()
         # Poussée au sol pour l'instant nulle
         self.T_sol = 0
 
