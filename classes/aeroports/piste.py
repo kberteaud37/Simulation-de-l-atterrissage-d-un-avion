@@ -3,6 +3,9 @@ from fonctions_aeroport import *
 # Class Piste
 
 class Piste(Aeroport):
+    asphalte=["concrete","asphalt/gravel","ASP","asphalt","ASPHALT","ASPH"]
+    gravier=["Gravel","gravel","GRAVEL","GRAVEL/TURF","GVL","SAND/GRAVEL","GRAVEL/GRASS"]
+    gazon=["grass","GRS","GRASS","EARTH/SNOW","GRASS/SAND"]
     def __init__(self,code,num_piste_le,num_piste_he):
 
         # Appel du constructeur parent
@@ -42,21 +45,26 @@ class Piste(Aeroport):
             print("Aéroport non trouvé")
 
     def surface(self, runways_df):
-        row = runways_df[(runways_df["ident"] == self.code) &
-                         (runways_df["le_ident"] == self.n_le_piste) &
-                         (runways_df["he_ident"] == self.n_he_piste)]
+        row = runways_df[(runways_df["ident"] == self.code)]
         if not row.empty:
             surface = row.iloc[0]["surface"]
-            return str(surface)
+            return surface
         else:
             print("Aéroport non trouvé")
 
-    def ajout_coefficient_friction(self):
-        return self.coef_friction.get(self.surface, 0.5)
+    def coeff_friction(self,runways_df):
+        if self.surface(runways_df) in self.asphalte:
+            return 0.5
+        elif self.surface(runways_df) in self.gravier:
+            return 0.3
+        elif self.surface(runways_df) in self.gazon:
+            return 0.4
+        else:
+            return 0.2
 
     def afficher_infos_piste(self,numero_piste,runways_df):
         print(f"\nCaracteristiques de la piste {numero_piste}:")
-        print(f"Matériau de la piste: {self.surface(runways_df)}")
+        print(f"Matériau de la piste: {self.surface(runways_df)}, f={self.coeff_friction(runways_df)}")
         print(f"Longueur: {self.longueur(runways_df)}m")
         print(f"Largeur: {self.largeur(runways_df)}m")
 
