@@ -40,17 +40,6 @@ def recuperer_runways():
     runways_fusion = pd.merge(qc_airports,runways_df,left_on="ident",right_on="airport_ident",how="inner")
     #Suppression de la colonne airport_ident en doublon
     runways_fusion = runways_fusion.drop(columns=["airport_ident"])
-    print(runways_fusion.shape[0])
     return runways_fusion
 
-def obtenir_data_piste(code, runways_df):
-    row = runways_df[runways_df["ident"] == code]
-    if not row.empty:
-        longueur = row.iloc[0]["length_ft"]
-        largeur = row.iloc[0]["width_ft"]
-        surface= row.iloc[0]["surface"]
-        return (float(longueur), float(largeur),str(surface))
-    else:
-        print("Aéroport non trouvé")
 
-recuperer_runways()
