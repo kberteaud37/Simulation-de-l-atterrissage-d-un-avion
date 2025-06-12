@@ -18,7 +18,6 @@ class Piste(Aeroport):
             'asphalte glacee': 0.10,
             'gazon solide': 0.4,
             'poussiere solide': 0.3,
-            'gazon mou': 0.2,
             'gazon mouille': 0.2,
         }
         """
@@ -43,12 +42,12 @@ class Piste(Aeroport):
             print("Aéroport non trouvé")
 
     def surface(self, runways_df):
-        row = runways_df[runways_df["ident"] == self.code]
+        row = runways_df[(runways_df["ident"] == self.code) &
+                         (runways_df["le_ident"] == self.n_le_piste) &
+                         (runways_df["he_ident"] == self.n_he_piste)]
         if not row.empty:
-            longueur = row.iloc[0]["length_ft"]
-            largeur = row.iloc[0]["width_ft"]
             surface = row.iloc[0]["surface"]
-            return (float(longueur), float(largeur), str(surface))
+            return str(surface)
         else:
             print("Aéroport non trouvé")
 
@@ -57,7 +56,7 @@ class Piste(Aeroport):
 
     def afficher_infos_piste(self,numero_piste,runways_df):
         print(f"\nCaracteristiques de la piste {numero_piste}:")
-        #print(f"Surface: {self.surface.capitalize()} (Coeff. friction: {self.ajout_coefficient_friction()})")
+        print(f"Matériau de la piste: {self.surface(runways_df)}")
         print(f"Longueur: {self.longueur(runways_df)}m")
         print(f"Largeur: {self.largeur(runways_df)}m")
 

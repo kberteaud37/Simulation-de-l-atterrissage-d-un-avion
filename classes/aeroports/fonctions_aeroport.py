@@ -35,8 +35,6 @@ def recuperer_runways():
     runways_fusion = runways_fusion.drop(columns=["airport_ident"])
     return runways_fusion
 
-
-
 def obtenir_data_piste(code, runways_df):
     row = runways_df[runways_df["ident"] == code]
     if not row.empty:
