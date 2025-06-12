@@ -1,48 +1,46 @@
 import pandas as pd
-import fonction_avion as charger_donnees_avions
+from fonction_avion import charger_donnees_avions
 
 
-class ChoixAvion:
-    """Classe pour accéder aux paramètres d'un avion à partir d'un DataFrame global"""
+class Choix_Avion:
+    """Classe adaptée pour gérer les unités converties"""
 
     def __init__(self, code_avion):
-        """Initialise avec le code de l'avion"""
         self.code = code_avion
 
-    def avion_data(self, donnees):
+    def _get_avion_data(self, donnees):
         avion_data = donnees[donnees['Code'] == self.code]
-        cod= avion_data.iloc[0]['Code'] if not avion_data.empty else None
+        return avion_data.iloc[0] if not avion_data.empty else None
 
-    # Méthodes pour chaque paramètre
+    def hauteur(self, donnees, en_pieds=True):
+        avion = self._get_avion_data(donnees)
+        if avion is None:
+            return None
+        return avion['Hauteur_aile_ft'] if en_pieds else avion.get('Hauteur_aile_m')
+
+    def surface(self, donnees, en_pieds_carres=True):
+        avion = self._get_avion_data(donnees)
+        if avion is None:
+            return None
+        return avion['Surface_alaire_ft2'] if en_pieds_carres else avion.get('Surface_alaire_m2')
+
     def allongement(self, donnees):
-        avion_data = donnees[donnees['Code'] == self.code]
-        allongement = avion_data.iloc[0]['Allongement'] if avion_data.empty is not None else None
-        return float(allongement)
-
-    def hauteur(self, donnees):
-        avion_data = donnees[donnees['Code'] == self.code]
-        hauteur = avion_data.iloc[0]['Hauteur_aile_m'] if avion_data.empty is not None else None
-        return float(hauteur)
-
-    def surface(self, donnees):
-        avion_data = donnees[donnees['Code'] == self.code]
-        surface = avion_data.iloc[0]['Surface_alaire_m2'] if avion_data.empty is not None else None
-        return float(surface)
+        avion = self._get_avion_data(donnees)
+        return float(avion['Allongement']) if avion is not None else None
 
     def portance(self, donnees):
-        avion_data = donnees[donnees['Code'] == self.code]
-        portance = avion_data.iloc[0]['CL_max_atterrissage'] if avion_data.empty is not None else None
-        return float(portance)
+        avion = self._get_avion_data(donnees)
+        return float(avion['CL_max_atterrissage']) if avion is not None else None
 
     def trainee_train(self, donnees):
-        avion_data = donnees[donnees['Code'] == self.code]
-        trainee_train = avion_data.iloc[0]['Cd_train'] if avion_data.empty is not None else None
-        return float(trainee_train)
+        avion = self._get_avion_data(donnees)
+        return float(avion['Cd_train']) if avion is not None else None
 
     def trainee_volets(self, donnees):
-        avion_data = donnees[donnees['Code'] == self.code]
-        trainee_volets = avion_data.iloc[0]['Cd_volets'] if avion_data.empty is not None else None
-        return float(trainee_volets)
+        avion = self._get_avion_data(donnees)
+        return float(avion['Cd_volets']) if avion is not None else None
 
-
-avion = ChoixAvion.trainee_volets()
+donnees_avions = charger_donnees_avions()
+a320 = Choix_Avion("A320")
+print(f"Surface alaire: {a320.surface(donnees_avions)} ft²")
+print(f"Coeff de traînée: {a320.trainee_train(donnees_avions)}")
