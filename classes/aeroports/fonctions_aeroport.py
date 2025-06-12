@@ -18,7 +18,7 @@ def recuperer_runways():
     runways_df = pd.read_csv(StringIO(runways_csv))
 
     #Nettoyer Airport
-    # Filtrer les aéroports/aérodromes du QC
+    # Filtrer les aéroports/aérodromes du CA
     qc_airports = airports_df[airports_df['iso_region'] == 'CA-QC']
     #Retiré les aéroports fermés et les héliports
     qc_airports = qc_airports[~qc_airports["type"].isin(["heliport", "closed"])]
@@ -29,10 +29,18 @@ def recuperer_runways():
     #Conserver uniquement les colonnes qui nous interesse
     runways_df=runways_df[["airport_ident","length_ft","width_ft","surface","le_ident","he_ident"]]
 
+    # Nettoyage des identifiants pour éviter les erreurs de comparaison
+
+    qc_airports["ident"] = qc_airports["ident"].astype(str).str.strip()
+    runways_df["airport_ident"] = runways_df["airport_ident"].astype(str).str.strip()
+    runways_df["le_ident"] = runways_df["le_ident"].astype(str).str.strip()
+    runways_df["he_ident"] = runways_df["he_ident"].astype(str).str.strip()
+
     #Fusion des fichier Runways et Airports
     runways_fusion = pd.merge(qc_airports,runways_df,left_on="ident",right_on="airport_ident",how="inner")
     #Suppression de la colonne airport_ident en doublon
     runways_fusion = runways_fusion.drop(columns=["airport_ident"])
+    print(runways_fusion.shape[0])
     return runways_fusion
 
 def obtenir_data_piste(code, runways_df):
@@ -45,3 +53,4 @@ def obtenir_data_piste(code, runways_df):
     else:
         print("Aéroport non trouvé")
 
+recuperer_runways()
