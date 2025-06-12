@@ -48,7 +48,14 @@ class Piste(Aeroport):
         row = self.runway[(self.runway["ident"] == self.code)]
         if not row.empty:
             surface = row.iloc[0]["surface"]
-            return surface
+            if surface in self.asphalte:
+                return 'Ashpalte'
+            elif surface in self.gravier:
+                return 'Gravier'
+            elif surface in self.gazon:
+                return 'Gazon'
+            else:
+                return 'Inconnue'
         else:
             print("Aéroport non trouvé")
 
@@ -69,8 +76,9 @@ class Piste(Aeroport):
         print(f"Largeur: {self.largeur()}m")
 
 
-mtl=Aeroport("CA-1218",recuperer_runways())
-piste1=mtl.pistes()
-piste2=mtl.pistes()
-piste_mtl=Piste("CA-1218",recuperer_runways(),piste1,piste2)
-piste_mtl.afficher_infos_piste(mtl.afficher_pistes()[2])
+mtl=Aeroport("CDD3",recuperer_runways())
+piste1=mtl.pistes()[0][0]
+piste2=mtl.pistes()[1][0]
+mtl.afficher_infos()
+piste_mtl=Piste("CDD3",recuperer_runways(),piste1,piste2)
+piste_mtl.afficher_infos_piste(mtl.afficher_pistes()[0])

@@ -33,8 +33,6 @@ def recuperer_runways():
 
     qc_airports["ident"] = qc_airports["ident"].astype(str).str.strip()
     runways_df["airport_ident"] = runways_df["airport_ident"].astype(str).str.strip()
-    runways_df["le_ident"] = runways_df["le_ident"].astype(str).str.strip()
-    runways_df["he_ident"] = runways_df["he_ident"].astype(str).str.strip()
 
     #Fusion des fichier Runways et Airports
     runways_fusion = pd.merge(qc_airports,runways_df,left_on="ident",right_on="airport_ident",how="inner")
