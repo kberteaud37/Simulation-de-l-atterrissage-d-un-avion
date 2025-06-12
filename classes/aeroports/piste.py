@@ -49,7 +49,7 @@ class Piste(Aeroport):
         if not row.empty:
             surface = row.iloc[0]["surface"]
             if surface in self.asphalte:
-                return 'Ashpalte'
+                return 'Asphalte'
             elif surface in self.gravier:
                 return 'Gravier'
             elif surface in self.gazon:
@@ -60,14 +60,14 @@ class Piste(Aeroport):
             print("Aéroport non trouvé")
 
     def coeff_friction(self):
-        if self.surface() in self.asphalte:
+        if self.surface()=='Asphalte':
             return 0.5
-        elif self.surface() in self.gravier:
+        elif self.surface()=='Gravier':
             return 0.3
-        elif self.surface() in self.gazon:
+        elif self.surface()=='Gazon':
             return 0.4
         else:
-            return 0.2
+            return 0.3
 
     def afficher_infos_piste(self,numero_piste):
         print(f"\nCaracteristiques de la piste {numero_piste}:")
@@ -76,9 +76,4 @@ class Piste(Aeroport):
         print(f"Largeur: {self.largeur()}m")
 
 
-mtl=Aeroport("CDD3",recuperer_runways())
-piste1=mtl.pistes()[0][0]
-piste2=mtl.pistes()[1][0]
-mtl.afficher_infos()
-piste_mtl=Piste("CDD3",recuperer_runways(),piste1,piste2)
-piste_mtl.afficher_infos_piste(mtl.afficher_pistes()[0])
+
