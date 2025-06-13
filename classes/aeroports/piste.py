@@ -72,6 +72,3 @@ class Piste(Aeroport):
         print(f"Longueur: {self.longueur()}m")
         print(f"Largeur: {self.largeur()}m")
 
-mtl=Aeroport("CYUL",recuperer_runways())
-piste_mtl=Piste("CYUL",recuperer_runways(),mtl.pistes()[0])
-piste_mtl.afficher_infos_piste()
