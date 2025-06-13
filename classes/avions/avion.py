@@ -2,7 +2,7 @@ from math import sqrt, pi, log
 
 
 class Avion:
-    angle_de_descente = -3 #Degrés
+    angle_de_descente = -2 #Degrés
     g = 32.2 #ft/s²
     temps_roue_libre = 3 #Secondes
     e = 0.8 #Coefficient D'Oswald
