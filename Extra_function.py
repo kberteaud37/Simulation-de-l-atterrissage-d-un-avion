@@ -18,21 +18,35 @@ def get_float_input(prompt):
             print("Invalid input, please try again.")
     return value
 
+# Fonction qui compare la longueur des pistes avec la distance nécessaire à l'atterrissage
 def compare(avion,piste,coef_secu = 1.67):
     distance_necessaire = avion.calcul_S_B() * coef_secu
     print(f"La distance nécessaire est : {distance_necessaire}")
     print(f"La longueur de la piste est : {piste.longueur()}")
+
+    # Récupération de toutes les pistes d'un même aéroport
+    pistes = recuperer_runways()[recuperer_runways()["ident"] == piste.code]
+
+    # On boucle jusqu'à trouver une piste d'atterrissage viable
     while distance_necessaire >= piste.longueur():
         print("Atterrissage non sûr : la distance nécessaire dépasse la longueur de la piste.\n"
               "Recherche d'une piste d'atterrissage sûre en cours...")
-        pistes = recuperer_runways()[recuperer_runways()["ident"] == piste.code]
+
+        # Parcours des pistes pour en trouver une compatible
         for num_piste in pistes["runway_ident"]:
             piste = classes.aeroports.Piste("CYUL", recuperer_runways(), num_piste)
-            print(piste.n_piste)
+            if distance_necessaire < piste.longueur():
+                break  # Permet de sortir du for
+        else:
+            pistes = trouver_aeroport_proche(piste)
+            continue  # Si aucune piste compatible trouvée, on relance le while
+        break  # Si une piste a été trouvée, on sort du while
+
     print(f"Atterrissage sûr : la distance nécessaire est inférieure ou égale à la longueur "
           f"de la piste {piste.n_piste} à l'aéroport {piste.nom()}")
 
-def trouver_aeroport_proche():
+def trouver_aeroport_proche(piste):
+
     return None
 
 def afficher_trajectoire_atterrissage(avion):
