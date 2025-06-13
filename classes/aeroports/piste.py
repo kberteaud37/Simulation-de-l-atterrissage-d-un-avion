@@ -55,19 +55,30 @@ class Piste(Aeroport):
         else:
             print("Aéroport non trouvé")
 
-    def coeff_friction(self):
+    def coeff_friction(self,pluie,glace):
         if self.surface()=='Asphalte':
-            return 0.5
+            if glace is True:
+                return 0.1
+            elif pluie is True:
+                return 0.3
+            else:
+                return 0.5
         elif self.surface()=='Gravier':
             return 0.3
         elif self.surface()=='Gazon':
-            return 0.4
+            if pluie is True:
+                return 0.2
+            else:
+                return 0.4
         else:
-            return 0.3
+            if glace is True:
+                return 0.1
+            else:
+                return 0.3
 
-    def afficher_infos_piste(self):
+    def afficher_infos_piste(self,pluie,glace):
         print(f"\nCaracteristiques de la piste {self.n_piste}:")
-        print(f"Matériau de la piste: {self.surface()}, f={self.coeff_friction()}")
+        print(f"Matériau de la piste: {self.surface()}, f={self.coeff_friction(pluie,glace)}")
         print(f"Longueur: {self.longueur()}m")
         print(f"Largeur: {self.largeur()}m")
 
