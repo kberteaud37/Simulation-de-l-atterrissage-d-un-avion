@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import classes
 from classes.aeroports.fonctions_aeroport import recuperer_runways
+from classes.avions.choix_avion import ChoixAvion
 
 
 #Fonction forçant l'utilisateur à entrer une valeur acceptable
@@ -21,13 +22,15 @@ def compare(avion,piste,coef_secu = 1.67):
     distance_necessaire = avion.calcul_S_B() * coef_secu
     print(f"La distance nécessaire est : {distance_necessaire}")
     print(f"La longueur de la piste est : {piste.longueur()}")
-    if distance_necessaire > piste.longueur():
+    while distance_necessaire >= piste.longueur():
         print("Atterrissage non sûr : la distance nécessaire dépasse la longueur de la piste.\n"
               "Recherche d'une piste d'atterrissage sûre en cours...")
-        
-    else:
-        print("Atterrissage sûr : la distance nécessaire est inférieure ou égale à la longueur de la piste")
-        return True
+        pistes = recuperer_runways()[recuperer_runways()["ident"] == piste.code]
+        for num_piste in pistes["runway_ident"]:
+            piste = classes.aeroports.Piste("CYUL", recuperer_runways(), num_piste)
+            print(piste.n_piste)
+    print(f"Atterrissage sûr : la distance nécessaire est inférieure ou égale à la longueur "
+          f"de la piste {piste.n_piste} à l'aéroport {piste.nom()}")
 
 def afficher_trajectoire_atterrissage(avion):
     # Initialisation des valeurs
@@ -87,8 +90,12 @@ def afficher_trajectoire_atterrissage(avion):
 # Exemple d'utilisation
 piste = classes.aeroports.Piste("CYUL", recuperer_runways(),"10-28")
 meteo = classes.meteos.Meteo(15+273.15,1013,10,270)
-avion = classes.avions.Commercial("A320",17918,8,60,396.1,2.62,meteo,piste,45)
+choix_avion = ChoixAvion("A320")
+avion = classes.avions.Commercial(17918,choix_avion,meteo,piste,45)
 afficher_trajectoire_atterrissage(avion)
 
 compare(avion,piste)
 
+code = "CYUL"
+num_p = "06L-24R"
+row = recuperer_runways()[(recuperer_runways()["ident"] == code) & (recuperer_runways()["runway_ident"] == num_p)]

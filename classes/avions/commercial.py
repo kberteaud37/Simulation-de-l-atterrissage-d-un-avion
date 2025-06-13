@@ -3,10 +3,10 @@ from .avion import Avion
 
 class Commercial(Avion):
 
-    def __init__(self,code, poids_atterrissage, choix_avion, meteo, piste, vitesse_vent=0,
+    def __init__(self,poids_atterrissage, choix_avion, meteo, piste, vitesse_vent=0,
                  facteur_de_charge = 1.35,hauteur_obstacle = 35,
                  coef_transition = 1.23):
-        super().__init__(code, poids_atterrissage, code, poids_atterrissage, choix_avion,
+        super().__init__(poids_atterrissage, choix_avion,
                          meteo, piste, vitesse_vent)
         self.n = facteur_de_charge
         self.H_OBS = hauteur_obstacle

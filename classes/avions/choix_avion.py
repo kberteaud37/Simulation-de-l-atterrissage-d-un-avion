@@ -1,5 +1,5 @@
 import pandas as pd
-from fonction_avion import charger_donnees_avions
+from .fonction_avion import charger_donnees_avions
 
 
 class ChoixAvion:

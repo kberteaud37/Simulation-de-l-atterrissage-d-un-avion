@@ -7,8 +7,8 @@ class Avion:
     temps_roue_libre = 3 #Secondes
     e = 0.8 #Coefficient D'Oswald
 
-    def __init__(self,code, poids_atterrissage, choix_avion, meteo, piste, vitesse_vent=0):
-        self.code = code
+    def __init__(self,poids_atterrissage, choix_avion, meteo, piste, vitesse_vent=0):
+        self.code = choix_avion.code
         self.W_LA = poids_atterrissage
         self.A = choix_avion.allongement()
         self.H = choix_avion.hauteur()
