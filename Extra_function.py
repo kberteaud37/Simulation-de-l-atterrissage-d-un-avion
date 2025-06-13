@@ -32,6 +32,9 @@ def compare(avion,piste,coef_secu = 1.67):
     print(f"Atterrissage sûr : la distance nécessaire est inférieure ou égale à la longueur "
           f"de la piste {piste.n_piste} à l'aéroport {piste.nom()}")
 
+def trouver_aeroport_proche():
+    return None
+
 def afficher_trajectoire_atterrissage(avion):
     # Initialisation des valeurs
     S_A = avion.calcul_S_A()
