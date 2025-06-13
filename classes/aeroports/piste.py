@@ -6,12 +6,11 @@ class Piste(Aeroport):
     asphalte=["concrete","asphalt/gravel","ASP","asphalt","ASPHALT","ASPH"]
     gravier=["Gravel","gravel","GRAVEL","GRAVEL/TURF","GVL","SAND/GRAVEL","GRAVEL/GRASS"]
     gazon=["grass","GRS","GRASS","EARTH/SNOW","GRASS/SAND"]
-    def __init__(self,code,runways_df,num_piste_le,num_piste_he):
+    def __init__(self,code,runways_df,num_piste):
 
         # Appel du constructeur parent
         super().__init__(code,runways_df)
-        self.n_le_piste=num_piste_le
-        self.n_he_piste=num_piste_he
+        self.n_piste=num_piste
 
         # Dictionnaire des coefficients de friction
         """
@@ -26,8 +25,7 @@ class Piste(Aeroport):
         """
     def longueur(self):
         row = self.runway[(self.runway["ident"] == self.code) &
-                         (self.runway["le_ident"] == self.n_le_piste) &
-                         (self.runway["he_ident"] == self.n_he_piste)]
+                         (self.runway["runway_ident"] == self.n_piste)]
         if not row.empty:
             longueur = row.iloc[0]["length_ft"]
             return float(longueur)
@@ -35,9 +33,8 @@ class Piste(Aeroport):
             print("Aéroport non trouvé")
 
     def largeur(self):
-        row = self.runway[(self.runway["ident"] == self.code)&
-                         (self.runway["le_ident"] == self.n_le_piste) &
-                         (self.runway["he_ident"] == self.n_he_piste)]
+        row = self.runway[(self.runway["ident"] == self.code) &
+                          (self.runway["runway_ident"] == self.n_piste)]
         if not row.empty:
             largeur = row.iloc[0]["width_ft"]
             return float(largeur)
@@ -69,11 +66,12 @@ class Piste(Aeroport):
         else:
             return 0.3
 
-    def afficher_infos_piste(self,numero_piste):
-        print(f"\nCaracteristiques de la piste {numero_piste}:")
+    def afficher_infos_piste(self):
+        print(f"\nCaracteristiques de la piste {self.n_piste}:")
         print(f"Matériau de la piste: {self.surface()}, f={self.coeff_friction()}")
         print(f"Longueur: {self.longueur()}m")
         print(f"Largeur: {self.largeur()}m")
 
-
-
+mtl=Aeroport("CYUL",recuperer_runways())
+piste_mtl=Piste("CYUL",recuperer_runways(),mtl.pistes()[0])
+piste_mtl.afficher_infos_piste()

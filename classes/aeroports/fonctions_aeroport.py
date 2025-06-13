@@ -29,6 +29,11 @@ def recuperer_runways():
     #Conserver uniquement les colonnes qui nous interesse
     runways_df=runways_df[["airport_ident","length_ft","width_ft","surface","le_ident","he_ident"]]
 
+    # Fusionner les identifiants de piste avec un tiret
+    runways_df["runway_ident"] = runways_df["le_ident"] + "-" + runways_df["he_ident"]
+    # Supprimer les colonnes originales
+    runways_df = runways_df.drop(columns=["le_ident", "he_ident"])
+
     # Nettoyage des identifiants pour éviter les erreurs de comparaison
 
     qc_airports["ident"] = qc_airports["ident"].astype(str).str.strip()
