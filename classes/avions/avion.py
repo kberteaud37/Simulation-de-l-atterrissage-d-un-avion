@@ -8,7 +8,7 @@ class Avion:
     e = 0.8 #Coefficient D'Oswald
 
     def __init__(self,code, poids_atterrissage, allongement, hauteur_aile, surface_alaire,
-                 coefficient_portance_max_atterrissage,meteo,piste
+                 coefficient_portance_max_atterrissage,meteo,piste, vitesse_vent=0
                  ,coefficient_trainee_train = 0.1,coefficient_trainee_volets = 0.02):
         self.code = code
         self.W_LA = poids_atterrissage
@@ -23,6 +23,7 @@ class Avion:
         self.mu = self.piste.ajout_coefficient_friction()
         self.meteo = meteo
         self.density = self.meteo.calcul_densite()
+        self.V_vent = vitesse_vent
         # Poussée au sol pour l'instant nulle
         self.T_sol = 0
 
@@ -34,7 +35,7 @@ class Avion:
         return 1/(pi*A_eff*self.e)
 
     def calcul_V_stall(self):
-        return sqrt(self.W_LA / (0.5 * self.density * self.S * self.Cl_max_LA))
+        return sqrt(self.W_LA / (0.5 * self.density * self.S * self.Cl_max_LA)) + self.V_vent
 
     def calcul_V_TD(self):
         V_stall = self.calcul_V_stall()
