@@ -7,17 +7,15 @@ class Avion:
     temps_roue_libre = 3 #Secondes
     e = 0.8 #Coefficient D'Oswald
 
-    def __init__(self,code, poids_atterrissage, allongement, hauteur_aile, surface_alaire,
-                 coefficient_portance_max_atterrissage,meteo,piste, vitesse_vent=0
-                 ,coefficient_trainee_train = 0.1,coefficient_trainee_volets = 0.02):
+    def __init__(self,code, poids_atterrissage, choix_avion, meteo, piste, vitesse_vent=0):
         self.code = code
         self.W_LA = poids_atterrissage
-        self.A = allongement
-        self.H = hauteur_aile
-        self.S = surface_alaire
-        self.Cl_max_LA = coefficient_portance_max_atterrissage
-        self.C_LG = coefficient_trainee_train
-        self.delta_C_D0_f = coefficient_trainee_volets
+        self.A = choix_avion.allongement()
+        self.H = choix_avion.hauteur()
+        self.S = choix_avion.surface()
+        self.Cl_max_LA = choix_avion.portance()
+        self.C_LG = choix_avion.trainee_train()
+        self.delta_C_D0_f = choix_avion.trainee_volets()
         self.charge_alaire = self.W_LA/self.S
         self.piste = piste
         self.mu = self.piste.coeff_friction()

@@ -21,13 +21,13 @@ def compare(avion,piste,coef_secu = 1.67):
     distance_necessaire = avion.calcul_S_B() * coef_secu
     print(f"La distance nécessaire est : {distance_necessaire}")
     print(f"La longueur de la piste est : {piste.longueur()}")
-    if distance_necessaire <= piste.longueur():
-        print("Atterrissage sûr : la distance nécessaire est inférieure ou égale à la longueur de la piste")
-        return True
-    else:
+    if distance_necessaire > piste.longueur():
         print("Atterrissage non sûr : la distance nécessaire dépasse la longueur de la piste.\n"
               "Recherche d'une piste d'atterrissage sûre en cours...")
-        return False
+        
+    else:
+        print("Atterrissage sûr : la distance nécessaire est inférieure ou égale à la longueur de la piste")
+        return True
 
 def afficher_trajectoire_atterrissage(avion):
     # Initialisation des valeurs
