@@ -54,3 +54,4 @@ def recuperer_airports():
     df_airports = df.drop_duplicates(subset=["ident"])
     return df_airports.reset_index(drop=True)
 
+
