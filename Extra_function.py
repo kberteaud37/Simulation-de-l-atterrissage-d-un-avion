@@ -1,6 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import classes
+from functions import recuperer_runways
+
 
 #Fonction forçant l'utilisateur à entrer une valeur acceptable
 def get_float_input(prompt):
@@ -81,23 +83,11 @@ def afficher_trajectoire_atterrissage(avion):
     plt.show()
 
 # Exemple d'utilisation
-piste = classes.aeroports.Piste("YUL", "code", "ville", (45.67, -73.75), 1700,
-                 2, "Asphalte", 45, 3000, 105)
+piste = classes.aeroports.Piste("CYUL",recuperer_runways(),10,28)
 meteo = classes.meteos.Meteo(15+273.15,1013,10,270)
 avion = classes.avions.Commercial("A320",17918,8,60,396.1,2.62,meteo,piste,45)
 afficher_trajectoire_atterrissage(avion)
 
 compare(avion,piste)
 
-#Fonction forçant l'utilisateur à entrer une valeur acceptable
-def get_float_input(prompt):
-    while True:
-        # Constantly check if a value was entered followed by Enter
-        try:
-            # Put the value entered by user in "entrée"
-            value = float(input(prompt))
-            break
-        except ValueError:
-            # If input is not a float we get a ValueError
-            print("Invalid input, please try again.")
-    return value
+
