@@ -21,10 +21,9 @@ def get_float_input(prompt):
 
 # Fonction qui compare la longueur des pistes avec la distance nécessaire à l'atterrissage
 def compare(avion, piste, coef_secu=1.67):
-    distance_necessaire = avion.calcul_S_B() * coef_secu
-    distance_necessaire = 3000
-    print(f"La distance nécessaire est : {distance_necessaire}")
-    print(f"La longueur de la piste est : {piste.longueur()}")
+    distance_necessaire = (avion.calcul_S_B()+avion.calcul_S_FR()+avion.calcul_S_TR()) * coef_secu
+    print(f"La distance nécessaire est : {distance_necessaire} ft")
+    print(f"La longueur de la piste est : {piste.longueur()} ft")
 
     df_runways = recuperer_runways()
     aeroport = [piste]
@@ -58,6 +57,7 @@ def compare(avion, piste, coef_secu=1.67):
         break  # sortie si piste compatible trouvée
 
     print(f"Vous pouvez atterrir à {piste.nom()} sur la piste {piste.n_piste}")
+    print(f"La longueur de la piste est {piste.longueur()} ft et la distance nécessaire de {distance_necessaire} ft")
 
 
 def trouver_aeroport_proche(exclusions):
@@ -147,7 +147,7 @@ def afficher_trajectoire_atterrissage(avion):
 piste = classes.Piste("CYUL", recuperer_runways(),"10-28")
 meteo = classes.meteos.Meteo(15+273.15,1013,10,270)
 choix_avion = ChoixAvion("A320")
-avion = classes.avions.Commercial(17918,choix_avion,meteo,piste,45)
+avion = classes.avions.Commercial(158732,choix_avion,meteo,piste,45)
 """afficher_trajectoire_atterrissage(avion)"""
 
 # Exemple de la fonction compare()
