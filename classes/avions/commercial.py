@@ -3,14 +3,11 @@ from .avion import Avion
 
 class Commercial(Avion):
 
-    def __init__(self,code, poids_atterrissage, allongement, hauteur_aile, surface_alaire,
-                 coefficient_portance_max_atterrissage,meteo,piste, vitesse_vent = 0
-                 ,coefficient_trainee_train = 0.1, coefficient_trainee_volets = 0.02,
+    def __init__(self,poids_atterrissage, choix_avion, meteo, piste, vitesse_vent=0,
                  facteur_de_charge = 1.35,hauteur_obstacle = 35,
                  coef_transition = 1.23):
-        super().__init__(code, poids_atterrissage, allongement, hauteur_aile, surface_alaire,
-                 coefficient_portance_max_atterrissage,meteo,piste, vitesse_vent
-                         ,coefficient_trainee_train,coefficient_trainee_volets)
+        super().__init__(poids_atterrissage, choix_avion,
+                         meteo, piste, vitesse_vent)
         self.n = facteur_de_charge
         self.H_OBS = hauteur_obstacle
         self.coef_TR = coef_transition
