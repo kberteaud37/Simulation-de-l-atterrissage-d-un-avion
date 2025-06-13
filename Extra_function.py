@@ -1,6 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import classes
+from classes.aeroports.fonctions_aeroport import recuperer_runways
+
 
 #Fonction forçant l'utilisateur à entrer une valeur acceptable
 def get_float_input(prompt):
@@ -17,7 +19,9 @@ def get_float_input(prompt):
 
 def compare(avion,piste,coef_secu = 1.67):
     distance_necessaire = avion.calcul_S_B() * coef_secu
-    if piste.longueur() <= distance_necessaire:
+    print(f"La distance nécessaire est : {distance_necessaire}")
+    print(f"La longueur de la piste est : {piste.longueur()}")
+    if distance_necessaire <= piste.longueur():
         print("Atterrissage sûr : la distance nécessaire est inférieure ou égale à la longueur de la piste")
         return True
     else:
@@ -81,8 +85,7 @@ def afficher_trajectoire_atterrissage(avion):
     plt.show()
 
 # Exemple d'utilisation
-piste = classes.aeroports.Piste("YUL", "code", "ville", (45.67, -73.75), 1700,
-                 2, "Asphalte", 45, 3000, 105)
+piste = classes.aeroports.Piste("CYUL", recuperer_runways(),"10-28")
 meteo = classes.meteos.Meteo(15+273.15,1013,10,270)
 avion = classes.avions.Commercial("A320",17918,8,60,396.1,2.62,meteo,piste,45)
 afficher_trajectoire_atterrissage(avion)

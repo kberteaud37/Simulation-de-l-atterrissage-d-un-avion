@@ -20,7 +20,7 @@ class Avion:
         self.delta_C_D0_f = coefficient_trainee_volets
         self.charge_alaire = self.W_LA/self.S
         self.piste = piste
-        self.mu = self.piste.ajout_coefficient_friction()
+        self.mu = self.piste.coeff_friction()
         self.meteo = meteo
         self.density = self.meteo.calcul_densite()
         self.V_vent = vitesse_vent

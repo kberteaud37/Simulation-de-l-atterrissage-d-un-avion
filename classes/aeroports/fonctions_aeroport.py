@@ -45,4 +45,3 @@ def recuperer_runways():
     runways_fusion = runways_fusion.drop(columns=["airport_ident"])
     return runways_fusion
 
-
