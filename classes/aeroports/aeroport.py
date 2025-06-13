@@ -40,18 +40,8 @@ class Aeroport:
     def pistes(self):
         filtre_code= self.runway[self.runway["ident"] == self.code]
         if not filtre_code.empty:
-            pistes_le = [f"{row['le_ident']}" for index, row in filtre_code.iterrows()]
-            pistes_he = [f"{row['he_ident']}" for index, row in filtre_code.iterrows()]
-            return pistes_le, pistes_he
-        else:
-            print("Aeroport non trouvé")
-
-    #Permet de concaténer le_ident et he_ident pour afficher les pistes de chaque aéroport
-    def afficher_pistes(self):
-        filtre_code= self.runway[self.runway["ident"] == self.code]
-        if not filtre_code.empty:
-            pistes_affichage = [f"{row['le_ident']}-{row['he_ident']}" for index, row in filtre_code.iterrows()]
-            return pistes_affichage
+            pistes = [f"{row['runway_ident']}" for index, row in filtre_code.iterrows()]
+            return pistes
         else:
             print("Aeroport non trouvé")
 
@@ -59,5 +49,6 @@ class Aeroport:
         print(f"Aéroport: {self.nom()} ({self.code})")
         print(f"Coordonnées: {self.latitude()}, {self.longitude()}")
         print(f"Altitude: {self.altitude()} ft")
-        print(f"La/les piste(s) de cet aéroport sont: {self.afficher_pistes()}")
+        print(f"La/les piste(s) de cet aéroport sont: {self.pistes()}")
+
 
