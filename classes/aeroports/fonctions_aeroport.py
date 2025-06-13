@@ -45,3 +45,11 @@ def recuperer_runways():
     runways_fusion = runways_fusion.drop(columns=["airport_ident"])
     return runways_fusion
 
+# Fonction qui filtre et ne garde que les aéroports en une seule instance
+def recuperer_airports():
+    df_runways = recuperer_runways()
+    # Sélectionne colonnes utiles
+    df = df_runways[["ident", "latitude_deg", "longitude_deg"]]
+    # Supprime doublons sur 'ident', en gardant la première occurence
+    df_airports = df.drop_duplicates(subset=["ident"])
+    return df_airports.reset_index(drop=True)

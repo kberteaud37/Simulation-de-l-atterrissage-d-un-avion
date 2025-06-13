@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import classes
+from scipy.spatial import KDTree
 from classes.aeroports.fonctions_aeroport import recuperer_runways
 from classes.avions.choix_avion import ChoixAvion
 
@@ -46,8 +47,22 @@ def compare(avion,piste,coef_secu = 1.67):
           f"de la piste {piste.n_piste} à l'aéroport {piste.nom()}")
 
 def trouver_aeroport_proche(piste):
+    row = recuperer_runways()[(recuperer_runways()["ident"] == piste.code)
+                              & (recuperer_runways()["runway_ident"] == piste.n_piste)]
+    print(f"Row : {row}")
+    # Construction du KDTree
+    tree = KDTree(np.radians(recuperer_runways()[["latitude_deg", "longitude_deg"]]))
 
-    return None
+    # Coordonnées de l'aéroport source en radians
+    coord_source = np.radians([row["latitude_deg"], row["longitude_deg"]]).ravel()
+    print(f"coord_source : {coord_source}")
+    # Trouver l’indice du plus proche voisin (hors lui-même)
+    dist, idx = tree.query(coord_source, k=2)  # k=2 pour ignorer soi-même
+    idx_plus_proche = idx[1]  # idx[0] serait souvent soi-même
+
+    plus_proche = recuperer_runways().iloc[idx_plus_proche]
+    print(plus_proche)
+    return plus_proche
 
 def afficher_trajectoire_atterrissage(avion):
     # Initialisation des valeurs
@@ -109,10 +124,12 @@ piste = classes.aeroports.Piste("CYUL", recuperer_runways(),"10-28")
 meteo = classes.meteos.Meteo(15+273.15,1013,10,270)
 choix_avion = ChoixAvion("A320")
 avion = classes.avions.Commercial(17918,choix_avion,meteo,piste,45)
-afficher_trajectoire_atterrissage(avion)
+"""afficher_trajectoire_atterrissage(avion)
 
-compare(avion,piste)
+compare(avion,piste)"""
 
-code = "CYUL"
+"""code = "CYUL"
 num_p = "06L-24R"
 row = recuperer_runways()[(recuperer_runways()["ident"] == code) & (recuperer_runways()["runway_ident"] == num_p)]
+print(row)"""
+trouver_aeroport_proche(piste)
