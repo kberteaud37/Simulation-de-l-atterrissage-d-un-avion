@@ -11,5 +11,6 @@ class Meteo:
     def calcul_densite(self):
         T_K=self.T+273.15
         P_Pa=self.P*100
-        densite=P_Pa/(T_K*self.R)
+        densite=P_Pa/(T_K*self.R) #kg/m3
+        densite = densite * 0.00194032 #slug/ft3
         return densite

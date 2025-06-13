@@ -28,47 +28,63 @@ def compare(avion,piste,coef_secu = 1.67):
 def afficher_trajectoire_atterrissage(avion):
     # Initialisation des valeurs
     S_A = avion.calcul_S_A()
+    print(f"S_A = {S_A}")
     S_TR = avion.calcul_S_TR()
+    print(f"S_TR = {S_TR}")
     S_FR = avion.calcul_S_FR()
+    print(f"S_FR = {S_FR}")
     S_B = avion.calcul_S_B()
-    angle_descente = avion.angle_de_descente
+    print(f"S_B = {S_B}")
+    angle_rad = np.radians(avion.angle_de_descente)
+    print(angle_rad)
+    h_obstacle = avion.H_OBS
 
-    # Phase 1: Approche initiale
+    # Création des données pour la trajectoire
     x_A = np.linspace(0, S_A, 100)
-    y_A = np.tan(angle_descente) * x_A
+    y_A = avion.H_OBS + x_A * np.tan(angle_rad)
 
-    # Phase 2: Transition
-    x_TR = np.linspace(S_A, S_A + S_TR, 100)
-    y_TR = np.tan(angle_descente) * S_A + (0 - np.tan(angle_descente) * S_A) * (x_TR - S_A) / S_TR
+    # Calculer les coordonnées pour la phase de transition
+    # Rayon de courbure pour la transition
+    rayon = abs(h_obstacle / np.sin(angle_rad))
 
-    # Phase 3: Roulement libre
+    # Centre du cercle de transition
+    x_center = S_A
+    y_center = h_obstacle + S_A * np.tan(angle_rad) - rayon
+
+    # Angle pour l'arc de cercle
+    theta = np.linspace(np.pi / 2, np.pi, 100)
+    x_TR = x_center + rayon * np.cos(theta)
+    y_TR = y_center + rayon * np.sin(theta)
+
+    # Roulement libre et freinage
     x_FR = np.linspace(S_A + S_TR, S_A + S_TR + S_FR, 100)
     y_FR = np.zeros_like(x_FR)
 
-    # Phase 4: Freinage
     x_B = np.linspace(S_A + S_TR + S_FR, S_A + S_TR + S_FR + S_B, 100)
     y_B = np.zeros_like(x_B)
 
     # Tracer la trajectoire
-    plt.figure(figsize=(10, 5))
-    plt.plot(x_A, y_A, label='Approche initiale')
-    plt.plot(x_TR, y_TR, label='Transition')
-    plt.plot(x_FR, y_FR, label='Roulement libre')
-    plt.plot(x_B, y_B, label='Freinage')
-    plt.axhline(0, color='black', linewidth=0.8)  # Ligne de la piste
+    plt.figure(figsize=(12, 6))
+    plt.plot(x_A, y_A, label='Approche initiale', color='blue')
+    plt.plot(x_TR, y_TR, label='Transition', color='orange')
+    plt.plot(x_FR, y_FR, label='Roulement libre', color='green',linewidth=3)
+    plt.plot(x_B, y_B, label='Freinage', color='red',linewidth=3)
+    # Tracer la piste
+
+    # Ajouter des labels et une légende
+    plt.title("Trajectoire d'atterrissage de l'avion")
     plt.xlabel('Distance')
     plt.ylabel('Altitude')
-    plt.title('Trajectoire d\'atterrissage de l\'avion')
     plt.legend()
     plt.grid(True)
-    plt.axis('equal')
+    plt.ylim(-h_obstacle-10, h_obstacle+10)
     plt.show()
 
 # Exemple d'utilisation
 piste = classes.aeroports.Piste("YUL", "code", "ville", (45.67, -73.75), 1700,
                  2, "Asphalte", 45, 3000, 105)
 meteo = classes.meteos.Meteo(15+273.15,1013,10,270)
-avion = classes.avions.Militaire("A320",17918,8,60,396.1,2.62,meteo,piste)
+avion = classes.avions.Commercial("A320",17918,8,60,396.1,2.62,meteo,piste,45)
 afficher_trajectoire_atterrissage(avion)
 
 compare(avion,piste)
