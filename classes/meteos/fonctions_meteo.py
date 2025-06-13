@@ -39,3 +39,6 @@ def recuperer_meteo(latitude,longitude):
         return {"T": temperature,"P": pression,"V_vent": vitesse_vent,"Dir_vent": orientation_vent,"pluie": pluie,"glace":glace}
     else:
         print("Erreur:", response.status_code)
+
+
+
