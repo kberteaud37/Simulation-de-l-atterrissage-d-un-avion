@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import classes
 from scipy.spatial import KDTree
-from classes.aeroports.fonctions_aeroport import recuperer_runways
+from classes.aeroports.fonctions_aeroport import recuperer_runways,recuperer_airports
 from classes.avions.choix_avion import ChoixAvion
 
 
@@ -20,49 +20,73 @@ def get_float_input(prompt):
     return value
 
 # Fonction qui compare la longueur des pistes avec la distance nécessaire à l'atterrissage
-def compare(avion,piste,coef_secu = 1.67):
+def compare(avion, piste, coef_secu=1.67):
     distance_necessaire = avion.calcul_S_B() * coef_secu
+    distance_necessaire = 3000
     print(f"La distance nécessaire est : {distance_necessaire}")
     print(f"La longueur de la piste est : {piste.longueur()}")
 
-    # Récupération de toutes les pistes d'un même aéroport
-    pistes = recuperer_runways()[recuperer_runways()["ident"] == piste.code]
+    df_runways = recuperer_runways()
+    aeroport = [piste]
+    code_aeroport_courant = piste.code
+    pistes = df_runways[df_runways["ident"] == code_aeroport_courant]
 
-    # On boucle jusqu'à trouver une piste d'atterrissage viable
+    max_recherches = 20
+    nb_recherches = 0
+
     while distance_necessaire >= piste.longueur():
+        if nb_recherches >= max_recherches:
+            raise RuntimeError("Trop de recherches effectuées, aucun aéroport viable trouvé.")
+        nb_recherches += 1
         print("Atterrissage non sûr : la distance nécessaire dépasse la longueur de la piste.\n"
               "Recherche d'une piste d'atterrissage sûre en cours...")
 
-        # Parcours des pistes pour en trouver une compatible
         for num_piste in pistes["runway_ident"]:
-            piste = classes.aeroports.Piste("CYUL", recuperer_runways(), num_piste)
-            if distance_necessaire < piste.longueur():
-                break  # Permet de sortir du for
+            piste_test = classes.aeroports.Piste(code_aeroport_courant, df_runways, num_piste)
+            if distance_necessaire < piste_test.longueur():
+                piste = piste_test
+                break
         else:
-            pistes = trouver_aeroport_proche(piste)
-            continue  # Si aucune piste compatible trouvée, on relance le while
-        break  # Si une piste a été trouvée, on sort du while
+            aeroport_proche = trouver_aeroport_proche(aeroport)
+            code_aeroport_courant = aeroport_proche["ident"]
+            pistes = df_runways[df_runways["ident"] == code_aeroport_courant]
 
-    print(f"Atterrissage sûr : la distance nécessaire est inférieure ou égale à la longueur "
-          f"de la piste {piste.n_piste} à l'aéroport {piste.nom()}")
+            ligne = pistes.iloc[0]
+            nouvelle_piste = classes.aeroports.Piste(ligne["ident"], df_runways, ligne["runway_ident"])
+            aeroport.append(nouvelle_piste)
+            continue  # relance le while
+        break  # sortie si piste compatible trouvée
 
-def trouver_aeroport_proche(piste):
-    row = recuperer_runways()[(recuperer_runways()["ident"] == piste.code)
-                              & (recuperer_runways()["runway_ident"] == piste.n_piste)]
-    print(f"Row : {row}")
-    # Construction du KDTree
-    tree = KDTree(np.radians(recuperer_runways()[["latitude_deg", "longitude_deg"]]))
+    print(f"Vous pouvez atterrir à {piste.nom()} sur la piste {piste.n_piste}")
 
-    # Coordonnées de l'aéroport source en radians
-    coord_source = np.radians([row["latitude_deg"], row["longitude_deg"]]).ravel()
-    print(f"coord_source : {coord_source}")
-    # Trouver l’indice du plus proche voisin (hors lui-même)
-    dist, idx = tree.query(coord_source, k=2)  # k=2 pour ignorer soi-même
-    idx_plus_proche = idx[1]  # idx[0] serait souvent soi-même
 
-    plus_proche = recuperer_runways().iloc[idx_plus_proche]
-    print(plus_proche)
+def trouver_aeroport_proche(exclusions):
+    df_airports = recuperer_airports()
+    code_depart = exclusions[0].code
+    a_exclure = set(p.code for p in exclusions)  # pour éviter les doublons et rendre la recherche rapide
+
+    # Aéroport de départ
+    row_depart = df_airports[df_airports["ident"] == code_depart]
+    if row_depart.empty:
+        raise ValueError(f"Aéroport avec ident = {code_depart} introuvable.")
+    row_depart = row_depart.iloc[0]
+    coord_depart = np.radians([row_depart["latitude_deg"], row_depart["longitude_deg"]])
+
+    # Filtrage des aéroports à exclure
+    df_filtre = df_airports[~df_airports["ident"].isin(a_exclure)].copy()
+
+    if df_filtre.empty:
+        raise ValueError("Tous les aéroports ont été exclus, impossible de continuer la recherche.")
+
+    coords = np.radians(df_filtre[["latitude_deg", "longitude_deg"]])
+    tree = KDTree(coords)
+
+    dist, idx = tree.query(coord_depart)
+    plus_proche = df_filtre.iloc[idx]
+
+    print(f"Aéroport le plus proche (hors exclusions) : {plus_proche['ident']} à {dist * 6371:.2f} km")
     return plus_proche
+
 
 def afficher_trajectoire_atterrissage(avion):
     # Initialisation des valeurs
@@ -120,16 +144,12 @@ def afficher_trajectoire_atterrissage(avion):
     plt.show()
 
 # Exemple d'utilisation
-piste = classes.aeroports.Piste("CYUL", recuperer_runways(),"10-28")
+piste = classes.Piste("CYUL", recuperer_runways(),"10-28")
 meteo = classes.meteos.Meteo(15+273.15,1013,10,270)
 choix_avion = ChoixAvion("A320")
 avion = classes.avions.Commercial(17918,choix_avion,meteo,piste,45)
-"""afficher_trajectoire_atterrissage(avion)
+"""afficher_trajectoire_atterrissage(avion)"""
 
-compare(avion,piste)"""
-
-"""code = "CYUL"
-num_p = "06L-24R"
-row = recuperer_runways()[(recuperer_runways()["ident"] == code) & (recuperer_runways()["runway_ident"] == num_p)]
-print(row)"""
-trouver_aeroport_proche(piste)
+# Exemple de la fonction compare()
+piste = classes.Piste("CSP6", recuperer_runways(),"07-25")
+compare(avion,piste)
