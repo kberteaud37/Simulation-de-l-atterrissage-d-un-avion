@@ -10,18 +10,27 @@ def charger_donnees_avions(convertir_en_pieds=True):
         PIEDS_PAR_METRE = 3.28084
         PIEDS_CARRE_PAR_METRE_CARRE = 10.7639
 
-        # 1. Chargement des données
-        df = pd.read_csv(chemin_fichier, sep=';', encoding='utf-8')
+        # 1. Chargement des données avec plusieurs options de séparateur
+        try:
+            # Essayer d'abord avec une virgule
+            df = pd.read_csv(chemin_fichier, sep=',', encoding='utf-8')
+        except pd.errors.ParserError:
+            try:
+                # Si échec, essayer avec un point-virgule
+                df = pd.read_csv(chemin_fichier, sep=';', encoding='utf-8')
+            except pd.errors.ParserError:
+                # Si échec, essayer avec tabulation
+                df = pd.read_csv(chemin_fichier, sep='\t', encoding='utf-8')
+
+        # Afficher les colonnes lues pour débogage
+        print("Colonnes lues dans le fichier:", df.columns.tolist())
+        print("Premières lignes:", df.head())
 
         # 2. Nettoyage approfondi
         # a. Suppression des doublons
         df = df.drop_duplicates(subset=['Code'], keep='first')
-
-        # b. Filtrage des données problématiques
-        df = df[df['Code'].notna()]  # Enlève les lignes sans code avion
-
-        # c. Conversion des types
-        df = df.convert_dtypes()  # Conversion automatique aux types optimaux
+        df = df[df['Code'].notna()]
+        df = df.convert_dtypes()
 
         # 3. Gestion des unités
         if convertir_en_pieds:
@@ -30,22 +39,27 @@ def charger_donnees_avions(convertir_en_pieds=True):
             df['Surface_alaire_ft2'] = df['Surface_alaire_m2'] * PIEDS_CARRE_PAR_METRE_CARRE
 
             # Formatage des valeurs converties
-            df['Hauteur_aile_ft'] = df['Hauteur_aile_ft'].round(2)  # 2 décimales
-            df['Surface_alaire_ft2'] = df['Surface_alaire_ft2'].round(1)  # 1 décimale
+            df['Hauteur_aile_ft'] = df['Hauteur_aile_ft'].round(2)
+            df['Surface_alaire_ft2'] = df['Surface_alaire_ft2'].round(1)
 
-            # Colonnes finales (version avec gestion propre des unités)
+            # Colonnes finales
             colonnes_finales = [
-                'Code', 'Allongement',
+                'Code', 'Type', 'Allongement',
                 'Hauteur_aile_m', 'Hauteur_aile_ft',
                 'Surface_alaire_m2', 'Surface_alaire_ft2',
                 'CL_max_atterrissage', 'Cd_train', 'Cd_volets'
             ]
         else:
             colonnes_finales = [
-                'Code', 'Allongement', 'Hauteur_aile_m',
+                'Code', 'Type', 'Allongement', 'Hauteur_aile_m',
                 'Surface_alaire_m2', 'CL_max_atterrissage',
                 'Cd_train', 'Cd_volets'
             ]
+
+        # Vérifier que toutes les colonnes nécessaires existent
+        for col in colonnes_finales:
+            if col not in df.columns:
+                raise ValueError(f"Colonne manquante dans les données: {col}")
 
         # 4. Sélection et ordre des colonnes
         df_clean = df[colonnes_finales]
@@ -57,5 +71,6 @@ def charger_donnees_avions(convertir_en_pieds=True):
         return df_clean
 
     except Exception as e:
-        print(f"Erreur lors du nettoyage: {e}")
+        print(f"Erreur lors du nettoyage: {str(e)}")
+        # Retourner un DataFrame vide en cas d'erreur
         return pd.DataFrame()
