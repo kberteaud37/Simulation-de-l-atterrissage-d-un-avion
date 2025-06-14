@@ -1,5 +1,5 @@
 from math import cos, sin, tan, radians
-from .avion import Avion
+from classes.avions.avion import Avion
 
 class Militaire(Avion):
 
