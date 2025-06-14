@@ -9,7 +9,7 @@ Cours MGA802, Session Été 2025
 
 
 #PROGRAMME PRINCIPAL
-
+import pandas
 import classes
 from classes.aeroports.fonctions_aeroport import recuperer_runways, recuperer_airports
 from classes.avions.choix_avion import ChoixAvion
@@ -83,28 +83,65 @@ def main():
     print("1. Commercial")
     print("2. Militaire")
 
+    # Charger les données des avions avant de les filtrer
+    choix_avion_df = charger_donnees_avions()
+    if choix_avion_df.empty:
+        print("ERREUR CRITIQUE: Impossible de charger les données avions. Vérifiez le fichier data_avions.csv")
+        return
+
     while True:
         try:
             type_avion = int(input("\nChoisissez le type d'avion (1 ou 2): "))
             if type_avion in (1, 2):
+                type_selectionne = "Commercial" if type_avion == 1 else "Militaire"
+                avions_filtres = choix_avion_df[choix_avion_df['Type'] == type_selectionne]
+
+                if avions_filtres.empty:
+                    print(f"\nAucun avion {type_selectionne.lower()} disponible dans la base.")
+                    print("Veuillez choisir un autre type ou ajouter des avions.")
+                    continue
+
                 break
         except ValueError:
-            pass
-        print("Choix invalide. Veuillez réessayer.")
+            print("Choix invalide. Veuillez entrer 1 ou 2.")
 
-    # 5. Sélection de l'avion
+    # 5. Sélection de l'avion (utilise maintenant avions_filtres)
     print("\nChargement des modèles d'avion disponibles...")
-    choix_avion_df = charger_donnees_avions()  # Utilisez la fonction directement
-    print("\nAvions disponibles:")
-    print(choix_avion_df[["Code"]].to_string(index=False, header=False))
+
+    print(f"\nAvions {type_selectionne.lower()}s disponibles:")
+    print(avions_filtres["Code"].str.strip().to_string(index=False, header=False))
+
 
     while True:
-        code_avion = input("\nEntrez le code de l'avion (ex: A320): ").strip().upper()
-        if code_avion in choix_avion_df["Code"].values:
-            break
-        print("Code d'avion invalide. Veuillez réessayer.")
+        code_avion = input(
+            "\nEntrez le code de l'avion (ex: A320) ou tapez 'AUTRE' pour saisir manuellement: ").strip().upper()
+        code_avion_clean = code_avion.replace(" ", "")
 
-    choix_avion_obj = ChoixAvion(code_avion)
+        if code_avion == "AUTRE":
+            print("\nSaisie des caractéristiques de l'avion:")
+            hauteur_m = get_float_input("Hauteur de l'aile (m): ")
+            surface_m2 = get_float_input("Surface alaire (m²): ")
+
+            custom_data = {
+                'Code': 'CUSTOM',
+                'Allongement': get_float_input("Allongement: "),
+                'Hauteur_aile_m': hauteur_m,
+                'Hauteur_aile_ft': hauteur_m * 3.28084,  # Conversion automatique
+                'Surface_alaire_m2': surface_m2,
+                'Surface_alaire_ft2': surface_m2 * 10.7639,  # Conversion automatique
+                'CL_max_atterrissage': get_float_input("Coefficient de portance max (CL_max): "),
+                'Cd_train': get_float_input("Coefficient de traînée du train (Cd_train): "),
+                'Cd_volets': get_float_input("Coefficient de traînée des volets (Cd_volets): ")
+            }
+            choix_avion_obj = ChoixAvion('CUSTOM', custom_data=custom_data)
+            break
+        elif any(choix_avion_df["Code"].str.replace(" ", "") == code_avion_clean):
+            original_code = \
+            choix_avion_df.loc[choix_avion_df["Code"].str.replace(" ", "") == code_avion_clean, "Code"].iloc[0]
+            choix_avion_obj = ChoixAvion(original_code)
+            break
+        else:
+            print("Code d'avion invalide. Veuillez réessayer ou taper 'AUTRE'.")
 
     # 6. Paramètres de l'avion
     print("\nEntrez les paramètres de l'avion:")
