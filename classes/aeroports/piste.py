@@ -1,5 +1,4 @@
-from .aeroport import Aeroport
-# Class Piste
+from classes.aeroports.aeroport import Aeroport# Class Piste
 
 class Piste(Aeroport):
     asphalte=["concrete","asphalt/gravel","ASP","asphalt","ASPHALT","ASPH"]
