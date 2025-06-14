@@ -1,4 +1,7 @@
-from .aeroport import Aeroport
+from aeroport import Aeroport
+from fonctions_aeroport import *
+import string
+
 # Class Piste
 
 class Piste(Aeroport):
@@ -76,9 +79,36 @@ class Piste(Aeroport):
             else:
                 return 0.3
 
+    def orientation_1(self):
+        row= self.runway[(self.runway["ident"] == self.code) &
+                          (self.runway["runway_ident"] == self.n_piste)]
+        alphabet_min = string.ascii_lowercase
+        if not row.empty:
+            num_piste = row.iloc[0]["le_ident"]
+            orientation_1=""
+            for lettre in num_piste.lower():
+                if lettre not in alphabet_min:
+                    orientation_1 += lettre
+            return int(orientation_1)*10
+        else:
+            print("Aéroport non trouvé")
+
+    def orientation_2(self):
+        row= self.runway[(self.runway["ident"] == self.code) &
+                          (self.runway["runway_ident"] == self.n_piste)]
+        alphabet_min = string.ascii_lowercase
+        if not row.empty:
+            num_piste = row.iloc[0]["he_ident"]
+            orientation_2=""
+            for lettre in num_piste.lower():
+                if lettre not in alphabet_min:
+                    orientation_2 += lettre
+            return int(orientation_2)*10
+        else:
+            print("Aéroport non trouvé")
+
     def afficher_infos_piste(self,pluie,glace):
         print(f"\nCaracteristiques de la piste {self.n_piste}:")
         print(f"Matériau de la piste: {self.surface()}, f={self.coeff_friction(pluie,glace)}")
         print(f"Longueur: {self.longueur()}m")
         print(f"Largeur: {self.largeur()}m")
-
