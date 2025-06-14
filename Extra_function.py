@@ -11,8 +11,8 @@ def get_float_input(prompt):
     while True:
         # Constantly check if a value was entered followed by Enter
         try:
-            # Put the value entered by user in "entrée"
-            value = float(input(prompt))
+            value = input(prompt).replace(',', '.')  # Remplace les virgules par des points
+            return float(value)
             break
         except ValueError:
             # If input is not a float we get a ValueError
