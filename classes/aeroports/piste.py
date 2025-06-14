@@ -11,17 +11,6 @@ class Piste(Aeroport):
         super().__init__(code,runways_df)
         self.n_piste=num_piste
 
-        # Dictionnaire des coefficients de friction
-        """
-        self.coef_friction = {
-            'asphalte': 0.5,
-            'asphalte mouillee': 0.3,
-            'asphalte glacee': 0.10,
-            'gazon solide': 0.4,
-            'poussiere solide': 0.3,
-            'gazon mouille': 0.2,
-        }
-        """
     def longueur(self):
         row = self.runway[(self.runway["ident"] == self.code) &
                          (self.runway["runway_ident"] == self.n_piste)]
