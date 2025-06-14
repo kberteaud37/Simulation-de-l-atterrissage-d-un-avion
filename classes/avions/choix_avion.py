@@ -1,5 +1,5 @@
 import pandas as pd
-from .fonction_avion import charger_donnees_avions
+from classes.avions.fonction_avion import charger_donnees_avions
 
 
 class ChoixAvion:
@@ -50,8 +50,3 @@ class ChoixAvion:
         return float(avion['Cd_volets']) if avion is not None else None
 
 
-"""# Exemple d'utilisation
-a320 = ChoixAvion("A320")
-print(f"Surface alaire: {a320.surface()} ft²")  # Par défaut en pieds carrés
-print(f"Surface alaire: {a320.surface(en_pieds_carres=False)} m²")  # En mètres carrés
-print(f"Coeff de traînée: {a320.trainee_train()}")"""
