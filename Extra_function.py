@@ -144,13 +144,3 @@ def afficher_trajectoire_atterrissage(avion):
     plt.ylim(-h_obstacle-10, h_obstacle+10)
     plt.show()
 
-# Exemple d'utilisation
-piste = classes.Piste("CYUL", recuperer_runways(),"10-28")
-meteo = classes.meteos.Meteo(15+273.15,1013,10,270)
-choix_avion = ChoixAvion("A320")
-avion = classes.avions.Commercial(158732,choix_avion,meteo,piste,45)
-"""afficher_trajectoire_atterrissage(avion)"""
-
-# Exemple de la fonction compare()
-piste = classes.Piste("CSP6", recuperer_runways(),"07-25")
-compare(avion,piste)
