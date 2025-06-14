@@ -81,6 +81,7 @@ class Piste(Aeroport):
         for num in orientation_str:
             orientation.append(int(num) * 10)
         return orientation
+
     def afficher_infos_piste(self,pluie,glace):
         print(f"\nCaracteristiques de la piste {self.n_piste}:")
         print(f"Matériau de la piste: {self.surface()}, f={self.coeff_friction(pluie,glace)}")
