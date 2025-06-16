@@ -196,29 +196,14 @@ def main():
     print(f"- Distance totale d'atterrissage: {avion.calcul_S_LA():.2f} ft")
 
     # 9. Visualisation
+    # 9. Visualisation
     print("\nVoulez-vous voir la trajectoire d'atterrissage? (O/N)")
     if input().strip().upper() == "O":
-        # Création d'une figure avec deux sous-graphiques
-        fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 10))
-        fig.suptitle(f"Simulation d'atterrissage - {avion.code}", fontsize=16)
+        print("\nAffichage de la trajectoire...")
+        afficher_trajectoire_atterrissage(avion)
 
-        # --- Graphique de la trajectoire ---
-        # Calcul des différentes distances
-        S_A = avion.calcul_S_A()
-        S_TR = avion.calcul_S_TR()
-        S_FR = avion.calcul_S_FR()
-        S_B = avion.calcul_S_B()
-
-        # Appel de la fonction existante mais avec l'axe spécifié
-        afficher_trajectoire_atterrissage(avion, ax=ax1)
-
-        # --- Graphique du freinage ---
-        # Appel de la fonction existante mais avec l'axe spécifié
-        afficher_freinage(avion, ax=ax2)
-
-        # Ajustement de l'espacement
-        plt.tight_layout()
-        plt.show()
+        print("\nAffichage du profil de freinage...")
+        afficher_freinage(avion)
 
     print("\nSimulation terminée. Bon vol!")
 
