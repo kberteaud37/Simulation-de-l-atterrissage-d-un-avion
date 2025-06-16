@@ -1,6 +1,6 @@
 """Module contenant la classe Piste pour la simulation d'atterrissage."""
 
-from aeroport import Aeroport
+from .aeroport import Aeroport
 import string
 
 
