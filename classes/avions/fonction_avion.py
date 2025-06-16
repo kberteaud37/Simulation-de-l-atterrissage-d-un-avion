@@ -22,9 +22,7 @@ def charger_donnees_avions(convertir_en_pieds=True):
                 # Si échec, essayer avec tabulation
                 df = pd.read_csv(chemin_fichier, sep='\t', encoding='utf-8')
 
-        # Afficher les colonnes lues pour débogage
-        print("Colonnes lues dans le fichier:", df.columns.tolist())
-        print("Premières lignes:", df.head())
+
 
         # 2. Nettoyage approfondi
         # a. Suppression des doublons
