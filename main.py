@@ -62,22 +62,41 @@ def main():
 
     piste = classes.aeroports.Piste(code_aeroport, runways_df, num_piste)
     piste.afficher_infos()
-    piste.afficher_infos_piste()
 
     # 3. Récupération des données météo
     print("\nRécupération des données météo en cours...")
+    meteo = None  # Initialisation de la variable
     try:
         lat, lon = piste.latitude(), piste.longitude()
-        temp, pression, vent_vitesse, vent_direction = recuperer_meteo(lat, lon)
-        meteo = classes.meteos.Meteo(temp, pression, vent_vitesse, vent_direction)
+        meteo_data = recuperer_meteo(lat, lon)
+        meteo = classes.meteos.Meteo(
+            meteo_data["T"],
+            meteo_data["P"],
+            meteo_data["V_vent"],
+            meteo_data["Dir_vent"],
+            meteo_data["pluie"],
+            meteo_data["glace"]
+        )
         print("\nConditions météo actuelles:")
-        print(f"- Température: {temp}°C")
-        print(f"- Pression: {pression} hPa")
-        print(f"- Vent: {vent_vitesse} km/h, direction {vent_direction}°")
+        print(f"- Température: {meteo_data['T']}°C")
+        print(f"- Pression: {meteo_data['P']} hPa")
+        print(f"- Vent: {meteo_data['V_vent']} km/h, direction {meteo_data['Dir_vent']}°")
+
+        # Avertissements météo
+        if meteo_data["pluie"]:
+            print("\n⚠️ ATTENTION: Pluie détectée - le coefficient de friction sera réduit")
+        if meteo_data["glace"]:
+            print("\n⚠️ ATTENTION: Glace détectée - le coefficient de friction sera fortement réduit")
+        if meteo_data["pluie"] and meteo_data["glace"]:
+            print("\n⚠️ ATTENTION EXTREME: Conditions glacées avec pluie - coefficient de friction minimal")
+
     except Exception as e:
         print(f"\nErreur lors de la récupération des données météo: {e}")
         print("Utilisation de valeurs météo par défaut (15°C, 1013 hPa, vent calme)")
-        meteo = classes.meteos.Meteo(15, 1013, 0, 0)
+        meteo = classes.meteos.Meteo(15, 1013, 0, 0, False, False)
+
+    # Maintenant que meteo est défini, on peut l'utiliser
+    piste.afficher_infos_piste(meteo.pluie, meteo.glace)
 
     # 4. Choix du type d'avion
     print("\nTypes d'avion disponibles:")
@@ -106,43 +125,47 @@ def main():
         except ValueError:
             print("Choix invalide. Veuillez entrer 1 ou 2.")
 
-    # 5. Sélection de l'avion (utilise maintenant avions_filtres)
-    print("\nChargement des modèles d'avion disponibles...")
-
-    print(f"\nAvions {type_selectionne.lower()}s disponibles:")
-    print(avions_filtres["Code"].str.strip().to_string(index=False, header=False))
-
+        # 5. Sélection de l'avion
+    print("\nAvions disponibles:")
+    # Afficher une liste numérotée avec formatage pour aligner les numéros
+    max_num_width = len(str(len(avions_filtres)))
+    for i, (_, row) in enumerate(avions_filtres.iterrows(), 1):
+        print(f"{i:{max_num_width}d}. {row['Code']}")
+    print(f"{len(avions_filtres) + 1}. Saisie manuelle")
 
     while True:
-        code_avion = input(
-            "\nEntrez le code de l'avion (ex: A320) ou tapez 'AUTRE' pour saisir manuellement: ").strip().upper()
-        code_avion_clean = code_avion.replace(" ", "")
+        choix = input("\nEntrez le NUMÉRO de l'avion: ").strip()
 
-        if code_avion == "AUTRE":
-            print("\nSaisie des caractéristiques de l'avion:")
-            hauteur_m = get_float_input("Hauteur de l'aile (m): ")
-            surface_m2 = get_float_input("Surface alaire (m²): ")
+        try:
+            choix_num = int(choix)
+            if 1 <= choix_num <= len(avions_filtres):
+                code_avion = avions_filtres.iloc[choix_num - 1]['Code']
+                print(f"\nVous avez sélectionné l'avion: {code_avion}")  # Ajout de cette ligne
+                choix_avion_obj = ChoixAvion(code_avion)
+                break
+            elif choix_num == len(avions_filtres) + 1:
+                print("\nSaisie des caractéristiques de l'avion:")
+                hauteur_m = get_float_input("Hauteur de l'aile (m): ")
+                surface_m2 = get_float_input("Surface alaire (m²): ")
 
-            custom_data = {
-                'Code': 'CUSTOM',
-                'Allongement': get_float_input("Allongement: "),
-                'Hauteur_aile_m': hauteur_m,
-                'Hauteur_aile_ft': hauteur_m * 3.28084,  # Conversion automatique
-                'Surface_alaire_m2': surface_m2,
-                'Surface_alaire_ft2': surface_m2 * 10.7639,  # Conversion automatique
-                'CL_max_atterrissage': get_float_input("Coefficient de portance max (CL_max): "),
-                'Cd_train': get_float_input("Coefficient de traînée du train (Cd_train): "),
-                'Cd_volets': get_float_input("Coefficient de traînée des volets (Cd_volets): ")
-            }
-            choix_avion_obj = ChoixAvion('CUSTOM', custom_data=custom_data)
-            break
-        elif any(choix_avion_df["Code"].str.replace(" ", "") == code_avion_clean):
-            original_code = \
-            choix_avion_df.loc[choix_avion_df["Code"].str.replace(" ", "") == code_avion_clean, "Code"].iloc[0]
-            choix_avion_obj = ChoixAvion(original_code)
-            break
-        else:
-            print("Code d'avion invalide. Veuillez réessayer ou taper 'AUTRE'.")
+                custom_data = {
+                    'Code': 'CUSTOM',
+                    'Allongement': get_float_input("Allongement: "),
+                    'Hauteur_aile_m': hauteur_m,
+                    'Hauteur_aile_ft': hauteur_m * 3.28084,
+                    'Surface_alaire_m2': surface_m2,
+                    'Surface_alaire_ft2': surface_m2 * 10.7639,
+                    'CL_max_atterrissage': get_float_input("Coefficient de portance max (CL_max): "),
+                    'Cd_train': get_float_input("Coefficient de traînée du train (Cd_train): "),
+                    'Cd_volets': get_float_input("Coefficient de traînée des volets (Cd_volets): ")
+                }
+                print("\nVous avez créé un avion personnalisé: CUSTOM")  # Ajout pour la saisie manuelle
+                choix_avion_obj = ChoixAvion('CUSTOM', custom_data=custom_data)
+                break
+            else:
+                print(f"Veuillez entrer un nombre entre 1 et {len(avions_filtres) + 1}")
+        except ValueError:
+            print("Entrée invalide. Veuillez entrer uniquement le numéro de l'avion.")
 
     # 6. Paramètres de l'avion
     print("\nEntrez les paramètres de l'avion:")
@@ -157,7 +180,7 @@ def main():
 
     # 8. Calculs et résultats
     print("\n" + "=" * 50)
-    print("RÉSULTATS DE LA SIMULATION")
+    print(f"RÉSULTATS DE LA SIMULATION - {avion.code}")  # Ajout du code de l'avion ici
     print("=" * 50)
 
     # Comparaison piste/atterrissage
@@ -175,7 +198,26 @@ def main():
     # 9. Visualisation
     print("\nVoulez-vous voir la trajectoire d'atterrissage? (O/N)")
     if input().strip().upper() == "O":
-        afficher_trajectoire_atterrissage(avion)
+        # Création d'une figure avec deux sous-graphiques
+        fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 10))
+        fig.suptitle(f"Simulation d'atterrissage - {avion.code}", fontsize=16)
+
+        # --- Graphique de la trajectoire ---
+        # Calcul des différentes distances
+        S_A = avion.calcul_S_A()
+        S_TR = avion.calcul_S_TR()
+        S_FR = avion.calcul_S_FR()
+        S_B = avion.calcul_S_B()
+
+        # Appel de la fonction existante mais avec l'axe spécifié
+        afficher_trajectoire_atterrissage(avion, ax=ax1)
+
+        # --- Graphique du freinage ---
+        # Appel de la fonction existante mais avec l'axe spécifié
+        afficher_freinage(avion, ax=ax2)
+
+        # Ajustement de l'espacement
+        plt.tight_layout()
         plt.show()
 
     print("\nSimulation terminée. Bon vol!")
