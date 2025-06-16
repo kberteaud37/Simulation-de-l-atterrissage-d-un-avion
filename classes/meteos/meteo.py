@@ -1,11 +1,13 @@
 class Meteo:
     #Constante des gaz parfaits
     R=287
-    def __init__(self,temperature,pression,vitesse_vent,orientation_vent):
+    def __init__(self,temperature,pression,vitesse_vent,orientation_vent,pluie,glace):
         self.T = temperature
         self.P = pression
         self.V_vent = vitesse_vent
         self.orientation_vent = orientation_vent
+        self.pluie = pluie
+        self.glace = glace
 
     #Calcul de la densité avec loi des gaz parfaits
     def calcul_densite(self):

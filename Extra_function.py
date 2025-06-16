@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import classes
+import affichages_graphiques
 from scipy.spatial import KDTree
 from classes.aeroports.fonctions_aeroport import recuperer_runways,recuperer_airports
 from classes.avions.choix_avion import ChoixAvion
@@ -88,69 +89,15 @@ def trouver_aeroport_proche(exclusions):
 
     return plus_proche
 
-
-def afficher_trajectoire_atterrissage(avion):
-    # Initialisation des valeurs
-    S_A = avion.calcul_S_A()
-    print(f"S_A = {S_A}")
-    S_TR = avion.calcul_S_TR()
-    print(f"S_TR = {S_TR}")
-    S_FR = avion.calcul_S_FR()
-    print(f"S_FR = {S_FR}")
-    S_B = avion.calcul_S_B()
-    print(f"S_B = {S_B}")
-    angle_rad = np.radians(avion.angle_de_descente)
-    print(angle_rad)
-    h_obstacle = avion.H_OBS
-
-    # Création des données pour la trajectoire
-    x_A = np.linspace(0, S_A, 100)
-    y_A = avion.H_OBS + x_A * np.tan(angle_rad)
-
-    # Calculer les coordonnées pour la phase de transition
-    # Rayon de courbure pour la transition
-    rayon = abs(h_obstacle / np.sin(angle_rad))
-
-    # Centre du cercle de transition
-    x_center = S_A
-    y_center = h_obstacle + S_A * np.tan(angle_rad) - rayon
-
-    # Angle pour l'arc de cercle
-    theta = np.linspace(np.pi / 2, np.pi, 100)
-    x_TR = x_center + rayon * np.cos(theta)
-    y_TR = y_center + rayon * np.sin(theta)
-
-    # Roulement libre et freinage
-    x_FR = np.linspace(S_A + S_TR, S_A + S_TR + S_FR, 100)
-    y_FR = np.zeros_like(x_FR)
-
-    x_B = np.linspace(S_A + S_TR + S_FR, S_A + S_TR + S_FR + S_B, 100)
-    y_B = np.zeros_like(x_B)
-
-    # Tracer la trajectoire
-    plt.figure(figsize=(12, 6))
-    plt.plot(x_A, y_A, label='Approche initiale', color='blue')
-    plt.plot(x_TR, y_TR, label='Transition', color='orange')
-    plt.plot(x_FR, y_FR, label='Roulement libre', color='green',linewidth=3)
-    plt.plot(x_B, y_B, label='Freinage', color='red',linewidth=3)
-    # Tracer la piste
-
-    # Ajouter des labels et une légende
-    plt.title("Trajectoire d'atterrissage de l'avion")
-    plt.xlabel('Distance')
-    plt.ylabel('Altitude')
-    plt.legend()
-    plt.grid(True)
-    plt.ylim(-h_obstacle-10, h_obstacle+10)
-    plt.show()
-
 # Exemple d'utilisation
 piste = classes.Piste("CYUL", recuperer_runways(),"10-28")
 meteo = classes.meteos.Meteo(15+273.15,1013,10,270)
 choix_avion = ChoixAvion("A320")
-avion = classes.avions.Commercial(158732,choix_avion,meteo,piste,45)
-"""afficher_trajectoire_atterrissage(avion)"""
+avion = classes.avions.Commercial(120000,choix_avion,meteo,piste)
+affichages_graphiques.afficher_trajectoire_atterrissage(avion)
+affichages_graphiques.afficher_freinage(avion)
 
 # Exemple de la fonction compare()
 piste = classes.Piste("CSP6", recuperer_runways(),"07-25")
 compare(avion,piste)
+

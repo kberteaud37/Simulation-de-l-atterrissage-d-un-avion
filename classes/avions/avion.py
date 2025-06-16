@@ -2,7 +2,7 @@ from math import sqrt, pi, log
 
 
 class Avion:
-    angle_de_descente = -3 #Degrés
+    angle_de_descente = -2 #Degrés
     g = 32.2 #ft/s²
     temps_roue_libre = 3 #Secondes
     e = 0.8 #Coefficient D'Oswald
@@ -56,8 +56,7 @@ class Avion:
         V_TD = self.calcul_V_TD()
         return (1/(2*self.g*f2))*log(1+((f2*V_TD**2)/f1))
 
-    def calcul_deceleration(self):
+    def calcul_deceleration(self, distance):
         V_TD = self.calcul_V_TD()
-        S_B = self.calcul_S_B()
-        return - (V_TD**2)/(2*S_B)
+        return - (V_TD**2)/(2*distance)
 

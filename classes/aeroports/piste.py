@@ -1,4 +1,7 @@
-from .aeroport import Aeroport
+from aeroport import Aeroport
+from fonctions_aeroport import *
+import string
+
 # Class Piste
 
 class Piste(Aeroport):
@@ -11,17 +14,6 @@ class Piste(Aeroport):
         super().__init__(code,runways_df)
         self.n_piste=num_piste
 
-        # Dictionnaire des coefficients de friction
-        """
-        self.coef_friction = {
-            'asphalte': 0.5,
-            'asphalte mouillee': 0.3,
-            'asphalte glacee': 0.10,
-            'gazon solide': 0.4,
-            'poussiere solide': 0.3,
-            'gazon mouille': 0.2,
-        }
-        """
     def longueur(self):
         row = self.runway[(self.runway["ident"] == self.code) &
                          (self.runway["runway_ident"] == self.n_piste)]
@@ -55,19 +47,43 @@ class Piste(Aeroport):
         else:
             print("Aéroport non trouvé")
 
-    def coeff_friction(self):
+    def coeff_friction(self,pluie,glace):
         if self.surface()=='Asphalte':
-            return 0.5
+            if glace is True:
+                return 0.1
+            elif pluie is True:
+                return 0.3
+            else:
+                return 0.5
         elif self.surface()=='Gravier':
             return 0.3
         elif self.surface()=='Gazon':
-            return 0.4
+            if pluie is True:
+                return 0.2
+            else:
+                return 0.4
         else:
-            return 0.3
+            if glace is True:
+                return 0.1
+            else:
+                return 0.3
 
-    def afficher_infos_piste(self):
+    def orientation(self):
+        alphabet_min = string.ascii_lowercase + "-"
+        orientation_piste = ""
+        for lettre in self.n_piste.lower():
+            if lettre not in alphabet_min:
+                orientation_piste += lettre
+            elif lettre == "-":
+                orientation_piste += ","
+        orientation_str = orientation_piste.split(",")
+        orientation = []
+        for num in orientation_str:
+            orientation.append(int(num) * 10)
+        return orientation
+
+    def afficher_infos_piste(self,pluie,glace):
         print(f"\nCaracteristiques de la piste {self.n_piste}:")
-        print(f"Matériau de la piste: {self.surface()}, f={self.coeff_friction()}")
+        print(f"Matériau de la piste: {self.surface()}, f={self.coeff_friction(pluie,glace)}")
         print(f"Longueur: {self.longueur()}m")
         print(f"Largeur: {self.largeur()}m")
-

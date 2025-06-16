@@ -31,8 +31,6 @@ def recuperer_runways():
 
     # Fusionner les identifiants de piste avec un tiret
     runways_df["runway_ident"] = runways_df["le_ident"] + "-" + runways_df["he_ident"]
-    # Supprimer les colonnes originales
-    runways_df = runways_df.drop(columns=["le_ident", "he_ident"])
 
     # Nettoyage des identifiants pour éviter les erreurs de comparaison
 

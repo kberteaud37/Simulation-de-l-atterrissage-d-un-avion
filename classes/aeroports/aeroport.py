@@ -1,4 +1,6 @@
 # Class Aeroport
+from fonctions_aeroport import *
+
 class Aeroport:
     def __init__(self, code,runways_df):
         self.code = code
@@ -49,5 +51,4 @@ class Aeroport:
         print(f"Coordonnées: {self.latitude()}, {self.longitude()}")
         print(f"Altitude: {self.altitude()} ft")
         print(f"La/les piste(s) de cet aéroport sont: {self.pistes()}")
-
 
