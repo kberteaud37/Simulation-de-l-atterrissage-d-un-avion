@@ -5,10 +5,10 @@ from classes.avions.fonction_avion import charger_donnees_avions
 class ChoixAvion:
     """Classe adaptée pour gérer les unités converties"""
 
-    def __init__(self, code_avion,  custom_data=None):
-        self.code = code_avion
-        self._donnees_avions = None  # Cache pour les données des avions
-        self._custom_data = custom_data  # Stocke les données personnalisées
+    def __init__(self, code_avion, custom_data=None):
+        self.code = code_avion  # Stocke directement le code sans transformation
+        self._donnees_avions = None
+        self._custom_data = custom_data
 
     def _importation_donnees(self):
         if self.code == "CUSTOM" and self._custom_data is not None:
@@ -26,13 +26,13 @@ class ChoixAvion:
         if self._donnees_avions is None:
             self._donnees_avions = charger_donnees_avions()
 
-        # Correction pour éviter le KeyError
-        try:
-            avion_data = self._donnees_avions[self._donnees_avions['Code'] == self.code]
-            if not avion_data.empty:
-                return avion_data.iloc[0]
-        except Exception as e:
-            print(f"Erreur lors de la récupération des données: {e}")
+        # Recherche insensible à la casse et aux espaces
+        avion_data = self._donnees_avions[
+            self._donnees_avions['Code'].str.upper().str.strip() == self.code.upper().strip()
+            ]
+
+        if not avion_data.empty:
+            return avion_data.iloc[0]
 
         raise ValueError(f"Avion {self.code} non trouvé dans la base de données")
 
