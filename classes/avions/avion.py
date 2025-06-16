@@ -18,7 +18,9 @@ class Avion:
         self.delta_C_D0_f = choix_avion.trainee_volets()
         self.charge_alaire = self.W_LA/self.S
         self.piste = piste
-        self.mu = self.piste.coeff_friction()
+        self.pluie = meteo.pluie
+        self.glace = meteo.glace
+        self.mu = self.piste.coeff_friction(self.pluie,self.glace)
         self.meteo = meteo
         self.density = self.meteo.calcul_densite()
         self.V_vent = vitesse_vent

@@ -1,4 +1,6 @@
 from .aeroport import Aeroport
+import string
+
 # Class Piste
 
 class Piste(Aeroport):
