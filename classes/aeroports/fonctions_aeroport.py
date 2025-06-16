@@ -1,9 +1,17 @@
+"""Module utilitaire pour la récupération et le traitement des données d'aéroports."""
+
 import requests
 import pandas as pd
 from io import StringIO
 import urllib3
 
 def recuperer_runways():
+    """Récupère et nettoie les données des aéroports et pistes du Québec.
+
+        :return: DataFrame fusionné contenant les informations des aéroports et pistes
+        :rtype: pandas.DataFrame
+        :raises: Désactive les avertissements SSL pour les requêtes HTTP
+    """
     urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
     pd.set_option('display.max_columns', None)
 
@@ -45,9 +53,14 @@ def recuperer_runways():
 
 # Fonction qui filtre et ne garde que les aéroports en une seule instance
 def recuperer_airports():
+    """Récupère la liste des aéroports du Québec sans doublons.
+
+        :return: DataFrame contenant les informations de base des aéroports
+        :rtype: pandas.DataFrame
+    """
     df_runways = recuperer_runways()
     # Sélectionne colonnes utiles
-    df = df_runways[["ident", "latitude_deg", "longitude_deg","name"]]
+    df = df_runways[["ident", "latitude_deg", "longitude_deg", "name"]]
     # Supprime doublons sur 'ident', en gardant la première occurence
     df_airports = df.drop_duplicates(subset=["ident"])
     return df_airports.reset_index(drop=True)
