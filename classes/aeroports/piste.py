@@ -1,5 +1,4 @@
-from aeroport import Aeroport
-from fonctions_aeroport import *
+from .aeroport import Aeroport
 import string
 
 # Class Piste
