@@ -125,7 +125,7 @@ class Piste(Aeroport):
             orientation.append(int(num) * 10)
         return orientation
 
-    def afficher_infos_piste(self, pluie, glace):
+    def afficher_infos_piste(self, pluie=False, glace=False):
         """Affiche les caractéristiques de la piste dans la console.
 
         :param pluie: True s'il pleut, False sinon
@@ -134,6 +134,15 @@ class Piste(Aeroport):
         :type glace: bool
         """
         print(f"\nCaracteristiques de la piste {self.n_piste}:")
-        print(f"Matériau de la piste: {self.surface()}, f={self.coeff_friction(pluie, glace)}")
-        print(f"Longueur: {self.longueur()}m")
-        print(f"Largeur: {self.largeur()}m")
+        print(f"Matériau de la piste: {self.surface()}, f={self.coeff_friction(pluie, glace):.2f}")
+        print(f"Longueur: {self.longueur():.2f} ft")
+        print(f"Largeur: {self.largeur():.2f} ft")
+        print(f"Orientation: {self.orientation()}")
+
+        # Avertissements sur les conditions
+        if pluie or glace:
+            print("\n⚠️ Conditions spéciales:")
+            if pluie:
+                print("- Pluie présente: coefficient de friction réduit")
+            if glace:
+                print("- Glace présente: coefficient de friction fortement réduit")
