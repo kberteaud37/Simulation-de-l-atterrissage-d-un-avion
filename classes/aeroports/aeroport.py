@@ -1,5 +1,6 @@
+# Class Aeroport
 """Module contenant la classe Aeroport pour la simulation d'atterrissage."""
-from fonctions_aeroport import *
+
 
 class Aeroport:
     """Classe représentant un aéroport dans la simulation.
