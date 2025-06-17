@@ -59,9 +59,11 @@ def compare(avion, piste, coef_secu=1.67):
             continue  # relance le while
         break  # sortie si piste compatible trouvée
 
-    print(f"Vous pouvez atterrir à {piste.nom()} sur la piste {piste.n_piste}")
+    distance_nm = calcul_distance_aeroport(aeroport[0].code, piste.code)
+    print(f"Vous pouvez atterrir à {piste.nom()} (piste {piste.n_piste}), situé à {distance_nm:.2f} NM de {aeroport[0].nom()}.")
     print(f"La longueur de la piste est {piste.longueur()} ft et la distance nécessaire de {distance_necessaire:.2f} ft")
 
+    return piste
 
 def trouver_aeroport_proche(exclusions):
     df_airports = recuperer_airports()
@@ -88,6 +90,26 @@ def trouver_aeroport_proche(exclusions):
     plus_proche = df_filtre.iloc[idx]
 
     return plus_proche
+
+def calcul_distance_aeroport(code_depart, code_arrivee):
+    df_airports = recuperer_airports()
+
+    # Récupération des coordonnées
+    row_depart = df_airports[df_airports["ident"] == code_depart].iloc[0]
+    row_arrivee = df_airports[df_airports["ident"] == code_arrivee].iloc[0]
+
+    lat1, lon1 = np.radians([row_depart["latitude_deg"], row_depart["longitude_deg"]])
+    lat2, lon2 = np.radians([row_arrivee["latitude_deg"], row_arrivee["longitude_deg"]])
+
+    # Formule de Haversine
+    dlat = lat2 - lat1
+    dlon = lon2 - lon1
+    a = np.sin(dlat / 2)**2 + np.cos(lat1) * np.cos(lat2) * np.sin(dlon / 2)**2
+    c = 2 * np.arcsin(np.sqrt(a))
+    rayon_terre_nm = 3440  # rayon terrestre en milles nautiques
+    distance_nm = rayon_terre_nm * c
+
+    return distance_nm
 
 """
 piste = classes.Piste("CYUL", recuperer_runways(),"10-28")
