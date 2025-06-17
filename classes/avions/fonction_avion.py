@@ -1,9 +1,9 @@
 import pandas as pd
-
+from pathlib import Path
 
 def charger_donnees_avions(convertir_en_pieds=True):
     """Charge et nettoie rigoureusement les données avions"""
-    chemin_fichier = r'.\Ressources\data_avions.csv'
+    chemin_fichier = Path("Ressources") / "data_avions.csv"
 
     try:
         # Coefficients de conversion
