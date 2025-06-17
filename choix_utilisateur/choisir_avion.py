@@ -1,5 +1,5 @@
 from classes.avions.choix_avion import *
-from choix_utilisateur import get_float_input
+from choix_utilisateur.get_float_input import get_float_input  # Modifié ici
 
 def choisir_avion(avions_filtres):
     """
