@@ -14,9 +14,6 @@ from classes.aeroports.fonctions_aeroport import recuperer_runways, recuperer_ai
 from classes.meteos.fonctions_meteo import recuperer_meteo
 from redirection_aeroport import compare
 from affichages_graphiques import afficher_trajectoire_atterrissage, afficher_freinage
-
-import matplotlib.pyplot as plt
-from Extra_function import *
 from classes.avions.fonction_avion import charger_donnees_avions
 from choix_utilisateur import *
 

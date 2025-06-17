@@ -1,7 +1,5 @@
 def code_aeroport_valide(airports_df):
     """
-    Demande à l'utilisateur un code d'aéroport valide jusqu'à ce qu'un code valide soit entré
-
     Args:
         airports_df (DataFrame): DataFrame contenant les données des aéroports avec une colonne 'ident'
 

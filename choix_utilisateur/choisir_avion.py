@@ -1,4 +1,4 @@
-from classes.avions.choix_avion import ChoixAvion
+from classes.avions.choix_avion import *
 from choix_utilisateur import get_float_input
 
 def choisir_avion(avions_filtres):
@@ -22,6 +22,7 @@ def choisir_avion(avions_filtres):
                 code_avion = avions_filtres.iloc[choix_num - 1]['Code']
                 print(f"\nVous avez sélectionné l'avion: {code_avion}")
                 return ChoixAvion(code_avion)
+
 
             # Option pour créer un avion personnalisé
             elif choix_num == len(avions_filtres) + 1:
@@ -48,3 +49,5 @@ def choisir_avion(avions_filtres):
 
         except ValueError:
             print("Entrée invalide. Veuillez entrer uniquement le numéro de l'avion.")
+
+
