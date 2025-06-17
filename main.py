@@ -169,14 +169,14 @@ def main():
 
     # 6. Paramètres de l'avion
     print("\nEntrez les paramètres de l'avion:")
-    poids = get_float_input("- Poids à l'atterrissage (kg): ")
-    vitesse_vent = get_float_input("- Vitesse du vent (km/h, 0 si déjà dans les données météo): ")
+    poids = get_float_input("- Poids à l'atterrissage (lb): ")
+
 
     # 7. Création de l'objet avion
     if type_avion == 1:
-        avion = classes.avions.Commercial(poids, choix_avion_obj, meteo, piste, vitesse_vent)
+        avion = classes.avions.Commercial(poids, choix_avion_obj, meteo, piste)
     else:
-        avion = classes.avions.Militaire(poids, choix_avion_obj, meteo, piste, vitesse_vent)
+        avion = classes.avions.Militaire(poids, choix_avion_obj, meteo, piste)
 
     # 8. Calculs et résultats
     print("\n" + "=" * 50)
