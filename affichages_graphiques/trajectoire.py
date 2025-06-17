@@ -2,6 +2,20 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 def afficher_trajectoire_atterrissage(avion):
+    """Affiche la trajectoire complète d'atterrissage d'un avion en quatre phases.
+
+        Cette fonction calcule et trace la trajectoire d'atterrissage complète comprenant :
+        1. L'approche initiale (descente rectiligne)
+        2. La transition (arrondi circulaire)
+        3. Le roulement libre
+        4. Le freinage
+
+        :param avion: Objet avion contenant les méthodes de calcul nécessaires
+        :type avion: object
+        :return: None (affiche directement le graphique)
+
+    """
+
     # Initialisation des valeurs
     S_A = avion.calcul_S_A()
     S_TR = avion.calcul_S_TR()
@@ -53,5 +67,11 @@ def afficher_trajectoire_atterrissage(avion):
     plt.grid(True)
     plt.ylim(-h_obstacle-10, h_obstacle+10)
     plt.show()
+
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+
 
 

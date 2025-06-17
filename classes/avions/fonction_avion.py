@@ -2,7 +2,24 @@ import pandas as pd
 from pathlib import Path
 
 def charger_donnees_avions(convertir_en_pieds=True):
-    """Charge et nettoie rigoureusement les données avions"""
+    """Charge, nettoie et prépare les données techniques des avions depuis un fichier CSV.
+
+        Cette fonction effectue plusieurs opérations :
+        1. Charge le fichier CSV en testant différents séparateurs
+        2. Nettoie les données (suppression des doublons, gestion des valeurs manquantes)
+        3. Convertit les unités métriques en unités impériales si demandé
+        4. Vérifie l'intégrité des données
+        5. Retourne un DataFrame propre et standardisé
+
+        :param convertir_en_pieds: Si True, convertit les unités métriques en pieds, defaults to True
+        :type convertir_en_pieds: bool, optional
+        :return: DataFrame contenant les données techniques des avions nettoyées
+        :rtype: pandas.DataFrame
+        :raises ValueError: Si des colonnes obligatoires sont manquantes ou si les données sont vides après nettoyage
+        :raises pd.errors.ParserError: Si le fichier ne peut être lu avec aucun séparateur testé
+        :raises FileNotFoundError: Si le fichier spécifié n'existe pas
+
+        """
     chemin_fichier = Path("Ressources") / "data_avions.csv"
 
     try:
