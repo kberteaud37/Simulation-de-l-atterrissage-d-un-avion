@@ -17,8 +17,6 @@ from affichages_graphiques import afficher_trajectoire_atterrissage, afficher_fr
 from classes.avions.fonction_avion import charger_donnees_avions
 from choix_utilisateur import *
 
-
-
 def main():
     print("\n" + "=" * 50)
     print("SIMULATEUR D'ATTERRISSAGE D'AVION - QUÉBEC")
