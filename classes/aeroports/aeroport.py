@@ -1,4 +1,3 @@
-"""Module contenant la classe Aeroport pour la simulation d'atterrissage."""
 
 class Aeroport:
     """Classe représentant un aéroport dans la simulation.

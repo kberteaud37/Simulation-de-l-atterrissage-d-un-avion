@@ -89,7 +89,7 @@ def trouver_aeroport_proche(exclusions):
 
     return plus_proche
 
-"""# Exemple d'utilisation
+"""
 piste = classes.Piste("CYUL", recuperer_runways(),"10-28")
 meteo = classes.meteos.Meteo(15+273.15,1013,10,270,0,0)
 choix_avion = ChoixAvion("A320")
@@ -99,4 +99,4 @@ affichages_graphiques.afficher_freinage(avion)
 
 # Exemple de la fonction compare()
 piste = classes.Piste("CSP6", recuperer_runways(),"07-25")
-compare(avion,piste)"""
+"""
