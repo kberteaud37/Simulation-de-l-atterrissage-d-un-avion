@@ -1,54 +1,5 @@
-
-from classes.avions.choix_avion import *
-#Fonction forçant l'utilisateur à entrer une valeur acceptable
-def get_float_input(prompt):
-    while True:
-        # Constantly check if a value was entered followed by Enter
-        try:
-            value = input(prompt).replace(',', '.')  # Remplace les virgules par des points
-            return float(value)
-            break
-        except ValueError:
-            # If input is not a float we get a ValueError
-            print("Invalid input, please try again.")
-    return value
-
-
-
-    Args:
-        airports_df (DataFrame): DataFrame contenant les données des aéroports avec une colonne 'ident'
-
-    Returns:
-        str: Code d'aéroport valide
-    """
-    while True:
-        code_aeroport = input("\nEntrez le code de l'aéroport (ex: CYUL): ").strip().upper()
-        if code_aeroport in airports_df["ident"].values:
-            return code_aeroport
-        print("Code d'aéroport invalide. Veuillez réessayer.")
-
-
-def choisir_piste(pistes_dispo):
-    """
-    Demande à l'utilisateur de choisir une piste valide parmi les options disponibles
-
-    Args:
-        pistes_dispo (list): Liste des pistes disponibles
-
-    Returns:
-        str: Numéro/identifiant de la piste choisie
-    """
-    while True:
-
-        try:
-            choix = int(input("\nChoisissez une piste (numéro): "))
-            if 1 <= choix <= len(pistes_dispo):
-                return pistes_dispo[choix - 1]
-                break
-        except ValueError:
-            pass
-        print("Choix invalide. Veuillez réessayer.")
-
+from classes.avions.choix_avion import ChoixAvion
+from choix_utilisateur import get_float_input
 
 def choisir_avion(avions_filtres):
     """
@@ -71,7 +22,6 @@ def choisir_avion(avions_filtres):
                 code_avion = avions_filtres.iloc[choix_num - 1]['Code']
                 print(f"\nVous avez sélectionné l'avion: {code_avion}")
                 return ChoixAvion(code_avion)
-
 
             # Option pour créer un avion personnalisé
             elif choix_num == len(avions_filtres) + 1:
@@ -98,5 +48,3 @@ def choisir_avion(avions_filtres):
 
         except ValueError:
             print("Entrée invalide. Veuillez entrer uniquement le numéro de l'avion.")
-
-
