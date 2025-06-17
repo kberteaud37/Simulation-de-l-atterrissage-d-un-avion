@@ -2,7 +2,28 @@ from math import cos, sin, tan, radians
 from classes.avions.avion import Avion
 
 class Militaire(Avion):
+    """Classe représentant un avion militaire pour la simulation d'atterrissage.
 
+        Hérite de la classe Avion de base et implémente les calculs spécifiques
+        aux avions militaires selon les normes de l'aviation militaire.
+
+        :param poids_atterrissage: Poids de l'avion à l'atterrissage (lbs)
+        :type poids_atterrissage: float
+        :param choix_avion: Objet contenant les caractéristiques techniques de l'avion
+        :type choix_avion: ChoixAvion
+        :param meteo: Objet contenant les conditions météorologiques
+        :type meteo: Meteo
+        :param piste: Objet représentant la piste d'atterrissage
+        :type piste: Piste
+        :param vitesse_vent: Vitesse du vent de face (ft/s), defaults to 0
+        :type vitesse_vent: float, optional
+        :param facteur_de_charge: Facteur de charge pour les calculs de trajectoire, defaults to 2
+        :type facteur_de_charge: float, optional
+        :param hauteur_obstacle: Hauteur de l'obstacle à franchir (ft), defaults to 50
+        :type hauteur_obstacle: float, optional
+        :param coef_transition: Coefficient pour le calcul de la vitesse de transition, defaults to 1.15
+        :type coef_transition: float, optional
+        """
     def __init__(self,poids_atterrissage, choix_avion, meteo, piste, vitesse_vent=0,
                  facteur_de_charge = 2,hauteur_obstacle = 50,
                  coef_transition = 1.15):
