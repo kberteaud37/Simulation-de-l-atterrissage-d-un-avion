@@ -87,5 +87,4 @@ class Aeroport:
         print(f"Aéroport: {self.nom()} ({self.code})")
         print(f"Coordonnées: {self.latitude()}, {self.longitude()}")
         print(f"Altitude: {self.altitude()} ft")
-        print(f"La/les piste(s) de cet aéroport sont: {self.pistes()}")
 
