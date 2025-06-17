@@ -17,14 +17,9 @@ from classes.meteos.fonctions_meteo import recuperer_meteo
 from Extra_function import get_float_input, compare
 from affichages_graphiques import afficher_trajectoire_atterrissage, afficher_freinage
 import matplotlib.pyplot as plt
-try:
-    from classes.avions.fonction_avion import charger_donnees_avions
-except ImportError:
-    # Fallback si la structure des packages ne fonctionne pas
-    import sys
-    from pathlib import Path
-    sys.path.append(str(Path(__file__).parent))
-    from fonction_avion import charger_donnees_avions
+from classes.avions.fonction_avion import charger_donnees_avions
+from Extra_function import *
+
 
 def main():
     print("\n" + "=" * 50)
@@ -34,15 +29,12 @@ def main():
     # 1. Choix de l'aéroport
     runways_df = recuperer_runways()
     airports_df = recuperer_airports()
-
     print("\nListe des aéroports disponibles au Québec:")
     print(airports_df[["ident", "name"]].to_string(index=False))
 
-    while True:
-        code_aeroport = input("\nEntrez le code de l'aéroport (ex: CYUL): ").strip().upper()
-        if code_aeroport in airports_df["ident"].values:
-            break
-        print("Code d'aéroport invalide. Veuillez réessayer.")
+    code_aeroport = code_aeroport_valide(airports_df)
+    aeroport = classes.aeroports.Aeroport(code_aeroport,runways_df)
+    aeroport.afficher_infos()
 
     # 2. Choix de la piste
     pistes_dispo = runways_df[runways_df["ident"] == code_aeroport]["runway_ident"].unique()
@@ -50,18 +42,8 @@ def main():
     for i, piste in enumerate(pistes_dispo, 1):
         print(f"{i}. {piste}")
 
-    while True:
-        try:
-            choix = int(input("\nChoisissez une piste (numéro): "))
-            if 1 <= choix <= len(pistes_dispo):
-                num_piste = pistes_dispo[choix - 1]
-                break
-        except ValueError:
-            pass
-        print("Choix invalide. Veuillez réessayer.")
-
-    piste = classes.aeroports.Piste(code_aeroport, runways_df, num_piste)
-    piste.afficher_infos()
+    piste_choisie = choisir_piste(pistes_dispo)
+    piste = classes.aeroports.Piste(code_aeroport, runways_df, piste_choisie)
 
     # 3. Récupération des données météo
     print("\nRécupération des données météo en cours...")
@@ -95,82 +77,32 @@ def main():
         print("Utilisation de valeurs météo par défaut (15°C, 1013 hPa, vent calme)")
         meteo = classes.meteos.Meteo(15, 1013, 0, 0, False, False)
 
-    # Maintenant que meteo est défini, on peut l'utiliser
     piste.afficher_infos_piste(meteo.pluie, meteo.glace)
 
     # 4. Choix du type d'avion
     print("\nTypes d'avion disponibles:")
-    print("1. Commercial")
+    print("1. Transport")
     print("2. Militaire")
-
     # Charger les données des avions avant de les filtrer
     choix_avion_df = charger_donnees_avions()
     if choix_avion_df.empty:
         print("ERREUR CRITIQUE: Impossible de charger les données avions. Vérifiez le fichier data_avions.csv")
         return
 
-    while True:
-        try:
-            type_avion = int(input("\nChoisissez le type d'avion (1 ou 2): "))
-            if type_avion in (1, 2):
-                type_selectionne = "Commercial" if type_avion == 1 else "Militaire"
-                avions_filtres = choix_avion_df[choix_avion_df['Type'] == type_selectionne]
+    type_avion, avions_filtres = choisir_type_avion(choix_avion_df)
 
-                if avions_filtres.empty:
-                    print(f"\nAucun avion {type_selectionne.lower()} disponible dans la base.")
-                    print("Veuillez choisir un autre type ou ajouter des avions.")
-                    continue
-
-                break
-        except ValueError:
-            print("Choix invalide. Veuillez entrer 1 ou 2.")
-
-        # 5. Sélection de l'avion
+     # 5. Sélection de l'avion
     print("\nAvions disponibles:")
     # Afficher une liste numérotée avec formatage pour aligner les numéros
     max_num_width = len(str(len(avions_filtres)))
     for i, (_, row) in enumerate(avions_filtres.iterrows(), 1):
         print(f"{i:{max_num_width}d}. {row['Code']}")
     print(f"{len(avions_filtres) + 1}. Saisie manuelle")
-
-    while True:
-        choix = input("\nEntrez le NUMÉRO de l'avion: ").strip()
-
-        try:
-            choix_num = int(choix)
-            if 1 <= choix_num <= len(avions_filtres):
-                code_avion = avions_filtres.iloc[choix_num - 1]['Code']
-                print(f"\nVous avez sélectionné l'avion: {code_avion}")  # Ajout de cette ligne
-                choix_avion_obj = ChoixAvion(code_avion)
-                break
-            elif choix_num == len(avions_filtres) + 1:
-                print("\nSaisie des caractéristiques de l'avion:")
-                hauteur_m = get_float_input("Hauteur de l'aile (m): ")
-                surface_m2 = get_float_input("Surface alaire (m²): ")
-
-                custom_data = {
-                    'Code': 'CUSTOM',
-                    'Allongement': get_float_input("Allongement: "),
-                    'Hauteur_aile_m': hauteur_m,
-                    'Hauteur_aile_ft': hauteur_m * 3.28084,
-                    'Surface_alaire_m2': surface_m2,
-                    'Surface_alaire_ft2': surface_m2 * 10.7639,
-                    'CL_max_atterrissage': get_float_input("Coefficient de portance max (CL_max): "),
-                    'Cd_train': get_float_input("Coefficient de traînée du train (Cd_train): "),
-                    'Cd_volets': get_float_input("Coefficient de traînée des volets (Cd_volets): ")
-                }
-                print("\nVous avez créé un avion personnalisé: CUSTOM")  # Ajout pour la saisie manuelle
-                choix_avion_obj = ChoixAvion('CUSTOM', custom_data=custom_data)
-                break
-            else:
-                print(f"Veuillez entrer un nombre entre 1 et {len(avions_filtres) + 1}")
-        except ValueError:
-            print("Entrée invalide. Veuillez entrer uniquement le numéro de l'avion.")
+    choix_avion_obj = choisir_avion(avions_filtres)
 
     # 6. Paramètres de l'avion
     print("\nEntrez les paramètres de l'avion:")
     poids = get_float_input("- Poids à l'atterrissage (lb): ")
-
 
     # 7. Création de l'objet avion
     if type_avion == 1:
@@ -196,7 +128,6 @@ def main():
     print(f"- Distance totale d'atterrissage: {avion.calcul_S_LA():.2f} ft")
 
     # 9. Visualisation
-    # 9. Visualisation
     print("\nVoulez-vous voir la trajectoire d'atterrissage? (O/N)")
     if input().strip().upper() == "O":
         print("\nAffichage de la trajectoire...")
@@ -206,7 +137,6 @@ def main():
         afficher_freinage(avion)
 
     print("\nSimulation terminée. Bon vol!")
-
 
 if __name__ == "__main__":
     main()
