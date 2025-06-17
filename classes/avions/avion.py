@@ -35,7 +35,7 @@ class Avion:
         return 1/(pi*A_eff*self.e)
 
     def calcul_V_stall(self):
-        return sqrt(self.W_LA / (0.5 * self.density * self.S * self.Cl_max_LA)) + self.V_vent
+        return sqrt(self.W_LA / (0.5 * self.density * self.S * self.Cl_max_LA)) - self.V_vent
 
     def calcul_V_TD(self):
         V_stall = self.calcul_V_stall()
