@@ -13,8 +13,8 @@ def get_float_input(prompt):
             print("Invalid input, please try again.")
     return value
 
-
-
+def code_aeroport_valide(airports_df)
+    """
     Args:
         airports_df (DataFrame): DataFrame contenant les données des aéroports avec une colonne 'ident'
 
