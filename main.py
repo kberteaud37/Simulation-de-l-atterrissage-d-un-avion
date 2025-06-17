@@ -151,7 +151,6 @@ def main():
     print(f"- Distance totale d'atterrissage: {avion.calcul_S_LA():.2f} ft")
 
     # 9. Visualisation
-    # 9. Visualisation
     print("\nVoulez-vous voir la trajectoire d'atterrissage? (O/N)")
     if input().strip().upper() == "O":
         print("\nAffichage de la trajectoire...")

@@ -136,21 +136,9 @@ class Piste(Aeroport):
         :param glace: True s'il y a de la glace, False sinon
         :type glace: bool
         """
-        print(f"\nCaracteristiques de la piste {self.n_piste}:")
-
-        print(f"Matériau de la piste: {self.surface()}, f={self.coeff_friction(pluie, glace):.2f}")
-        print(f"Longueur: {self.longueur():.2f} ft")
-        print(f"Largeur: {self.largeur():.2f} ft")
-        print(f"Orientation: {self.orientation()}")
-
+        print(f"Piste n°{self.n_piste}")
         # Avertissements sur les conditions
-        if pluie or glace:
-            print("\n⚠️ Conditions spéciales:")
-            if pluie:
-                print("- Pluie présente: coefficient de friction réduit")
-            if glace:
-                print("- Glace présente: coefficient de friction fortement réduit")
         print(f"Matériau de la piste: {self.surface()}, f={self.coeff_friction(pluie, glace)}")
-        print(f"Longueur: {self.longueur()}m")
-        print(f"Largeur: {self.largeur()}m")
+        print(f"Longueur: {self.longueur()} ft")
+        print(f"Largeur: {self.largeur()} ft")
 
