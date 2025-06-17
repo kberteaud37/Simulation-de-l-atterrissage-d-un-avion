@@ -69,9 +69,4 @@ def afficher_trajectoire_atterrissage(avion):
     plt.show()
 
 
-import matplotlib.pyplot as plt
-import numpy as np
-
-
-
 
