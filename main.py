@@ -185,9 +185,16 @@ def main():
     print("=" * 50)
 
     # Comparaison piste/atterrissage
-    compare(avion, piste)
+    piste_finale=compare(avion,piste)
 
+    if recuperer_meteo(piste_finale.latitude(), piste_finale.longitude())['Dir_vent'] in range(0,180):
+        print(f"Le vent à cet aéroport vient de l'Est, à {recuperer_meteo(piste_finale.latitude(), piste_finale.longitude())['Dir_vent']}° par rapport au Nord Magnétique")
+        print(f"Vous devez atterrir sur la piste n°{piste_finale.orientation()[0]} pour être face au vent")
+    elif recuperer_meteo(piste_finale.latitude(), piste_finale.longitude())['Dir_vent'] in range(181,360):
+        print(f"Le vent à cet aéroport vient de l'Ouest, à {recuperer_meteo(piste_finale.latitude(), piste_finale.longitude())['Dir_vent']}° par rapport au Nord Magnétique")
+        print(f"Vous devez atterrir sur la piste n°{piste_finale.orientation()[1]}° pour être face au vent")
     # Affichage des détails
+
     print("\nDétails des calculs:")
     print(f"- Vitesse de décrochage: {avion.calcul_V_stall():.2f} ft/s")
     print(f"- Distance d'approche (S_A): {avion.calcul_S_A():.2f} ft")
