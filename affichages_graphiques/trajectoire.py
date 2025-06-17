@@ -43,3 +43,5 @@ def afficher_trajectoire_atterrissage(avion):
     ax.set_ylim(-h_obstacle-10, h_obstacle+10)
 
     st.pyplot(fig)
+
+

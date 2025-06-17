@@ -9,10 +9,12 @@ def choisir_piste(pistes_dispo):
         str: Numéro/identifiant de la piste choisie
     """
     while True:
+
         try:
             choix = int(input("\nChoisissez une piste (numéro): "))
             if 1 <= choix <= len(pistes_dispo):
                 return pistes_dispo[choix - 1]
+                break
         except ValueError:
             pass
         print("Choix invalide. Veuillez réessayer.")

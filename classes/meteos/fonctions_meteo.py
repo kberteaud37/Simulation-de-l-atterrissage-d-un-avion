@@ -1,7 +1,4 @@
 import requests
-import pandas as pd
-from io import StringIO
-import urllib3
 
 def recuperer_meteo(latitude,longitude):
 
