@@ -16,7 +16,7 @@ from redirection_aeroport import compare
 from affichages_graphiques import afficher_trajectoire_atterrissage, afficher_freinage
 from classes.avions.fonction_avion import charger_donnees_avions
 from choix_utilisateur import *
-
+from choix_utilisateur.get_float_input import get_float_input
 
 
 def main():
