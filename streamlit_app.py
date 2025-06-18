@@ -248,7 +248,8 @@ elif st.session_state.step == 4:
         avion = Militaire(poids, choix_avion_obj, meteo, piste)
 
     # Calcul et logs
-    piste_finale, logs = compare(avion, piste)
+    coef_secu = 1.67
+    piste_finale, logs, distance_necessaire = compare(avion, piste)
 
     # Affichage ligne par ligne
     st.subheader("Vérification et recherche de pistes :")
@@ -276,13 +277,20 @@ elif st.session_state.step == 4:
     else:
         st.warning("⚠️ Direction du vent non déterminée")
 
+    # Changement de l'objet avion
+    if type_avion == "Commercial":
+        avion = Commercial(poids, choix_avion_obj, meteo, piste_finale)
+    else:
+        avion = Militaire(poids, choix_avion_obj, meteo, piste_finale)
+
     # Résultats de calculs
     st.metric("Vitesse de décrochage", f"{avion.calcul_V_stall():.2f} ft/s")
     st.metric("Distance d'approche (S_A)", f"{avion.calcul_S_A():.2f} ft")
     st.metric("Distance de transition (S_TR)", f"{avion.calcul_S_TR():.2f} ft")
     st.metric("Distance de roulement libre (S_FR)", f"{avion.calcul_S_FR():.2f} ft")
     st.metric("Distance de freinage (S_B)", f"{avion.calcul_S_B():.2f} ft")
-    st.success(f"✈️ **Distance totale d'atterrissage**: {avion.calcul_S_LA():.2f} ft")
+    st.metric(f"Distance totale d'atterrissage", f"{avion.calcul_S_LA():.2f} ft")
+    st.success(f"✈️ **Distance d'atterrissage au sol** : {(avion.calcul_S_B() + avion.calcul_S_FR() + avion.calcul_S_TR()) * coef_secu:.2f} ft")
 
     st.write("---")
     st.markdown("### 📈 Visualisations")

@@ -132,7 +132,7 @@ def main():
     print("=" * 50)
 
     # Comparaison piste/atterrissage
-    piste_finale=compare(avion,piste)
+    piste_finale, logs, distance_necessaire=compare(avion,piste)
 
     if recuperer_meteo(piste_finale.latitude(), piste_finale.longitude())['Dir_vent'] in range(0,180):
         print(f"Le vent à cet aéroport vient de l'Est, à {recuperer_meteo(piste_finale.latitude(), piste_finale.longitude())['Dir_vent']}° par rapport au Nord Magnétique")
@@ -149,6 +149,7 @@ def main():
     print(f"- Distance de roulement libre (S_FR): {avion.calcul_S_FR():.2f} ft")
     print(f"- Distance de freinage (S_B): {avion.calcul_S_B():.2f} ft")
     print(f"- Distance totale d'atterrissage: {avion.calcul_S_LA():.2f} ft")
+    print(f"- Distance d'atterrissage au sol : {distance_necessaire:.2f} ft")
 
     # 9. Visualisation
     print("\nVoulez-vous voir la trajectoire d'atterrissage? (O/N)")
