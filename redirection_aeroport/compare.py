@@ -27,6 +27,8 @@ def compare(avion, piste, coef_secu=1.67):
 
         for num_piste in pistes["runway_ident"]:
             piste_test = classes.aeroports.Piste(code_aeroport_courant, df_runways, num_piste)
+            avion.piste = piste_test
+            distance_necessaire = (avion.calcul_S_B() + avion.calcul_S_FR() + avion.calcul_S_TR()) * coef_secu
             if distance_necessaire < piste_test.longueur():
                 piste = piste_test
                 break
