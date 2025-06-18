@@ -45,6 +45,6 @@ def compare(avion, piste, coef_secu=1.67):
 
     distance_nm = calcul_distance_aeroport(aeroport[0].code, piste.code)
     logs.append(("success", f"🛬 Vous pouvez atterrir à {piste.nom()} (piste {piste.n_piste}), situé à {distance_nm:.2f} NM de {aeroport[0].nom()}."))
-    logs.append(("info", f"La longueur de la piste est {piste.longueur()} ft et la distance nécessaire de {distance_necessaire:.2f} ft"))
+    logs.append(("info", f"La longueur de la nouvelle piste est {piste.longueur()} ft"))
 
     return piste, logs

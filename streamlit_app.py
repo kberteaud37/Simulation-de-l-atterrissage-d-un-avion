@@ -261,13 +261,13 @@ elif st.session_state.step == 4:
             st.info(message)
         else:
             st.write(message)
-        time.sleep(1)
+        time.sleep(1.5)
 
     # Direction du vent
     dir_vent = recuperer_meteo(piste_finale.latitude(), piste_finale.longitude())["Dir_vent"]
 
     st.write("---")
-    st.subheader(f"Résultats pour l'avion : `{avion.code}`")
+    st.subheader(f"Détails des résultats pour l'avion : `{avion.code}`")
 
     if dir_vent in range(0, 180):
         st.info(f"💨 Le vent vient de l'Est ({dir_vent}°)\n\n➡️ Atterrissage recommandé sur la piste **{piste_finale.orientation()[0]}**")
@@ -277,7 +277,6 @@ elif st.session_state.step == 4:
         st.warning("⚠️ Direction du vent non déterminée")
 
     # Résultats de calculs
-    st.markdown("###Détails des distances calculées (en pieds)")
     st.metric("Vitesse de décrochage", f"{avion.calcul_V_stall():.2f} ft/s")
     st.metric("Distance d'approche (S_A)", f"{avion.calcul_S_A():.2f} ft")
     st.metric("Distance de transition (S_TR)", f"{avion.calcul_S_TR():.2f} ft")
