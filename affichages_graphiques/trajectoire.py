@@ -25,10 +25,10 @@ def afficher_trajectoire_atterrissage(avion):
     y_filtered = y_circle[mask]
 
     x_FR = np.linspace(S_A + S_TR, S_A + S_TR + S_FR, 100)
-    y_FR = np.zeros_like(x_FR) + 0.1
+    y_FR = np.zeros_like(x_FR)
 
     x_B = np.linspace(S_A + S_TR + S_FR, S_A + S_TR + S_FR + S_B, 100)
-    y_B = np.zeros_like(x_B) + 0.1
+    y_B = np.zeros_like(x_B)
 
     fig, ax = plt.subplots(figsize=(12, 6))
     ax.plot(x_A, y_A, label='Approche initiale', color='blue')
