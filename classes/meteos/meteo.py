@@ -1,6 +1,6 @@
 class Meteo:
     #Constante des gaz parfaits
-    R=287
+    R = 287
     def __init__(self,temperature,pression,vitesse_vent,orientation_vent,pluie,glace):
         self.T = temperature
         self.P = pression
