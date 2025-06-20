@@ -43,7 +43,7 @@ def recuperer_meteo(latitude,longitude):
         glace = temperature<0 or weather_code in {56, 57,66,67,71,73,75,77,85,86}
         return {"T": temperature,"P": pression,"V_vent": vitesse_vent,"Dir_vent": orientation_mag,"pluie": pluie,"glace":glace}
     else:
-        print("Erreur:", response.status_code)
+        return "Erreur:", response.status_code
 
 
 

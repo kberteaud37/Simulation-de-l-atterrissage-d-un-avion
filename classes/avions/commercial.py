@@ -56,7 +56,7 @@ class Commercial(Avion):
     def calcul_H_TR(self):
         """Calcule la hauteur perdue pendant la phase de transition.
 
-                :return: Hauteur perdue pendant la transition (ft)
+                :return: Hauteur perdue durant la transition (ft)
                 :rtype: float
                 """
         R = self.calcul_R()

@@ -30,11 +30,11 @@ def recuperer_runways():
     qc_airports = airports_df[airports_df['iso_region'] == 'CA-QC']
     #Retiré les aéroports fermés et les héliports
     qc_airports = qc_airports[~qc_airports["type"].isin(["heliport", "closed"])]
-    #Conserver uniquement les colonnes qui nous interesse
+    #Conserver uniquement les colonnes qui nous intéressent
     qc_airports = qc_airports[["ident", "type", "name", "latitude_deg", "longitude_deg", "elevation_ft"]]
 
     #Nettoyer Runways
-    #Conserver uniquement les colonnes qui nous interesse
+    #Conserver uniquement les colonnes qui nous intéressent
     runways_df=runways_df[["airport_ident","length_ft","width_ft","surface","le_ident","he_ident"]]
 
     # Fusionner les identifiants de piste avec un tiret
@@ -61,7 +61,7 @@ def recuperer_airports():
     df_runways = recuperer_runways()
     # Sélectionne colonnes utiles
     df = df_runways[["ident", "latitude_deg", "longitude_deg", "name"]]
-    # Supprime doublons sur 'ident', en gardant la première occurence
+    # Supprime doublons sur 'ident', en gardant la première occurrence
     df_airports = df.drop_duplicates(subset=["ident"])
     return df_airports.reset_index(drop=True)
 

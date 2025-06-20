@@ -3,7 +3,6 @@ import numpy as np
 import streamlit as st
 
 def afficher_freinage(avion):
-    decelerations = []
     distance_i = avion.calcul_S_FR()
     distance_f = avion.calcul_S_B()
     distances = np.linspace(distance_i, distance_f, 1000)

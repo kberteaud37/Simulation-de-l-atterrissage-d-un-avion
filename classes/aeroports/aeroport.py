@@ -24,7 +24,7 @@ class Aeroport:
             latitude = row.iloc[0]["latitude_deg"]
             return float(latitude)
         else:
-            print("Aéroport non trouvé")
+            return "Aéroport non trouvé"
 
     def longitude(self):
         """Retourne la longitude de l'aéroport en degrés décimaux.
@@ -38,7 +38,7 @@ class Aeroport:
             longitude = row.iloc[0]["longitude_deg"]
             return float(longitude)
         else:
-            print("Aéroport non trouvé")
+            return "Aéroport non trouvé"
 
     def nom(self):
         """Retourne le nom complet de l'aéroport.
@@ -52,7 +52,7 @@ class Aeroport:
             nom = row.iloc[0]["name"]
             return str(nom)
         else:
-            print("Aéroport non trouvé")
+            return "Aéroport non trouvé"
 
     def altitude(self):
         """Retourne l'altitude de l'aéroport en pieds.
@@ -66,7 +66,7 @@ class Aeroport:
             elevation = row.iloc[0]["elevation_ft"]
             return float(elevation)
         else:
-            print("Aéroport non trouvé")
+            return "Aéroport non trouvé"
 
     def pistes(self):
         """Retourne la liste des identifiants de pistes disponibles.
@@ -80,7 +80,7 @@ class Aeroport:
             pistes = [f"{row['runway_ident']}" for index, row in filtre_code.iterrows()]
             return pistes
         else:
-            print("Aeroport non trouvé")
+            return "Aeroport non trouvé"
 
     def afficher_infos(self):
         """Affiche les informations principales de l'aéroport dans la console."""

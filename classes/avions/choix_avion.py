@@ -1,4 +1,3 @@
-import pandas as pd
 from classes.avions.fonction_avion import charger_donnees_avions
 
 
@@ -9,7 +8,7 @@ class ChoixAvion:
         à partir de son code identifiant, avec conversion automatique des unités.
         Supporte également la création d'avions personnalisés via le code "CUSTOM".
 
-        :param code_avion: Code identifiant de l'avion (ex: "B737", "A320")
+        :param code_avion: Code identifiant de l'avion (ex : "B737", "A320")
         :type code_avion: str
         :param custom_data: Données personnalisées pour un avion CUSTOM, defaults to None
         :type custom_data: dict, optional

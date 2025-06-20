@@ -12,7 +12,6 @@ Cours MGA802, Session Été 2025
 import streamlit as st
 from streamlit_folium import st_folium
 import folium
-from classes.aeroports.piste import Piste
 import classes
 from classes.aeroports.fonctions_aeroport import recuperer_runways, recuperer_airports
 from classes.aeroports.aeroport import *

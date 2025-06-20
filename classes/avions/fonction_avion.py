@@ -7,7 +7,7 @@ def charger_donnees_avions(convertir_en_pieds=True):
         Cette fonction effectue plusieurs opérations :
         1. Charge le fichier CSV en testant différents séparateurs
         2. Nettoie les données (suppression des doublons, gestion des valeurs manquantes)
-        3. Convertit les unités métriques en unités impériales si demandé
+        3. Convertit les unités métriques en unités impériales si demandées
         4. Vérifie l'intégrité des données
         5. Retourne un DataFrame propre et standardisé
 

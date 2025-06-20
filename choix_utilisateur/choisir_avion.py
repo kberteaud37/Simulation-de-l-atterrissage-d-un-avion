@@ -5,11 +5,11 @@ def choisir_avion(avions_filtres):
     """
     Permet à l'utilisateur de choisir un avion parmi une liste ou de créer un avion personnalisé
 
-    Args:
-        avions_filtres (DataFrame): DataFrame contenant les avions disponibles
+    Args :
+        avions_filtres (DataFrame) : DataFrame contenant les avions disponibles
 
-    Returns:
-        ChoixAvion: Objet ChoixAvion configuré selon le choix de l'utilisateur
+    Returns :
+        ChoixAvion : Objet ChoixAvion configuré selon le choix de l'utilisateur
     """
     while True:
         choix = input("\nEntrez le numero de l'avion: ").strip()

@@ -1,7 +1,6 @@
 """Module contenant la classe Piste pour la simulation d'atterrissage."""
 
 from .aeroport import Aeroport
-import string
 
 
 class Piste(Aeroport):
@@ -11,7 +10,7 @@ class Piste(Aeroport):
     :type code: str
     :param runways_df: DataFrame contenant les informations sur les pistes
     :type runways_df: pandas.DataFrame
-    :param num_piste: Identifiant de la piste (ex: "08-26")
+    :param num_piste: Identifiant de la piste (ex : "08-26")
     :type num_piste: str
     """
 
@@ -38,7 +37,7 @@ class Piste(Aeroport):
             longueur = row.iloc[0]["length_ft"]
             return float(longueur)
         else:
-            print("Aéroport non trouvé")
+            return "Aéroport non trouvé"
 
     def largeur(self):
         """Retourne la largeur de la piste en pieds.
@@ -53,7 +52,7 @@ class Piste(Aeroport):
             largeur = row.iloc[0]["width_ft"]
             return float(largeur)
         else:
-            print("Aéroport non trouvé")
+            return "Aéroport non trouvé"
 
     def surface(self):
         """Détermine le type de surface de la piste.
@@ -74,7 +73,7 @@ class Piste(Aeroport):
             else:
                 return 'Inconnue'
         else:
-            print("Aéroport non trouvé")
+            return "Aéroport non trouvé"
 
     def coeff_friction(self, pluie, glace):
         """Calcule le coefficient de friction de la piste.
@@ -115,14 +114,14 @@ class Piste(Aeroport):
 
         alphabet_min = string.ascii_lowercase + "-"
         orientation_piste = ""
-        for lettre in self.n_piste.lower():
-            if lettre not in alphabet_min:
+        for lettre in self.n_piste.lower() :
+            if lettre not in alphabet_min :
                 orientation_piste += lettre
-            elif lettre == "-":
+            elif lettre == "-" :
                 orientation_piste += ","
         orientation_str = orientation_piste.split(",")
         orientation = []
-        for num in orientation_str:
+        for num in orientation_str :
             orientation.append(int(num) * 10)
         return orientation
         """
