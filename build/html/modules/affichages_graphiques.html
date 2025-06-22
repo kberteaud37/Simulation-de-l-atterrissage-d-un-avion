@@ -49,14 +49,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../modules.html">Modules</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Affichages_graphiques</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#module-affichages_graphiques.freinage">freinage</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#affichages_graphiques.freinage.afficher_freinage"><code class="docutils literal notranslate"><span class="pre">afficher_freinage()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#module-affichages_graphiques.trajectoire">trajectoire</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#affichages_graphiques.trajectoire.afficher_trajectoire_atterrissage"><code class="docutils literal notranslate"><span class="pre">afficher_trajectoire_atterrissage()</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="#freinage">freinage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#trajectoire">trajectoire</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="choix_utilisateur.html">choix_utilisateur</a></li>
@@ -93,44 +87,11 @@
              
   <section id="affichages-graphiques">
 <h1>Affichages_graphiques<a class="headerlink" href="#affichages-graphiques" title="Lien vers cette rubrique"></a></h1>
-<section id="module-affichages_graphiques.freinage">
-<span id="freinage"></span><h2>freinage<a class="headerlink" href="#module-affichages_graphiques.freinage" title="Lien vers cette rubrique"></a></h2>
-<dl class="py function">
-<dt class="sig sig-object py" id="affichages_graphiques.freinage.afficher_freinage">
-<span class="sig-prename descclassname"><span class="pre">affichages_graphiques.freinage.</span></span><span class="sig-name descname"><span class="pre">afficher_freinage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">avion</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/affichages_graphiques/freinage.html#afficher_freinage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#affichages_graphiques.freinage.afficher_freinage" title="Lien vers cette définition"></a></dt>
-<dd><p>Affiche un graphique de la décélération d’un avion pendant le freinage.</p>
-<p>Cette fonction calcule et affiche la décélération de l’avion en fonction de la distance parcourue
-pendant le freinage. Elle utilise matplotlib pour tracer le graphique et Streamlit pour l’afficher.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>avion</strong> (<a class="reference internal" href="classes.avions.html#classes.avions.avion.Avion" title="classes.avions.avion.Avion"><em>Avion</em></a>) – Un objet de type Avion contenant les caractéristiques et conditions d’atterrissage.</p>
-</dd>
-<dt class="field-even">Renvoie<span class="colon">:</span></dt>
-<dd class="field-even"><p>None</p>
-</dd>
-</dl>
-</dd></dl>
-
+<section id="freinage">
+<h2>freinage<a class="headerlink" href="#freinage" title="Lien vers cette rubrique"></a></h2>
 </section>
-<section id="module-affichages_graphiques.trajectoire">
-<span id="trajectoire"></span><h2>trajectoire<a class="headerlink" href="#module-affichages_graphiques.trajectoire" title="Lien vers cette rubrique"></a></h2>
-<dl class="py function">
-<dt class="sig sig-object py" id="affichages_graphiques.trajectoire.afficher_trajectoire_atterrissage">
-<span class="sig-prename descclassname"><span class="pre">affichages_graphiques.trajectoire.</span></span><span class="sig-name descname"><span class="pre">afficher_trajectoire_atterrissage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">avion</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/affichages_graphiques/trajectoire.html#afficher_trajectoire_atterrissage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#affichages_graphiques.trajectoire.afficher_trajectoire_atterrissage" title="Lien vers cette définition"></a></dt>
-<dd><p>Affiche un graphique de la trajectoire d’atterrissage d’un avion.</p>
-<p>Cette fonction calcule et affiche la trajectoire complète d’atterrissage d’un avion,
-incluant les phases d’approche initiale, de transition, de roulement libre et de freinage.
-Elle utilise matplotlib pour tracer le graphique et Streamlit pour l’afficher.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>avion</strong> (<a class="reference internal" href="classes.avions.html#classes.avions.avion.Avion" title="classes.avions.avion.Avion"><em>Avion</em></a>) – Un objet de type Avion contenant les caractéristiques et conditions d’atterrissage.</p>
-</dd>
-<dt class="field-even">Renvoie<span class="colon">:</span></dt>
-<dd class="field-even"><p>None</p>
-</dd>
-</dl>
-</dd></dl>
-
+<section id="trajectoire">
+<h2>trajectoire<a class="headerlink" href="#trajectoire" title="Lien vers cette rubrique"></a></h2>
 </section>
 </section>
 

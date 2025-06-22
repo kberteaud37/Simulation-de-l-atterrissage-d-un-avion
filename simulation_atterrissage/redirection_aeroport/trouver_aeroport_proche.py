@@ -1,6 +1,6 @@
 import numpy as np
 from scipy.spatial import KDTree
-from classes.aeroports.fonctions_aeroport import recuperer_airports
+from simulation_atterrissage.classes.aeroports.fonctions_aeroport import recuperer_airports
 
 def trouver_aeroport_proche(exclusions):
     df_airports = recuperer_airports()

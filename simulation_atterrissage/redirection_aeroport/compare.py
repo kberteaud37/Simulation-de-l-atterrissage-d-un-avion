@@ -1,5 +1,5 @@
-import classes
-from classes.aeroports.fonctions_aeroport import recuperer_runways
+from .. import classes
+from simulation_atterrissage.classes.aeroports.fonctions_aeroport import recuperer_runways
 from .trouver_aeroport_proche import trouver_aeroport_proche
 from .calcul_distance_aeroport import calcul_distance_aeroport
 

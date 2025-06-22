@@ -7,7 +7,7 @@ authors = [
     { name = "Berteaud Kilian" },
     { name = "Chenuet Alexis" }
 ]
-license = { text = "MIT" }
+license = "MIT"
 readme = "README.md"
 requires-python = ">=3.8"
 dependencies = [
@@ -16,9 +16,16 @@ dependencies = [
     "pandas>=1.3.0",
     "folium>=0.12.0",
     "matplotlib>=3.4.0",
-    "requests>=2.26.0"
-    "streamlit-folium>=0.13"
+    "requests>=2.26.0",
+    "streamlit-folium>=0.13",
+    "urllib3>=2.4.0"
 ]
+
+[tool.setuptools]
+packages = ["simulation_atterrissage"]
+
+[project.scripts]
+simulation-atterrissage = "main:main"
 
 [project.urls]
 "Homepage" = "https://github.com/kberteaud37/Simulation-de-l-atterrissage-d-un-avion"

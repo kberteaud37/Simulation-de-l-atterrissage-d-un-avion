@@ -1,11 +1,11 @@
 from math import cos, sin, tan, radians
-from classes.avions.avion import Avion
+from simulation_atterrissage.classes.avions.avion import Avion
 
-class Commercial(Avion):
-    """Classe représentant un avion commercial pour la simulation d'atterrissage.
+class Militaire(Avion):
+    """Classe représentant un avion militaire pour la simulation d'atterrissage.
 
         Hérite de la classe Avion de base et implémente les calculs spécifiques
-        aux avions commerciaux selon les normes de l'industrie aéronautique.
+        aux avions militaires selon les normes de l'aviation militaire.
 
         :param poids_atterrissage: Poids de l'avion à l'atterrissage (lbs)
         :type poids_atterrissage: float
@@ -17,18 +17,16 @@ class Commercial(Avion):
         :type piste: Piste
         :param vitesse_vent: Vitesse du vent de face (ft/s), defaults to 0
         :type vitesse_vent: float, optional
-        :param facteur_de_charge: Facteur de charge pour les calculs de trajectoire, defaults to 1.35
+        :param facteur_de_charge: Facteur de charge pour les calculs de trajectoire, defaults to 2
         :type facteur_de_charge: float, optional
-        :param hauteur_obstacle: Hauteur de l'obstacle à franchir (ft), defaults to 35
+        :param hauteur_obstacle: Hauteur de l'obstacle à franchir (ft), defaults to 50
         :type hauteur_obstacle: float, optional
-        :param coef_transition: Coefficient pour le calcul de la vitesse de transition, defaults to 1.23
+        :param coef_transition: Coefficient pour le calcul de la vitesse de transition, defaults to 1.15
         :type coef_transition: float, optional
         """
-
     def __init__(self,poids_atterrissage, choix_avion, meteo, piste, vitesse_vent=0,
-                 facteur_de_charge = 1.35,hauteur_obstacle = 35,
-                 coef_transition = 1.23):
-        """Initialise un avion commercial avec ses paramètres spécifiques."""
+                 facteur_de_charge = 2,hauteur_obstacle = 50,
+                 coef_transition = 1.15):
         super().__init__(poids_atterrissage, choix_avion,
                          meteo, piste, vitesse_vent)
         self.n = facteur_de_charge
@@ -51,7 +49,7 @@ class Commercial(Avion):
                 :rtype: float
                 """
         V_TR = self.calcul_V_TR()
-        return (V_TR**2)/(self.g*(self.n-1))
+        return (V_TR ** 2) / (self.g * (self.n - 1))
 
     def calcul_H_TR(self):
         """Calcule la hauteur perdue pendant la phase de transition.
@@ -60,7 +58,7 @@ class Commercial(Avion):
                 :rtype: float
                 """
         R = self.calcul_R()
-        return R*(1-cos(radians(self.angle_de_descente)))
+        return R * (1 - cos(radians(self.angle_de_descente)))
 
     def calcul_S_A(self):
         """Calcule la distance horizontale de la phase d'approche.
@@ -69,7 +67,7 @@ class Commercial(Avion):
                 :rtype: float
                 """
         H_TR = self.calcul_H_TR()
-        return (H_TR-self.H_OBS)/tan(radians(self.angle_de_descente))
+        return (H_TR - self.H_OBS) / tan(radians(self.angle_de_descente))
 
     def calcul_S_TR(self):
         """Calcule la distance horizontale de la phase de transition.
@@ -78,7 +76,7 @@ class Commercial(Avion):
                 :rtype: float
                 """
         R = self.calcul_R()
-        return -R*sin(radians(self.angle_de_descente))
+        return -R * sin(radians(self.angle_de_descente))
 
     def calcul_S_LA(self):
         """Calcule la distance totale d'atterrissage avec marge de sécurité.

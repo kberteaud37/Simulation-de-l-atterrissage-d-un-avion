@@ -1,0 +1,2 @@
+[console_scripts]
+simulation-atterrissage = main:main

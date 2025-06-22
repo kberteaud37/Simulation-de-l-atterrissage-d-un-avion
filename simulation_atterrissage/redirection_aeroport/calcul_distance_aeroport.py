@@ -1,5 +1,5 @@
 import numpy as np
-from classes.aeroports.fonctions_aeroport import recuperer_airports
+from simulation_atterrissage.classes.aeroports.fonctions_aeroport import recuperer_airports
 
 def calcul_distance_aeroport(code_depart, code_arrivee):
     df_airports = recuperer_airports()

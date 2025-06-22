@@ -1,4 +1,4 @@
-from classes.avions.fonction_avion import charger_donnees_avions
+from simulation_atterrissage.classes.avions.fonction_avion import charger_donnees_avions
 
 
 class ChoixAvion:

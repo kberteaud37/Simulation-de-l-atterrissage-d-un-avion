@@ -19,10 +19,10 @@ choisir un avion, et finalement simuler l'atterrissage.
 import streamlit as st
 from streamlit_folium import st_folium
 import folium
-import classes
-from classes.aeroports.fonctions_aeroport import recuperer_runways, recuperer_airports
-from classes.aeroports.aeroport import *
-from classes.meteos.fonctions_meteo import recuperer_meteo
+from simulation_atterrissage import classes
+from simulation_atterrissage.classes.aeroports import recuperer_runways, recuperer_airports
+from simulation_atterrissage.classes.aeroports.aeroport import *
+from simulation_atterrissage.classes.meteos.fonctions_meteo import recuperer_meteo
 
 # 🔄 Pour afficher dans Streamlit des print() d'objets avec .afficher_infos()
 import io
@@ -191,7 +191,7 @@ def main():
         """
         st.title("Choix de l'avion")
 
-        from classes.avions.fonction_avion import charger_donnees_avions
+        from simulation_atterrissage.classes.avions.fonction_avion import charger_donnees_avions
 
         try:
             choix_avion_df = charger_donnees_avions()
@@ -266,11 +266,11 @@ def main():
         st.title("Résultats de la simulation")
 
         import time
-        from classes.avions import Commercial, Militaire, ChoixAvion
-        from redirection_aeroport import compare
-        from classes.meteos import Meteo
-        from classes.avions.fonction_avion import charger_donnees_avions
-        from affichages_graphiques import afficher_trajectoire_atterrissage, afficher_freinage
+        from simulation_atterrissage.classes.avions import Commercial, Militaire, ChoixAvion
+        from simulation_atterrissage.redirection_aeroport import compare
+        from simulation_atterrissage.classes.meteos import Meteo
+        from simulation_atterrissage.classes.avions.fonction_avion import charger_donnees_avions
+        from simulation_atterrissage.affichages_graphiques import afficher_trajectoire_atterrissage, afficher_freinage
         # Récupération des variables de session
         poids = st.session_state.poids
         meteo = st.session_state.meteo

@@ -5,8 +5,8 @@ Fournit la fonction creer_carte_quebec() pour générer une carte interactive
 des aéroports à l'aide de la bibliothèque Folium.
 
 Exemple:
-    >>> from carte_quebec import creer_carte_quebec
-    >>> creer_carte_quebec()  # Génère et ouvre la carte
+- from carte_quebec import creer_carte_quebec
+- creer_carte_quebec()  # Génère et ouvre la carte
 """
 
 import folium

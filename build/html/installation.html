@@ -47,11 +47,16 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#prerequis">Prérequis</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#methodes-d-installation">Méthodes d’installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#execution-de-lapplication">Exécution de l’application</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#utilisation-en-ligne-optionnel">Utilisation en ligne (optionnel)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#verification-de-l-installation">Vérification de l’installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configuration-requise">Configuration requise</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#methodes-d-installation">Méthodes d’installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mode-developpeur-installation-editable">1. Mode développeur (installation éditable)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#installation-comme-package-python">2. Installation comme package Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#via-requirements-txt-methode-historique">3. Via requirements.txt (méthode historique)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#lancement-de-l-application">Lancement de l’application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#acces-en-ligne-sans-installation">Accès en ligne (sans installation)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#verification">Vérification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#depannage">Dépannage</a></li>
 </ul>
 </li>
@@ -84,80 +89,88 @@
              
   <section id="installation">
 <span id="id1"></span><h1>Installation<a class="headerlink" href="#installation" title="Lien vers cette rubrique"></a></h1>
-<p>Ce guide vous montre comment installer et configurer le projet Simulation d’atterrissage.</p>
-<section id="prerequis">
-<h2>Prérequis<a class="headerlink" href="#prerequis" title="Lien vers cette rubrique"></a></h2>
-<p>Avant de commencer, assurez-vous d’avoir installé les logiciels suivants :</p>
+<section id="configuration-requise">
+<h2>Configuration requise<a class="headerlink" href="#configuration-requise" title="Lien vers cette rubrique"></a></h2>
 <ul class="simple">
-<li><p>Python 3.8 ou supérieur (<a class="reference external" href="https://www.python.org/downloads/">https://www.python.org/downloads/</a>)</p></li>
-<li><p>pip (gestionnaire de paquets Python)</p></li>
-<li><p>Git (optionnel pour le versionnage)</p></li>
+<li><p>Python 3.8+ (avec pip inclus)</p></li>
+<li><p>Git (pour le clonage)</p></li>
+<li><p>Streamlit 1.33+ (installé automatiquement)</p></li>
 </ul>
 </section>
 <section id="methodes-d-installation">
 <h2>Méthodes d’installation<a class="headerlink" href="#methodes-d-installation" title="Lien vers cette rubrique"></a></h2>
-<ol class="arabic">
-<li><p><strong>Installation via requirements.txt (recommandé pour le développement)</strong> :</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Clonez le dépôt (ou téléchargez les sources)</span>
+<section id="mode-developpeur-installation-editable">
+<h3>1. Mode développeur (installation éditable)<a class="headerlink" href="#mode-developpeur-installation-editable" title="Lien vers cette rubrique"></a></h3>
+<p>Idéal pour contribuer au projet ou modifier la simulation :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Clonage du dépôt</span>
 git<span class="w"> </span>clone<span class="w"> </span>https://github.com/kberteaud37/simulation-atterrissage.git
 <span class="nb">cd</span><span class="w"> </span>simulation-atterrissage
 
-<span class="c1"># 2. Créez un environnement virtuel (optionnel mais recommandé)</span>
-python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>venv
-<span class="nb">source</span><span class="w"> </span>venv/bin/activate<span class="w">  </span><span class="c1"># Linux/Mac</span>
-venv<span class="se">\S</span>cripts<span class="se">\a</span>ctivate<span class="w">     </span><span class="c1"># Windows</span>
-
-<span class="c1"># 3. Installez les dépendances</span>
-pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+<span class="c1"># Installation en mode éditable avec dépendances</span>
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[dev]&quot;</span><span class="w">  </span><span class="c1"># Inclut les outils de test et linting</span>
 </pre></div>
 </div>
-</li>
-<li><p><strong>Installation comme package (pour une utilisation en production)</strong> :</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/kberteaud37/simulation-atterrissage.git
-<span class="c1"># ou pour une installation locale</span>
+</section>
+<section id="installation-comme-package-python">
+<h3>2. Installation comme package Python<a class="headerlink" href="#installation-comme-package-python" title="Lien vers cette rubrique"></a></h3>
+<p>Pour une utilisation comme bibliothèque dans d’autres projets :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Depuis GitHub</span>
+pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/kberteaud37/simulation-atterrissage.git
+
+<span class="c1"># Depuis une archive locale</span>
 pip<span class="w"> </span>install<span class="w"> </span>.
 </pre></div>
 </div>
-</li>
-</ol>
 </section>
-<section id="execution-de-lapplication">
-<h2>Exécution de l’application<a class="headerlink" href="#execution-de-lapplication" title="Lien vers cette rubrique"></a></h2>
-<p>Une fois l’installation terminée, lancez l’application Streamlit avec la commande suivante :</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>streamlit<span class="w"> </span>run<span class="w"> </span>main.py
+<section id="via-requirements-txt-methode-historique">
+<h3>3. Via requirements.txt (méthode historique)<a class="headerlink" href="#via-requirements-txt-methode-historique" title="Lien vers cette rubrique"></a></h3>
+<p>Alternative simple :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
 </pre></div>
 </div>
-<p>Cela ouvrira automatiquement l’application dans votre navigateur par défaut.</p>
 </section>
-<section id="utilisation-en-ligne-optionnel">
-<h2>Utilisation en ligne (optionnel)<a class="headerlink" href="#utilisation-en-ligne-optionnel" title="Lien vers cette rubrique"></a></h2>
-<p>Une version hébergée de l’application est également accessible (si disponible) via Streamlit Cloud :</p>
-<p><a class="reference external" href="https://simulateur-avion.streamlit.app">https://simulateur-avion.streamlit.app</a></p>
-<p>Cette méthode ne nécessite aucune installation et est recommandée pour une utilisation rapide ou une démonstration.</p>
 </section>
-<section id="verification-de-l-installation">
-<h2>Vérification de l’installation<a class="headerlink" href="#verification-de-l-installation" title="Lien vers cette rubrique"></a></h2>
-<p>Après installation, vous pouvez vérifier que tout est bien installé en exécutant :</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;from simulation_atterrissage import main; print(&#39;Installation réussie !&#39;)&quot;</span>
+<section id="lancement-de-l-application">
+<h2>Lancement de l’application<a class="headerlink" href="#lancement-de-l-application" title="Lien vers cette rubrique"></a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>streamlit<span class="w"> </span>run<span class="w"> </span>simulation_atterrissage/main.py<span class="w">  </span><span class="c1"># Ou main.py selon votre structure</span>
+</pre></div>
+</div>
+</section>
+<section id="acces-en-ligne-sans-installation">
+<h2>Accès en ligne (sans installation)<a class="headerlink" href="#acces-en-ligne-sans-installation" title="Lien vers cette rubrique"></a></h2>
+<p>Version hébergée disponible : <a class="reference external" href="https://simulateur-avion.streamlit.app"><img alt="Open in Streamlit" src="https://static.streamlit.io/badges/streamlit_badge_black_white.svg" /></a></p>
+</section>
+<section id="verification">
+<h2>Vérification<a class="headerlink" href="#verification" title="Lien vers cette rubrique"></a></h2>
+<p>Testez l’installation avec :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">from simulation_atterrissage.core import Simulation</span>
+<span class="s2">print(&#39;Package fonctionnel! Version:&#39;, Simulation.version)</span>
+<span class="s2">&quot;&quot;&quot;</span>
 </pre></div>
 </div>
 </section>
 <section id="depannage">
 <h2>Dépannage<a class="headerlink" href="#depannage" title="Lien vers cette rubrique"></a></h2>
-<p>Problèmes courants :</p>
-<ul>
-<li><p><strong>Erreurs de dépendances</strong> :</p>
-<blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution 1 : Mettez à jour pip</span>
-python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>pip
-
-<span class="c1"># Solution 2 : Installation forcée</span>
-pip<span class="w"> </span>install<span class="w"> </span>--ignore-installed<span class="w"> </span>-r<span class="w"> </span>requirements.txt
-</pre></div>
-</div>
-</div></blockquote>
-</li>
-</ul>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Problème</p></th>
+<th class="head"><p>Solution</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Erreurs de dépendances</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">--upgrade</span> <span class="pre">pip</span> <span class="pre">wheel</span> <span class="pre">setuptools</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Module non trouvé</p></td>
+<td><p>Vérifiez votre PYTHONPATH ou réinstallez avec
+<code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">.</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Erreurs Streamlit</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">streamlit</span> <span class="pre">cache</span> <span class="pre">clear</span></code></p></td>
+</tr>
+</tbody>
+</table>
 </section>
 </section>
 
