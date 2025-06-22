@@ -18,12 +18,6 @@ Un affichage interactif (cartes, métriques, visualisations) guide l’utilisate
 
 ---
 
-## 🖼️ Aperçu de l’interface
-
-![Aperçu de l’application](b67e27fa-68ef-4b58-921a-722e67348a7e.png)
-
----
-
 ## 🚀 Déploiement en ligne
 
 Accédez à l’application sans rien installer :
