@@ -49,6 +49,8 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#prerequis">Prérequis</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#methodes-d-installation">Méthodes d’installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#execution-de-lapplication">Exécution de l’application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#utilisation-en-ligne-optionnel">Utilisation en ligne (optionnel)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#verification-de-l-installation">Vérification de l’installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#depannage">Dépannage</a></li>
 </ul>
@@ -89,7 +91,7 @@
 <ul class="simple">
 <li><p>Python 3.8 ou supérieur (<a class="reference external" href="https://www.python.org/downloads/">https://www.python.org/downloads/</a>)</p></li>
 <li><p>pip (gestionnaire de paquets Python)</p></li>
-<li><p>Git (optionnel pour la version contrôle)</p></li>
+<li><p>Git (optionnel pour le versionnage)</p></li>
 </ul>
 </section>
 <section id="methodes-d-installation">
@@ -97,7 +99,7 @@
 <ol class="arabic">
 <li><p><strong>Installation via requirements.txt (recommandé pour le développement)</strong> :</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Clonez le dépôt (ou téléchargez les sources)</span>
-git<span class="w"> </span>clone<span class="w"> </span>https://github.com/votre_user/simulation-atterrissage.git
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/kberteaud37/simulation-atterrissage.git
 <span class="nb">cd</span><span class="w"> </span>simulation-atterrissage
 
 <span class="c1"># 2. Créez un environnement virtuel (optionnel mais recommandé)</span>
@@ -111,7 +113,7 @@ pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </s
 </div>
 </li>
 <li><p><strong>Installation comme package (pour une utilisation en production)</strong> :</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/votre_user/simulation-atterrissage.git
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/kberteaud37/simulation-atterrissage.git
 <span class="c1"># ou pour une installation locale</span>
 pip<span class="w"> </span>install<span class="w"> </span>.
 </pre></div>
@@ -119,9 +121,23 @@ pip<span class="w"> </span>install<span class="w"> </span>.
 </li>
 </ol>
 </section>
+<section id="execution-de-lapplication">
+<h2>Exécution de l’application<a class="headerlink" href="#execution-de-lapplication" title="Lien vers cette rubrique"></a></h2>
+<p>Une fois l’installation terminée, lancez l’application Streamlit avec la commande suivante :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>streamlit<span class="w"> </span>run<span class="w"> </span>main.py
+</pre></div>
+</div>
+<p>Cela ouvrira automatiquement l’application dans votre navigateur par défaut.</p>
+</section>
+<section id="utilisation-en-ligne-optionnel">
+<h2>Utilisation en ligne (optionnel)<a class="headerlink" href="#utilisation-en-ligne-optionnel" title="Lien vers cette rubrique"></a></h2>
+<p>Une version hébergée de l’application est également accessible (si disponible) via Streamlit Cloud :</p>
+<p><a class="reference external" href="https://simulateur-avion.streamlit.app">https://simulateur-avion.streamlit.app</a></p>
+<p>Cette méthode ne nécessite aucune installation et est recommandée pour une utilisation rapide ou une démonstration.</p>
+</section>
 <section id="verification-de-l-installation">
 <h2>Vérification de l’installation<a class="headerlink" href="#verification-de-l-installation" title="Lien vers cette rubrique"></a></h2>
-<p>Après installation, exécutez :</p>
+<p>Après installation, vous pouvez vérifier que tout est bien installé en exécutant :</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;from simulation_atterrissage import main; print(&#39;Installation réussie !&#39;)&quot;</span>
 </pre></div>
 </div>
@@ -130,13 +146,15 @@ pip<span class="w"> </span>install<span class="w"> </span>.
 <h2>Dépannage<a class="headerlink" href="#depannage" title="Lien vers cette rubrique"></a></h2>
 <p>Problèmes courants :</p>
 <ul>
-<li><p><strong>Erreurs de dépendances</strong> :
-.. code-block:: bash</p>
+<li><p><strong>Erreurs de dépendances</strong> :</p>
 <blockquote>
-<div><p># Solution 1 : Mettez à jour pip
-python -m pip install –upgrade pip</p>
-<p># Solution 2 : Installation forcée
-pip install –ignore-installed -r requirements.txt</p>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution 1 : Mettez à jour pip</span>
+python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>pip
+
+<span class="c1"># Solution 2 : Installation forcée</span>
+pip<span class="w"> </span>install<span class="w"> </span>--ignore-installed<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+</pre></div>
+</div>
 </div></blockquote>
 </li>
 </ul>
