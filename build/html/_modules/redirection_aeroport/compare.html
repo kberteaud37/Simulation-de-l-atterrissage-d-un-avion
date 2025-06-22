@@ -1,0 +1,160 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>redirection_aeroport.compare &mdash; Documentation Simulation d&#39;atterrissage Juin 2025</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=87a02b47"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/translations.js?v=e6b791cb"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Recherche" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Simulation d'atterrissage
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Rechercher docs" aria-label="Rechercher docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contenu:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Modules</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Simulation d'atterrissage</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Code du module</a></li>
+      <li class="breadcrumb-item active">redirection_aeroport.compare</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Code source de redirection_aeroport.compare</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">classes</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">classes.aeroports.fonctions_aeroport</span><span class="w"> </span><span class="kn">import</span> <span class="n">recuperer_runways</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.trouver_aeroport_proche</span><span class="w"> </span><span class="kn">import</span> <span class="n">trouver_aeroport_proche</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.calcul_distance_aeroport</span><span class="w"> </span><span class="kn">import</span> <span class="n">calcul_distance_aeroport</span>
+
+<span class="c1"># Fonction qui compare la longueur des pistes avec la distance nécessaire à l&#39;atterrissage</span>
+<div class="viewcode-block" id="compare">
+<a class="viewcode-back" href="../../modules/redirection_aeroport.html#redirection_aeroport.compare.compare">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">compare</span><span class="p">(</span><span class="n">monavion</span><span class="p">,</span> <span class="n">piste</span><span class="p">,</span> <span class="n">coef_secu</span><span class="o">=</span><span class="mf">1.67</span><span class="p">):</span>
+    <span class="n">logs</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># &lt;-- liste de logs [(type, message)]</span>
+    <span class="n">avion</span> <span class="o">=</span> <span class="n">monavion</span>
+    <span class="n">distance_necessaire</span> <span class="o">=</span> <span class="p">(</span><span class="n">avion</span><span class="o">.</span><span class="n">calcul_S_B</span><span class="p">()</span><span class="o">+</span><span class="n">avion</span><span class="o">.</span><span class="n">calcul_S_FR</span><span class="p">()</span><span class="o">+</span><span class="n">avion</span><span class="o">.</span><span class="n">calcul_S_TR</span><span class="p">())</span> <span class="o">*</span> <span class="n">coef_secu</span>
+    <span class="n">logs</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;info&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;La distance nécessaire est : </span><span class="si">{</span><span class="n">distance_necessaire</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> ft&quot;</span><span class="p">))</span>
+    <span class="n">logs</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;info&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;La longueur de la piste est : </span><span class="si">{</span><span class="n">piste</span><span class="o">.</span><span class="n">longueur</span><span class="p">()</span><span class="si">}</span><span class="s2"> ft&quot;</span><span class="p">))</span>
+
+    <span class="n">df_runways</span> <span class="o">=</span> <span class="n">recuperer_runways</span><span class="p">()</span>
+    <span class="n">aeroport</span> <span class="o">=</span> <span class="p">[</span><span class="n">piste</span><span class="p">]</span>
+    <span class="n">code_aeroport_courant</span> <span class="o">=</span> <span class="n">piste</span><span class="o">.</span><span class="n">code</span>
+    <span class="n">pistes</span> <span class="o">=</span> <span class="n">df_runways</span><span class="p">[</span><span class="n">df_runways</span><span class="p">[</span><span class="s2">&quot;ident&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">code_aeroport_courant</span><span class="p">]</span>
+
+    <span class="n">max_recherches</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">nb_recherches</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">logs</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Test pour l&#39;aéroport </span><span class="si">{</span><span class="n">piste</span><span class="o">.</span><span class="n">nom</span><span class="p">()</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">))</span>
+
+    <span class="k">while</span> <span class="n">distance_necessaire</span> <span class="o">&gt;=</span> <span class="n">piste</span><span class="o">.</span><span class="n">longueur</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">nb_recherches</span> <span class="o">&gt;=</span> <span class="n">max_recherches</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Trop de recherches effectuées, aucun aéroport viable trouvé.&quot;</span><span class="p">)</span>
+        <span class="n">nb_recherches</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">for</span> <span class="n">num_piste</span> <span class="ow">in</span> <span class="n">pistes</span><span class="p">[</span><span class="s2">&quot;runway_ident&quot;</span><span class="p">]:</span>
+            <span class="n">piste_test</span> <span class="o">=</span> <span class="n">classes</span><span class="o">.</span><span class="n">aeroports</span><span class="o">.</span><span class="n">Piste</span><span class="p">(</span><span class="n">code_aeroport_courant</span><span class="p">,</span> <span class="n">df_runways</span><span class="p">,</span> <span class="n">num_piste</span><span class="p">)</span>
+            <span class="n">avion</span><span class="o">.</span><span class="n">piste</span> <span class="o">=</span> <span class="n">piste_test</span>
+            <span class="n">distance_necessaire_test</span> <span class="o">=</span> <span class="p">(</span><span class="n">avion</span><span class="o">.</span><span class="n">calcul_S_B</span><span class="p">()</span> <span class="o">+</span> <span class="n">avion</span><span class="o">.</span><span class="n">calcul_S_FR</span><span class="p">()</span> <span class="o">+</span> <span class="n">avion</span><span class="o">.</span><span class="n">calcul_S_TR</span><span class="p">())</span> <span class="o">*</span> <span class="n">coef_secu</span>
+            <span class="k">if</span> <span class="n">distance_necessaire_test</span> <span class="o">&lt;</span> <span class="n">piste_test</span><span class="o">.</span><span class="n">longueur</span><span class="p">():</span>
+                <span class="n">piste</span> <span class="o">=</span> <span class="n">piste_test</span>
+                <span class="n">distance_necessaire</span> <span class="o">=</span> <span class="n">distance_necessaire_test</span>
+                <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logs</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;error&quot;</span><span class="p">,</span> <span class="s2">&quot;⚠️ Atterrissage non sûr : la distance nécessaire dépasse la longueur de la piste.</span><span class="se">\n</span><span class="s2">Recherche d&#39;une piste d&#39;atterrissage sûre en cours...&quot;</span><span class="p">))</span>
+            <span class="n">aeroport_proche</span> <span class="o">=</span> <span class="n">trouver_aeroport_proche</span><span class="p">(</span><span class="n">aeroport</span><span class="p">)</span>
+            <span class="n">code_aeroport_courant</span> <span class="o">=</span> <span class="n">aeroport_proche</span><span class="p">[</span><span class="s2">&quot;ident&quot;</span><span class="p">]</span>
+            <span class="n">pistes</span> <span class="o">=</span> <span class="n">df_runways</span><span class="p">[</span><span class="n">df_runways</span><span class="p">[</span><span class="s2">&quot;ident&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">code_aeroport_courant</span><span class="p">]</span>
+
+            <span class="n">ligne</span> <span class="o">=</span> <span class="n">pistes</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">nouvelle_piste</span> <span class="o">=</span> <span class="n">classes</span><span class="o">.</span><span class="n">aeroports</span><span class="o">.</span><span class="n">Piste</span><span class="p">(</span><span class="n">ligne</span><span class="p">[</span><span class="s2">&quot;ident&quot;</span><span class="p">],</span> <span class="n">df_runways</span><span class="p">,</span> <span class="n">ligne</span><span class="p">[</span><span class="s2">&quot;runway_ident&quot;</span><span class="p">])</span>
+            <span class="n">aeroport</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nouvelle_piste</span><span class="p">)</span>
+            <span class="n">logs</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Test pour l&#39;aéroport </span><span class="si">{</span><span class="n">nouvelle_piste</span><span class="o">.</span><span class="n">nom</span><span class="p">()</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">))</span>
+            <span class="k">continue</span>
+        <span class="k">break</span>
+
+    <span class="n">distance_nm</span> <span class="o">=</span> <span class="n">calcul_distance_aeroport</span><span class="p">(</span><span class="n">aeroport</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">code</span><span class="p">,</span> <span class="n">piste</span><span class="o">.</span><span class="n">code</span><span class="p">)</span>
+    <span class="n">logs</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;success&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;🛬 Vous pouvez atterrir à </span><span class="si">{</span><span class="n">piste</span><span class="o">.</span><span class="n">nom</span><span class="p">()</span><span class="si">}</span><span class="s2"> (piste </span><span class="si">{</span><span class="n">piste</span><span class="o">.</span><span class="n">n_piste</span><span class="si">}</span><span class="s2">), situé à </span><span class="si">{</span><span class="n">distance_nm</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> NM de </span><span class="si">{</span><span class="n">aeroport</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">nom</span><span class="p">()</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">))</span>
+    <span class="n">logs</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;info&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;La longueur de la nouvelle piste est </span><span class="si">{</span><span class="n">piste</span><span class="o">.</span><span class="n">longueur</span><span class="p">()</span><span class="si">}</span><span class="s2"> ft&quot;</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">piste</span><span class="p">,</span> <span class="n">logs</span><span class="p">,</span> <span class="n">distance_necessaire</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Droits d'auteur 2025, Loranchet Pierrick - Berteaud Kilian - Chenuet Alexis.</p>
+  </div>
+
+  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
+    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

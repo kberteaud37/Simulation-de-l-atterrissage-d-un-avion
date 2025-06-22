@@ -3,6 +3,17 @@ import numpy as np
 import streamlit as st
 
 def afficher_trajectoire_atterrissage(avion):
+    """Affiche un graphique de la trajectoire d'atterrissage d'un avion.
+
+    Cette fonction calcule et affiche la trajectoire complète d'atterrissage d'un avion,
+    incluant les phases d'approche initiale, de transition, de roulement libre et de freinage.
+    Elle utilise matplotlib pour tracer le graphique et Streamlit pour l'afficher.
+
+    :param avion: Un objet de type Avion contenant les caractéristiques et conditions d'atterrissage.
+    :type avion: Avion
+
+    :return: None
+    """
     S_A = avion.calcul_S_A()
     S_TR = avion.calcul_S_TR()
     S_FR = avion.calcul_S_FR()

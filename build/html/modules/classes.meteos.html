@@ -1,0 +1,223 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Classes Météos &mdash; Documentation Simulation d&#39;atterrissage Juin 2025</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=87a02b47"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/translations.js?v=e6b791cb"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="next" title="Redirection_aeroport" href="redirection_aeroport.html" />
+    <link rel="prev" title="Classes Avions" href="classes.avions.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Simulation d'atterrissage
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Rechercher docs" aria-label="Rechercher docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contenu:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../modules.html">Modules</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="affichages_graphiques.html">Affichages_graphiques</a></li>
+<li class="toctree-l2"><a class="reference internal" href="choix_utilisateur.html">choix_utilisateur</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="classes.html">Classes</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="classes.aeroports.html">Classes Aéroports</a></li>
+<li class="toctree-l3"><a class="reference internal" href="classes.avions.html">Classes Avions</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Classes Météos</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#module-classes.meteos.meteo">Météo</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-classes.meteos.fonctions_meteo">fonctions_meteo</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="redirection_aeroport.html">Redirection_aeroport</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Simulation d'atterrissage</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../modules.html">Modules</a></li>
+          <li class="breadcrumb-item"><a href="classes.html">Classes</a></li>
+      <li class="breadcrumb-item active">Classes Météos</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/modules/classes.meteos.rst.txt" rel="nofollow"> Afficher la source de la page</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="classes-meteos">
+<h1>Classes Météos<a class="headerlink" href="#classes-meteos" title="Lien vers cette rubrique"></a></h1>
+<section id="module-classes.meteos.meteo">
+<span id="meteo"></span><h2>Météo<a class="headerlink" href="#module-classes.meteos.meteo" title="Lien vers cette rubrique"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="classes.meteos.meteo.Meteo">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">classes.meteos.meteo.</span></span><span class="sig-name descname"><span class="pre">Meteo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">temperature</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pression</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vitesse_vent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orientation_vent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pluie</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">glace</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/classes/meteos/meteo.html#Meteo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#classes.meteos.meteo.Meteo" title="Lien vers cette définition"></a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Classe représentant les conditions météorologiques pour la simulation d’atterrissage.</p>
+<p>Cette classe calcule et fournit les paramètres météorologiques nécessaires à la simulation,
+y compris la densité de l’air en fonction de la température et de la pression.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>temperature</strong> (<em>float</em>) – Température en degrés Celsius.</p></li>
+<li><p><strong>pression</strong> (<em>float</em>) – Pression atmosphérique en hPa.</p></li>
+<li><p><strong>vitesse_vent</strong> (<em>float</em>) – Vitesse du vent en km/h.</p></li>
+<li><p><strong>orientation_vent</strong> (<em>float</em>) – Orientation du vent en degrés.</p></li>
+<li><p><strong>pluie</strong> (<em>bool</em>) – Indique s’il pleut.</p></li>
+<li><p><strong>glace</strong> (<em>bool</em>) – Indique s’il y a de la glace.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="classes.meteos.meteo.Meteo.R">
+<span class="sig-name descname"><span class="pre">R</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">287</span></em><a class="headerlink" href="#classes.meteos.meteo.Meteo.R" title="Lien vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="classes.meteos.meteo.Meteo.calcul_densite">
+<span class="sig-name descname"><span class="pre">calcul_densite</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/classes/meteos/meteo.html#Meteo.calcul_densite"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#classes.meteos.meteo.Meteo.calcul_densite" title="Lien vers cette définition"></a></dt>
+<dd><p>Calcule la densité de l’air en utilisant la loi des gaz parfaits.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Renvoie<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Densité de l’air en slug/ft³.</p>
+</dd>
+<dt class="field-even">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-classes.meteos.fonctions_meteo">
+<span id="fonctions-meteo"></span><h2>fonctions_meteo<a class="headerlink" href="#module-classes.meteos.fonctions_meteo" title="Lien vers cette rubrique"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="classes.meteos.fonctions_meteo.recuperer_meteo">
+<span class="sig-prename descclassname"><span class="pre">classes.meteos.fonctions_meteo.</span></span><span class="sig-name descname"><span class="pre">recuperer_meteo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">latitude</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">longitude</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/classes/meteos/fonctions_meteo.html#recuperer_meteo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#classes.meteos.fonctions_meteo.recuperer_meteo" title="Lien vers cette définition"></a></dt>
+<dd><p>Récupère les données météorologiques actuelles pour des coordonnées géographiques données.</p>
+<p>Cette fonction interroge l’API Open-Meteo pour obtenir les conditions météo actuelles
+et retourne les données pertinentes pour l’aviation, notamment :</p>
+<ul class="simple">
+<li><p>Température, pression, vitesse et direction du vent</p></li>
+<li><p>Indicateurs de conditions météorologiques critiques (pluie, glace)</p></li>
+</ul>
+<p>Args:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>latitude (float): Latitude du point à interroger (de -90 à 90)</p></li>
+<li><p>longitude (float): Longitude du point à interroger (de -180 à 180)</p></li>
+</ul>
+</div></blockquote>
+<dl>
+<dt>Returns:</dt><dd><dl class="simple">
+<dt>dict: Dictionnaire contenant les données météorologiques avec les clés suivantes :</dt><dd><ul class="simple">
+<li><p>« T » (float): Température à 2m en °C</p></li>
+<li><p>« P » (float): Pression au niveau de la mer en hPa</p></li>
+<li><p>« V_vent » (float): Vitesse du vent à 10m en km/h</p></li>
+<li><p>« Dir_vent » (float): Direction du vent magnétique (orientation réelle - 15°)</p></li>
+<li><p>« pluie » (bool): True si précipitations ou codes météo de pluie détectés</p></li>
+<li><p>« glace » (bool): True si température &lt;0°C ou codes météo de gel détectés</p></li>
+</ul>
+</dd>
+</dl>
+<p>str: Message d’erreur si la requête échoue (format « Erreur: [code_statut] »)</p>
+</dd>
+<dt>Raises:</dt><dd><p>ValueError: Si les coordonnées fournies sont hors des plages valides
+requests.exceptions.RequestException: Pour les erreurs de connexion ou de timeout</p>
+</dd>
+<dt>Notes:</dt><dd><ul class="simple">
+<li><p>Les codes météo (WMO) utilisés pour détecter pluie/glace correspondent à :</p>
+<ul>
+<li><p>Pluie : 51,53,55,61,63,65,80,81,82</p></li>
+<li><p>Glace : 56,57,66,67,71-77,85,86</p></li>
+</ul>
+</li>
+<li><p>La direction du vent est ajustée de -15° pour obtenir l’orientation magnétique</p></li>
+<li><p>En cas d’absence de données de précipitations/code météo, elles sont initialisées à 0</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pied de page">
+        <a href="classes.avions.html" class="btn btn-neutral float-left" title="Classes Avions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Précédent</a>
+        <a href="redirection_aeroport.html" class="btn btn-neutral float-right" title="Redirection_aeroport" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Droits d'auteur 2025, Loranchet Pierrick - Berteaud Kilian - Chenuet Alexis.</p>
+  </div>
+
+  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
+    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

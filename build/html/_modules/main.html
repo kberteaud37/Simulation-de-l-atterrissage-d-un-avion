@@ -1,0 +1,463 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" data-content_root="../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>main &mdash; Documentation Simulation d&#39;atterrissage Juin 2025</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=87a02b47"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/translations.js?v=e6b791cb"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Simulation d'atterrissage
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Rechercher docs" aria-label="Rechercher docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contenu:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">Modules</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Simulation d'atterrissage</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Code du module</a></li>
+      <li class="breadcrumb-item active">main</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Code source de main</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">-------- Projet de session - Simulation de l&#39;atterrissage d&#39;un avion --------</span>
+
+<span class="sd">Auteurs :</span>
+<span class="sd">    - Kilian Berteaud</span>
+<span class="sd">    - Alexis Chenuet</span>
+<span class="sd">    - Pierrick Loranchet</span>
+
+<span class="sd">Cours : MGA802, Session Été 2025</span>
+
+<span class="sd">Description :</span>
+<span class="sd">Ce script est le point d&#39;entrée principal pour une application Streamlit qui simule l&#39;atterrissage d&#39;un avion.</span>
+<span class="sd">Il guide l&#39;utilisateur à travers plusieurs étapes pour sélectionner un aéroport, une piste, vérifier les conditions météorologiques,</span>
+<span class="sd">choisir un avion, et finalement simuler l&#39;atterrissage.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="c1">#PROGRAMME PRINCIPAL</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">streamlit</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">st</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">streamlit_folium</span><span class="w"> </span><span class="kn">import</span> <span class="n">st_folium</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">folium</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">classes</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">classes.aeroports.fonctions_aeroport</span><span class="w"> </span><span class="kn">import</span> <span class="n">recuperer_runways</span><span class="p">,</span> <span class="n">recuperer_airports</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">classes.aeroports.aeroport</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">classes.meteos.fonctions_meteo</span><span class="w"> </span><span class="kn">import</span> <span class="n">recuperer_meteo</span>
+
+<span class="c1"># 🔄 Pour afficher dans Streamlit des print() d&#39;objets avec .afficher_infos()</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">io</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+
+
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../main.html#main.main">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Fonction principale pour exécuter l&#39;application Streamlit.</span>
+<span class="sd">    Gère les différentes étapes de la simulation d&#39;atterrissage d&#39;un avion.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Initialiser les états de session</span>
+    <span class="k">if</span> <span class="s2">&quot;step&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="p">:</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">step</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="k">if</span> <span class="s2">&quot;code_aeroport&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="p">:</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">code_aeroport</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">if</span> <span class="s2">&quot;piste_choisie&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="p">:</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">piste_choisie</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">if</span> <span class="s2">&quot;meteo_data&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="p">:</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">meteo_data</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1"># Chargement des données</span>
+    <span class="n">runways_df</span> <span class="o">=</span> <span class="n">recuperer_runways</span><span class="p">()</span>
+    <span class="n">airports_df</span> <span class="o">=</span> <span class="n">recuperer_airports</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">step</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Étape 1 : Choix de l&#39;aéroport et de la piste.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            airports_df (DataFrame): DataFrame contenant les informations des aéroports.</span>
+<span class="sd">            runways_df (DataFrame): DataFrame contenant les informations des pistes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Choix de l&#39;aéroport et de la piste&quot;</span><span class="p">)</span>
+
+        <span class="n">airport_codes</span> <span class="o">=</span> <span class="n">airports_df</span><span class="p">[</span><span class="s2">&quot;ident&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="n">selected_code</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">selectbox</span><span class="p">(</span><span class="s2">&quot;✈️ Choisissez un aéroport (code OACI)&quot;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">airport_codes</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">selected_code</span><span class="p">:</span>
+            <span class="c1"># --- Objets ---</span>
+            <span class="n">aeroport</span> <span class="o">=</span> <span class="n">Aeroport</span><span class="p">(</span><span class="n">selected_code</span><span class="p">,</span> <span class="n">runways_df</span><span class="p">)</span>
+
+            <span class="c1"># --- Affichage infos aéroport ---</span>
+            <span class="n">buffer</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">()</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="n">buffer</span>
+            <span class="n">aeroport</span><span class="o">.</span><span class="n">afficher_infos</span><span class="p">()</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">__stdout__</span>
+            <span class="n">st</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">buffer</span><span class="o">.</span><span class="n">getvalue</span><span class="p">())</span>
+
+            <span class="c1"># --- Choix piste ---</span>
+            <span class="n">pistes_dispo</span> <span class="o">=</span> <span class="n">runways_df</span><span class="p">[</span><span class="n">runways_df</span><span class="p">[</span><span class="s2">&quot;ident&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">selected_code</span><span class="p">][</span><span class="s2">&quot;runway_ident&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+            <span class="n">selected_piste</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">selectbox</span><span class="p">(</span><span class="s2">&quot;🛬 Choisissez une piste d&#39;atterrissage&quot;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">pistes_dispo</span><span class="p">)</span>
+
+            <span class="c1"># --- Carte centrée sur l&#39;aéroport sélectionné ---</span>
+            <span class="n">coord_aeroport</span> <span class="o">=</span> <span class="n">airports_df</span><span class="p">[</span><span class="n">airports_df</span><span class="p">[</span><span class="s2">&quot;ident&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">selected_code</span><span class="p">][[</span><span class="s2">&quot;latitude_deg&quot;</span><span class="p">,</span> <span class="s2">&quot;longitude_deg&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span>
+                <span class="mi">0</span><span class="p">]</span>
+            <span class="n">map_center</span> <span class="o">=</span> <span class="p">[</span><span class="n">coord_aeroport</span><span class="p">[</span><span class="s2">&quot;latitude_deg&quot;</span><span class="p">],</span> <span class="n">coord_aeroport</span><span class="p">[</span><span class="s2">&quot;longitude_deg&quot;</span><span class="p">]]</span>
+            <span class="n">zoom_level</span> <span class="o">=</span> <span class="mi">10</span>
+
+            <span class="n">folium_map</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="n">map_center</span><span class="p">,</span> <span class="n">zoom_start</span><span class="o">=</span><span class="n">zoom_level</span><span class="p">)</span>
+
+            <span class="c1"># Ajouter un marqueur sur l&#39;aéroport sélectionné</span>
+            <span class="n">folium</span><span class="o">.</span><span class="n">Marker</span><span class="p">(</span>
+                <span class="n">location</span><span class="o">=</span><span class="n">map_center</span><span class="p">,</span>
+                <span class="n">popup</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Aéroport </span><span class="si">{</span><span class="n">selected_code</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">tooltip</span><span class="o">=</span><span class="n">selected_code</span><span class="p">,</span>
+                <span class="n">icon</span><span class="o">=</span><span class="n">folium</span><span class="o">.</span><span class="n">Icon</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s2">&quot;plane&quot;</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;fa&quot;</span><span class="p">)</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">folium_map</span><span class="p">)</span>
+
+            <span class="c1"># Afficher la carte dans Streamlit</span>
+            <span class="n">st_folium</span><span class="p">(</span><span class="n">folium_map</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">700</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">450</span><span class="p">)</span>
+
+            <span class="c1"># --- Enregistrement en session ---</span>
+            <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">code_aeroport</span> <span class="o">=</span> <span class="n">selected_code</span>
+            <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">piste_choisie</span> <span class="o">=</span> <span class="n">selected_piste</span>
+
+            <span class="c1"># --- Suivant ---</span>
+            <span class="n">col1</span><span class="p">,</span> <span class="n">col2</span><span class="p">,</span> <span class="n">col3</span><span class="p">,</span> <span class="n">col4</span><span class="p">,</span> <span class="n">col5</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">columns</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">col5</span><span class="o">.</span><span class="n">button</span><span class="p">(</span><span class="s2">&quot;SUIVANT ➡&quot;</span><span class="p">):</span>
+                <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">step</span> <span class="o">=</span> <span class="mi">2</span>
+                <span class="n">st</span><span class="o">.</span><span class="n">rerun</span><span class="p">()</span>
+
+    <span class="c1"># === ÉTAPE 2 : Affichage météo ===</span>
+    <span class="k">elif</span> <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">step</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Étape 2 : Affichage des données météos</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            meteo_data (DataFrame): DataFrame contenant les informations de la météo.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Informations météorologiques&quot;</span><span class="p">)</span>
+
+        <span class="n">code</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">code_aeroport</span>
+        <span class="n">piste_id</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">piste_choisie</span>
+        <span class="n">piste</span> <span class="o">=</span> <span class="n">classes</span><span class="o">.</span><span class="n">aeroports</span><span class="o">.</span><span class="n">Piste</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="n">runways_df</span><span class="p">,</span> <span class="n">piste_id</span><span class="p">)</span>
+
+        <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">piste</span> <span class="o">=</span> <span class="n">piste</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Récupération des données météo</span>
+            <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span> <span class="o">=</span> <span class="n">piste</span><span class="o">.</span><span class="n">latitude</span><span class="p">(),</span> <span class="n">piste</span><span class="o">.</span><span class="n">longitude</span><span class="p">()</span>
+            <span class="n">meteo_data</span> <span class="o">=</span> <span class="n">recuperer_meteo</span><span class="p">(</span><span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">)</span>
+
+            <span class="n">pluie</span> <span class="o">=</span> <span class="n">meteo_data</span><span class="p">[</span><span class="s2">&quot;pluie&quot;</span><span class="p">]</span>
+            <span class="n">glace</span> <span class="o">=</span> <span class="n">meteo_data</span><span class="p">[</span><span class="s2">&quot;glace&quot;</span><span class="p">]</span>
+
+            <span class="c1"># Création de l&#39;objet Météo</span>
+            <span class="n">meteo</span> <span class="o">=</span> <span class="n">classes</span><span class="o">.</span><span class="n">meteos</span><span class="o">.</span><span class="n">Meteo</span><span class="p">(</span>
+                <span class="n">meteo_data</span><span class="p">[</span><span class="s2">&quot;T&quot;</span><span class="p">],</span>
+                <span class="n">meteo_data</span><span class="p">[</span><span class="s2">&quot;P&quot;</span><span class="p">],</span>
+                <span class="n">meteo_data</span><span class="p">[</span><span class="s2">&quot;V_vent&quot;</span><span class="p">],</span>
+                <span class="n">meteo_data</span><span class="p">[</span><span class="s2">&quot;Dir_vent&quot;</span><span class="p">],</span>
+                <span class="n">pluie</span><span class="p">,</span>
+                <span class="n">glace</span>
+            <span class="p">)</span>
+
+            <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">meteo</span> <span class="o">=</span> <span class="n">meteo</span>  <span class="c1"># stockage pour les étapes suivantes</span>
+
+            <span class="c1"># Affichage météo</span>
+            <span class="n">st</span><span class="o">.</span><span class="n">subheader</span><span class="p">(</span><span class="s2">&quot;🌤️ Conditions météo actuelles :&quot;</span><span class="p">)</span>
+            <span class="n">st</span><span class="o">.</span><span class="n">markdown</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- 🌡️ Température : **</span><span class="si">{</span><span class="n">meteo_data</span><span class="p">[</span><span class="s1">&#39;T&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">°C**&quot;</span><span class="p">)</span>
+            <span class="n">st</span><span class="o">.</span><span class="n">markdown</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- 🧭 Pression : **</span><span class="si">{</span><span class="n">meteo_data</span><span class="p">[</span><span class="s1">&#39;P&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> hPa**&quot;</span><span class="p">)</span>
+            <span class="n">st</span><span class="o">.</span><span class="n">markdown</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- 💨 Vent : **</span><span class="si">{</span><span class="n">meteo_data</span><span class="p">[</span><span class="s1">&#39;V_vent&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> km/h**, direction **</span><span class="si">{</span><span class="n">meteo_data</span><span class="p">[</span><span class="s1">&#39;Dir_vent&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">°**&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">pluie</span> <span class="ow">and</span> <span class="n">glace</span><span class="p">:</span>
+                <span class="n">st</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                    <span class="s2">&quot;⚠️ ATTENTION CONDITIONS EXTRÊMES : Conditions glacées avec pluie – Coefficient de friction minimal.&quot;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">glace</span><span class="p">:</span>
+                <span class="n">st</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;⚠️ ATTENTION : Glace détectée – Le coefficient de friction sera fortement réduit.&quot;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">pluie</span><span class="p">:</span>
+                <span class="n">st</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;⚠️ ATTENTION : Pluie détectée – Le coefficient de friction sera réduit.&quot;</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">st</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Erreur météo : </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">st</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Valeurs météo par défaut utilisées.&quot;</span><span class="p">)</span>
+            <span class="n">meteo_data</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;T&quot;</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span> <span class="s2">&quot;P&quot;</span><span class="p">:</span> <span class="mi">1013</span><span class="p">,</span> <span class="s2">&quot;V_vent&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Dir_vent&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;pluie&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;glace&quot;</span><span class="p">:</span> <span class="kc">False</span>
+            <span class="p">}</span>
+            <span class="n">pluie</span> <span class="o">=</span> <span class="n">meteo_data</span><span class="p">[</span><span class="s2">&quot;pluie&quot;</span><span class="p">]</span>
+            <span class="n">glace</span> <span class="o">=</span> <span class="n">meteo_data</span><span class="p">[</span><span class="s2">&quot;glace&quot;</span><span class="p">]</span>
+
+        <span class="n">st</span><span class="o">.</span><span class="n">subheader</span><span class="p">(</span><span class="s2">&quot;🛣️ Caractéristiques de la piste :&quot;</span><span class="p">)</span>
+        <span class="c1"># Affichage des infos piste (utilise pluie/glace)</span>
+        <span class="n">buffer</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">()</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="n">buffer</span>
+        <span class="n">piste</span><span class="o">.</span><span class="n">afficher_infos_piste</span><span class="p">(</span><span class="n">pluie</span><span class="o">=</span><span class="n">pluie</span><span class="p">,</span> <span class="n">glace</span><span class="o">=</span><span class="n">glace</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">__stdout__</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">buffer</span><span class="o">.</span><span class="n">getvalue</span><span class="p">())</span>
+
+        <span class="c1"># Navigation</span>
+        <span class="n">col1</span><span class="p">,</span> <span class="n">col2</span><span class="p">,</span> <span class="n">col3</span><span class="p">,</span> <span class="n">col4</span><span class="p">,</span> <span class="n">col5</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">columns</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">col1</span><span class="o">.</span><span class="n">button</span><span class="p">(</span><span class="s2">&quot;⬅ PRÉCÉDENT&quot;</span><span class="p">):</span>
+            <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">step</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">st</span><span class="o">.</span><span class="n">rerun</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">col5</span><span class="o">.</span><span class="n">button</span><span class="p">(</span><span class="s2">&quot;SUIVANT ➡&quot;</span><span class="p">):</span>
+            <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">step</span> <span class="o">=</span> <span class="mi">3</span>
+            <span class="n">st</span><span class="o">.</span><span class="n">rerun</span><span class="p">()</span>
+
+    <span class="k">elif</span> <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">step</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Étape 3 : Choix de l&#39;avion.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Choix de l&#39;avion&quot;</span><span class="p">)</span>
+
+        <span class="kn">from</span><span class="w"> </span><span class="nn">classes.avions.fonction_avion</span><span class="w"> </span><span class="kn">import</span> <span class="n">charger_donnees_avions</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">choix_avion_df</span> <span class="o">=</span> <span class="n">charger_donnees_avions</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">st</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;❌ Impossible de charger les données avions : </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">st</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">choix_avion_df</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="n">st</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;❌ Aucune donnée avion chargée. Vérifie `data_avions.csv`.&quot;</span><span class="p">)</span>
+            <span class="n">st</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+        <span class="c1"># Choix du type d&#39;avion</span>
+        <span class="n">type_avion</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">selectbox</span><span class="p">(</span><span class="s2">&quot;⚙️ Sélectionnez le type d&#39;avion :&quot;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Commercial&quot;</span><span class="p">,</span> <span class="s2">&quot;Militaire&quot;</span><span class="p">])</span>
+        <span class="n">avions_filtres</span> <span class="o">=</span> <span class="n">choix_avion_df</span><span class="p">[</span><span class="n">choix_avion_df</span><span class="p">[</span><span class="s2">&quot;Type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">type_avion</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+        <span class="c1"># Ajouter l&#39;option personnalisée</span>
+        <span class="n">avions_filtres</span> <span class="o">=</span> <span class="n">avions_filtres</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">avion_codes</span> <span class="o">=</span> <span class="n">avions_filtres</span><span class="p">[</span><span class="s2">&quot;Code&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;Autre&quot;</span><span class="p">]</span>
+        <span class="n">selected_code</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">selectbox</span><span class="p">(</span><span class="s2">&quot;🛩 Choisissez un avion :&quot;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">avion_codes</span><span class="p">)</span>
+
+        <span class="n">custom_avion_data</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="n">selected_code</span> <span class="o">==</span> <span class="s2">&quot;Autre&quot;</span><span class="p">:</span>
+            <span class="n">st</span><span class="o">.</span><span class="n">markdown</span><span class="p">(</span><span class="s2">&quot;### Caractéristiques personnalisées de l’avion&quot;</span><span class="p">)</span>
+
+            <span class="n">hauteur_m</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">number_input</span><span class="p">(</span><span class="s2">&quot;Hauteur de l’aile (m)&quot;</span><span class="p">,</span> <span class="n">min_value</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%.2f</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">surface_m2</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">number_input</span><span class="p">(</span><span class="s2">&quot;Surface alaire (m²)&quot;</span><span class="p">,</span> <span class="n">min_value</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%.2f</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="n">allongement</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">number_input</span><span class="p">(</span><span class="s2">&quot;Allongement&quot;</span><span class="p">,</span> <span class="n">min_value</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%.2f</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">cl_max</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">number_input</span><span class="p">(</span><span class="s2">&quot;Coefficient de portance max à l’atterrissage&quot;</span><span class="p">,</span> <span class="n">min_value</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+                                     <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%.2f</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">cd_train</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">number_input</span><span class="p">(</span><span class="s2">&quot;Coefficient de trainée du train d’atterrissage&quot;</span><span class="p">,</span> <span class="n">min_value</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
+                                       <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%.3f</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">cd_volets</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">number_input</span><span class="p">(</span><span class="s2">&quot;Coefficient de trainée des volets&quot;</span><span class="p">,</span> <span class="n">min_value</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%.3f</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="n">custom_avion_data</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;Code&#39;</span><span class="p">:</span> <span class="s1">&#39;CUSTOM&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Allongement&#39;</span><span class="p">:</span> <span class="n">allongement</span><span class="p">,</span>
+                <span class="s1">&#39;Hauteur_aile_m&#39;</span><span class="p">:</span> <span class="n">hauteur_m</span><span class="p">,</span>
+                <span class="s1">&#39;Hauteur_aile_ft&#39;</span><span class="p">:</span> <span class="n">hauteur_m</span> <span class="o">*</span> <span class="mf">3.28084</span><span class="p">,</span>
+                <span class="s1">&#39;Surface_alaire_m2&#39;</span><span class="p">:</span> <span class="n">surface_m2</span><span class="p">,</span>
+                <span class="s1">&#39;Surface_alaire_ft2&#39;</span><span class="p">:</span> <span class="n">surface_m2</span> <span class="o">*</span> <span class="mf">10.7639</span><span class="p">,</span>
+                <span class="s1">&#39;CL_max_atterrissage&#39;</span><span class="p">:</span> <span class="n">cl_max</span><span class="p">,</span>
+                <span class="s1">&#39;Cd_train&#39;</span><span class="p">:</span> <span class="n">cd_train</span><span class="p">,</span>
+                <span class="s1">&#39;Cd_volets&#39;</span><span class="p">:</span> <span class="n">cd_volets</span>
+            <span class="p">}</span>
+
+        <span class="c1"># Poids à l’atterrissage</span>
+        <span class="n">poids</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">number_input</span><span class="p">(</span><span class="s2">&quot;⚖️ Entrez le poids à l’atterrissage (lb)&quot;</span><span class="p">,</span> <span class="n">min_value</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">1000.0</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%.0f</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Sauvegarde en session</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">type_avion</span> <span class="o">=</span> <span class="n">type_avion</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">avion_code</span> <span class="o">=</span> <span class="n">selected_code</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">poids</span> <span class="o">=</span> <span class="n">poids</span>
+        <span class="k">if</span> <span class="n">custom_avion_data</span><span class="p">:</span>
+            <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">custom_avion_data</span> <span class="o">=</span> <span class="n">custom_avion_data</span>
+
+        <span class="c1"># Navigation</span>
+        <span class="n">col1</span><span class="p">,</span> <span class="n">col2</span><span class="p">,</span> <span class="n">col3</span><span class="p">,</span> <span class="n">col4</span><span class="p">,</span> <span class="n">col5</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">columns</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">col1</span><span class="o">.</span><span class="n">button</span><span class="p">(</span><span class="s2">&quot;⬅ PRÉCÉDENT&quot;</span><span class="p">):</span>
+            <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">step</span> <span class="o">=</span> <span class="mi">2</span>
+            <span class="n">st</span><span class="o">.</span><span class="n">rerun</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">col5</span><span class="o">.</span><span class="n">button</span><span class="p">(</span><span class="s2">&quot;SUIVANT ➡&quot;</span><span class="p">):</span>
+            <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">step</span> <span class="o">=</span> <span class="mi">4</span>
+            <span class="n">st</span><span class="o">.</span><span class="n">rerun</span><span class="p">()</span>
+
+    <span class="k">elif</span> <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">step</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Étape 4 : Résultats de la simulation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Résultats de la simulation&quot;</span><span class="p">)</span>
+
+        <span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">classes.avions</span><span class="w"> </span><span class="kn">import</span> <span class="n">Commercial</span><span class="p">,</span> <span class="n">Militaire</span><span class="p">,</span> <span class="n">ChoixAvion</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">redirection_aeroport</span><span class="w"> </span><span class="kn">import</span> <span class="n">compare</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">classes.meteos</span><span class="w"> </span><span class="kn">import</span> <span class="n">Meteo</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">classes.avions.fonction_avion</span><span class="w"> </span><span class="kn">import</span> <span class="n">charger_donnees_avions</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">affichages_graphiques</span><span class="w"> </span><span class="kn">import</span> <span class="n">afficher_trajectoire_atterrissage</span><span class="p">,</span> <span class="n">afficher_freinage</span>
+        <span class="c1"># Récupération des variables de session</span>
+        <span class="n">poids</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">poids</span>
+        <span class="n">meteo</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">meteo</span>
+        <span class="n">piste</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">piste</span>
+        <span class="n">type_avion</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">type_avion</span>
+        <span class="n">avion_code</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">avion_code</span>
+
+        <span class="c1"># Choix de l&#39;avion (objet)</span>
+        <span class="k">if</span> <span class="n">avion_code</span> <span class="o">==</span> <span class="s2">&quot;Autre (personnalisé)&quot;</span><span class="p">:</span>
+            <span class="n">choix_avion_obj</span> <span class="o">=</span> <span class="n">ChoixAvion</span><span class="p">(</span><span class="s1">&#39;CUSTOM&#39;</span><span class="p">,</span> <span class="n">custom_data</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">custom_avion_data</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">choix_avion_obj</span> <span class="o">=</span> <span class="n">ChoixAvion</span><span class="p">(</span><span class="n">avion_code</span><span class="p">)</span>
+
+        <span class="c1"># Création de l&#39;objet avion</span>
+        <span class="k">if</span> <span class="n">type_avion</span> <span class="o">==</span> <span class="s2">&quot;Commercial&quot;</span><span class="p">:</span>
+            <span class="n">avion</span> <span class="o">=</span> <span class="n">Commercial</span><span class="p">(</span><span class="n">poids</span><span class="p">,</span> <span class="n">choix_avion_obj</span><span class="p">,</span> <span class="n">meteo</span><span class="p">,</span> <span class="n">piste</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">avion</span> <span class="o">=</span> <span class="n">Militaire</span><span class="p">(</span><span class="n">poids</span><span class="p">,</span> <span class="n">choix_avion_obj</span><span class="p">,</span> <span class="n">meteo</span><span class="p">,</span> <span class="n">piste</span><span class="p">)</span>
+
+        <span class="c1"># Calcul et logs</span>
+        <span class="n">coef_secu</span> <span class="o">=</span> <span class="mf">1.67</span>
+        <span class="n">piste_finale</span><span class="p">,</span> <span class="n">logs</span><span class="p">,</span> <span class="n">distance_necessaire</span> <span class="o">=</span> <span class="n">compare</span><span class="p">(</span><span class="n">avion</span><span class="p">,</span> <span class="n">piste</span><span class="p">)</span>
+
+        <span class="c1"># Affichage ligne par ligne</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">subheader</span><span class="p">(</span><span class="s2">&quot;Vérification et recherche de pistes :&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">log_type</span><span class="p">,</span> <span class="n">message</span> <span class="ow">in</span> <span class="n">logs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">log_type</span> <span class="o">==</span> <span class="s2">&quot;error&quot;</span><span class="p">:</span>
+                <span class="n">st</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">log_type</span> <span class="o">==</span> <span class="s2">&quot;success&quot;</span><span class="p">:</span>
+                <span class="n">st</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">log_type</span> <span class="o">==</span> <span class="s2">&quot;info&quot;</span><span class="p">:</span>
+                <span class="n">st</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">st</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">1.5</span><span class="p">)</span>
+
+        <span class="c1"># Direction du vent</span>
+        <span class="n">dir_vent</span> <span class="o">=</span> <span class="n">recuperer_meteo</span><span class="p">(</span><span class="n">piste_finale</span><span class="o">.</span><span class="n">latitude</span><span class="p">(),</span> <span class="n">piste_finale</span><span class="o">.</span><span class="n">longitude</span><span class="p">())[</span><span class="s2">&quot;Dir_vent&quot;</span><span class="p">]</span>
+
+        <span class="n">st</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;---&quot;</span><span class="p">)</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">subheader</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Détails des résultats pour l&#39;avion : `</span><span class="si">{</span><span class="n">avion</span><span class="o">.</span><span class="n">code</span><span class="si">}</span><span class="s2">`&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">dir_vent</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">180</span><span class="p">):</span>
+            <span class="n">st</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;💨 Le vent vient de l&#39;Est (</span><span class="si">{</span><span class="n">dir_vent</span><span class="si">}</span><span class="s2">°)</span><span class="se">\n\n</span><span class="s2">➡️ Atterrissage recommandé sur la piste **</span><span class="si">{</span><span class="n">piste_finale</span><span class="o">.</span><span class="n">orientation</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">**&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">dir_vent</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">181</span><span class="p">,</span> <span class="mi">360</span><span class="p">):</span>
+            <span class="n">st</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;💨 Le vent vient de l&#39;Ouest (</span><span class="si">{</span><span class="n">dir_vent</span><span class="si">}</span><span class="s2">°)</span><span class="se">\n\n</span><span class="s2">➡️ Atterrissage recommandé sur la piste **</span><span class="si">{</span><span class="n">piste_finale</span><span class="o">.</span><span class="n">orientation</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">**&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">st</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;⚠️ Direction du vent non déterminée&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Changement de l&#39;objet avion</span>
+        <span class="k">if</span> <span class="n">type_avion</span> <span class="o">==</span> <span class="s2">&quot;Commercial&quot;</span><span class="p">:</span>
+            <span class="n">avion</span> <span class="o">=</span> <span class="n">Commercial</span><span class="p">(</span><span class="n">poids</span><span class="p">,</span> <span class="n">choix_avion_obj</span><span class="p">,</span> <span class="n">meteo</span><span class="p">,</span> <span class="n">piste_finale</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">avion</span> <span class="o">=</span> <span class="n">Militaire</span><span class="p">(</span><span class="n">poids</span><span class="p">,</span> <span class="n">choix_avion_obj</span><span class="p">,</span> <span class="n">meteo</span><span class="p">,</span> <span class="n">piste_finale</span><span class="p">)</span>
+
+        <span class="c1"># Résultats de calculs</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">metric</span><span class="p">(</span><span class="s2">&quot;Vitesse de décrochage&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">avion</span><span class="o">.</span><span class="n">calcul_V_stall</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> ft/s&quot;</span><span class="p">)</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">metric</span><span class="p">(</span><span class="s2">&quot;Distance d&#39;approche (S_A)&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">avion</span><span class="o">.</span><span class="n">calcul_S_A</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> ft&quot;</span><span class="p">)</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">metric</span><span class="p">(</span><span class="s2">&quot;Distance de transition (S_TR)&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">avion</span><span class="o">.</span><span class="n">calcul_S_TR</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> ft&quot;</span><span class="p">)</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">metric</span><span class="p">(</span><span class="s2">&quot;Distance de roulement libre (S_FR)&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">avion</span><span class="o">.</span><span class="n">calcul_S_FR</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> ft&quot;</span><span class="p">)</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">metric</span><span class="p">(</span><span class="s2">&quot;Distance de freinage (S_B)&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">avion</span><span class="o">.</span><span class="n">calcul_S_B</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> ft&quot;</span><span class="p">)</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">metric</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Distance totale d&#39;atterrissage&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">avion</span><span class="o">.</span><span class="n">calcul_S_LA</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> ft&quot;</span><span class="p">)</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">success</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;✈️ **Distance d&#39;atterrissage au sol** : </span><span class="si">{</span><span class="p">(</span><span class="n">avion</span><span class="o">.</span><span class="n">calcul_S_B</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">avion</span><span class="o">.</span><span class="n">calcul_S_FR</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">avion</span><span class="o">.</span><span class="n">calcul_S_TR</span><span class="p">())</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">coef_secu</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> ft&quot;</span><span class="p">)</span>
+
+        <span class="n">st</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;---&quot;</span><span class="p">)</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">markdown</span><span class="p">(</span><span class="s2">&quot;### 📈 Visualisations&quot;</span><span class="p">)</span>
+
+        <span class="n">col1</span><span class="p">,</span> <span class="n">col2</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">columns</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="n">col1</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">st</span><span class="o">.</span><span class="n">button</span><span class="p">(</span><span class="s2">&quot;📍 Afficher la trajectoire d’atterrissage&quot;</span><span class="p">):</span>
+                <span class="n">afficher_trajectoire_atterrissage</span><span class="p">(</span><span class="n">avion</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="n">col2</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">st</span><span class="o">.</span><span class="n">button</span><span class="p">(</span><span class="s2">&quot;🛑 Afficher le profil de freinage&quot;</span><span class="p">):</span>
+                <span class="n">afficher_freinage</span><span class="p">(</span><span class="n">avion</span><span class="p">)</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Droits d'auteur 2025, Loranchet Pierrick - Berteaud Kilian - Chenuet Alexis.</p>
+  </div>
+
+  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
+    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,10 +1,17 @@
-"""--------Projet de session - Simulation de l'atterrissage d'un avion----------
+"""
+-------- Projet de session - Simulation de l'atterrissage d'un avion --------
 
+Auteurs :
     - Kilian Berteaud
     - Alexis Chenuet
     - Pierrick Loranchet
 
-Cours MGA802, Session Été 2025
+Cours : MGA802, Session Été 2025
+
+Description :
+Ce script est le point d'entrée principal pour une application Streamlit qui simule l'atterrissage d'un avion.
+Il guide l'utilisateur à travers plusieurs étapes pour sélectionner un aéroport, une piste, vérifier les conditions météorologiques,
+choisir un avion, et finalement simuler l'atterrissage.
 """
 
 
@@ -23,6 +30,10 @@ import sys
 
 
 def main():
+    """
+    Fonction principale pour exécuter l'application Streamlit.
+    Gère les différentes étapes de la simulation d'atterrissage d'un avion.
+    """
     # Initialiser les états de session
     if "step" not in st.session_state:
         st.session_state.step = 1
@@ -41,6 +52,13 @@ def main():
     airports_df = recuperer_airports()
 
     if st.session_state.step == 1:
+        """
+        Étape 1 : Choix de l'aéroport et de la piste.
+
+        Args:
+            airports_df (DataFrame): DataFrame contenant les informations des aéroports.
+            runways_df (DataFrame): DataFrame contenant les informations des pistes.
+        """
         st.title("Choix de l'aéroport et de la piste")
 
         airport_codes = airports_df["ident"].tolist()
@@ -92,6 +110,12 @@ def main():
 
     # === ÉTAPE 2 : Affichage météo ===
     elif st.session_state.step == 2:
+        """
+        Étape 2 : Affichage des données météos
+
+        Args:
+            meteo_data (DataFrame): DataFrame contenant les informations de la météo.
+        """
         st.title("Informations météorologiques")
 
         code = st.session_state.code_aeroport
@@ -162,6 +186,9 @@ def main():
             st.rerun()
 
     elif st.session_state.step == 3:
+        """
+        Étape 3 : Choix de l'avion.
+        """
         st.title("Choix de l'avion")
 
         from classes.avions.fonction_avion import charger_donnees_avions
@@ -233,6 +260,9 @@ def main():
             st.rerun()
 
     elif st.session_state.step == 4:
+        """
+        Étape 4 : Résultats de la simulation.
+        """
         st.title("Résultats de la simulation")
 
         import time

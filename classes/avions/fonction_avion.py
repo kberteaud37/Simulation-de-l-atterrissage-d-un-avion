@@ -5,6 +5,7 @@ def charger_donnees_avions(convertir_en_pieds=True):
     """Charge, nettoie et prépare les données techniques des avions depuis un fichier CSV.
 
         Cette fonction effectue plusieurs opérations :
+
         1. Charge le fichier CSV en testant différents séparateurs
         2. Nettoie les données (suppression des doublons, gestion des valeurs manquantes)
         3. Convertit les unités métriques en unités impériales si demandées

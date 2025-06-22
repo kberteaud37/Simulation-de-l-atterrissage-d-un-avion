@@ -1,0 +1,152 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>classes.meteos.meteo &mdash; Documentation Simulation d&#39;atterrissage Juin 2025</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=87a02b47"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/translations.js?v=e6b791cb"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Recherche" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Simulation d'atterrissage
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Rechercher docs" aria-label="Rechercher docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contenu:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Modules</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Simulation d'atterrissage</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Code du module</a></li>
+      <li class="breadcrumb-item active">classes.meteos.meteo</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Code source de classes.meteos.meteo</h1><div class="highlight"><pre>
+<div class="viewcode-block" id="Meteo">
+<a class="viewcode-back" href="../../../modules/classes.meteos.html#classes.meteos.meteo.Meteo">[docs]</a>
+<span></span><span class="k">class</span><span class="w"> </span><span class="nc">Meteo</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Classe représentant les conditions météorologiques pour la simulation d&#39;atterrissage.</span>
+
+<span class="sd">    Cette classe calcule et fournit les paramètres météorologiques nécessaires à la simulation,</span>
+<span class="sd">    y compris la densité de l&#39;air en fonction de la température et de la pression.</span>
+
+<span class="sd">    :param temperature: Température en degrés Celsius.</span>
+<span class="sd">    :type temperature: float</span>
+<span class="sd">    :param pression: Pression atmosphérique en hPa.</span>
+<span class="sd">    :type pression: float</span>
+<span class="sd">    :param vitesse_vent: Vitesse du vent en km/h.</span>
+<span class="sd">    :type vitesse_vent: float</span>
+<span class="sd">    :param orientation_vent: Orientation du vent en degrés.</span>
+<span class="sd">    :type orientation_vent: float</span>
+<span class="sd">    :param pluie: Indique s&#39;il pleut.</span>
+<span class="sd">    :type pluie: bool</span>
+<span class="sd">    :param glace: Indique s&#39;il y a de la glace.</span>
+<span class="sd">    :type glace: bool</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1">#Constante des gaz parfaits</span>
+    <span class="n">R</span> <span class="o">=</span> <span class="mi">287</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">temperature</span><span class="p">,</span><span class="n">pression</span><span class="p">,</span><span class="n">vitesse_vent</span><span class="p">,</span><span class="n">orientation_vent</span><span class="p">,</span><span class="n">pluie</span><span class="p">,</span><span class="n">glace</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialise un objet Meteo avec les conditions météorologiques.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">T</span> <span class="o">=</span> <span class="n">temperature</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">P</span> <span class="o">=</span> <span class="n">pression</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">V_vent</span> <span class="o">=</span> <span class="n">vitesse_vent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">orientation_vent</span> <span class="o">=</span> <span class="n">orientation_vent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pluie</span> <span class="o">=</span> <span class="n">pluie</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">glace</span> <span class="o">=</span> <span class="n">glace</span>
+
+    <span class="c1">#Calcul de la densité avec loi des gaz parfaits</span>
+<div class="viewcode-block" id="Meteo.calcul_densite">
+<a class="viewcode-back" href="../../../modules/classes.meteos.html#classes.meteos.meteo.Meteo.calcul_densite">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">calcul_densite</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calcule la densité de l&#39;air en utilisant la loi des gaz parfaits.</span>
+
+<span class="sd">        :return: Densité de l&#39;air en slug/ft³.</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">T_K</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="o">+</span><span class="mf">273.15</span>
+        <span class="n">P_Pa</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">P</span><span class="o">*</span><span class="mi">100</span>
+        <span class="n">densite</span><span class="o">=</span><span class="n">P_Pa</span><span class="o">/</span><span class="p">(</span><span class="n">T_K</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">R</span><span class="p">)</span> <span class="c1">#kg/m3</span>
+        <span class="n">densite</span> <span class="o">=</span> <span class="n">densite</span> <span class="o">*</span> <span class="mf">0.00194032</span> <span class="c1">#slug/ft3</span>
+        <span class="k">return</span> <span class="n">densite</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Droits d'auteur 2025, Loranchet Pierrick - Berteaud Kilian - Chenuet Alexis.</p>
+  </div>
+
+  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
+    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

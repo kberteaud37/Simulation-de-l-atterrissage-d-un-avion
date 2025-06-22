@@ -1,0 +1,218 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>classes.avions.militaire &mdash; Documentation Simulation d&#39;atterrissage Juin 2025</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=87a02b47"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/translations.js?v=e6b791cb"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Recherche" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Simulation d'atterrissage
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Rechercher docs" aria-label="Rechercher docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contenu:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Modules</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Simulation d'atterrissage</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Code du module</a></li>
+      <li class="breadcrumb-item active">classes.avions.militaire</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Code source de classes.avions.militaire</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">cos</span><span class="p">,</span> <span class="n">sin</span><span class="p">,</span> <span class="n">tan</span><span class="p">,</span> <span class="n">radians</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">classes.avions.avion</span><span class="w"> </span><span class="kn">import</span> <span class="n">Avion</span>
+
+<div class="viewcode-block" id="Militaire">
+<a class="viewcode-back" href="../../../modules/classes.avions.html#classes.avions.militaire.Militaire">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Militaire</span><span class="p">(</span><span class="n">Avion</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Classe représentant un avion militaire pour la simulation d&#39;atterrissage.</span>
+
+<span class="sd">        Hérite de la classe Avion de base et implémente les calculs spécifiques</span>
+<span class="sd">        aux avions militaires selon les normes de l&#39;aviation militaire.</span>
+
+<span class="sd">        :param poids_atterrissage: Poids de l&#39;avion à l&#39;atterrissage (lbs)</span>
+<span class="sd">        :type poids_atterrissage: float</span>
+<span class="sd">        :param choix_avion: Objet contenant les caractéristiques techniques de l&#39;avion</span>
+<span class="sd">        :type choix_avion: ChoixAvion</span>
+<span class="sd">        :param meteo: Objet contenant les conditions météorologiques</span>
+<span class="sd">        :type meteo: Meteo</span>
+<span class="sd">        :param piste: Objet représentant la piste d&#39;atterrissage</span>
+<span class="sd">        :type piste: Piste</span>
+<span class="sd">        :param vitesse_vent: Vitesse du vent de face (ft/s), defaults to 0</span>
+<span class="sd">        :type vitesse_vent: float, optional</span>
+<span class="sd">        :param facteur_de_charge: Facteur de charge pour les calculs de trajectoire, defaults to 2</span>
+<span class="sd">        :type facteur_de_charge: float, optional</span>
+<span class="sd">        :param hauteur_obstacle: Hauteur de l&#39;obstacle à franchir (ft), defaults to 50</span>
+<span class="sd">        :type hauteur_obstacle: float, optional</span>
+<span class="sd">        :param coef_transition: Coefficient pour le calcul de la vitesse de transition, defaults to 1.15</span>
+<span class="sd">        :type coef_transition: float, optional</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">poids_atterrissage</span><span class="p">,</span> <span class="n">choix_avion</span><span class="p">,</span> <span class="n">meteo</span><span class="p">,</span> <span class="n">piste</span><span class="p">,</span> <span class="n">vitesse_vent</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                 <span class="n">facteur_de_charge</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span><span class="n">hauteur_obstacle</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
+                 <span class="n">coef_transition</span> <span class="o">=</span> <span class="mf">1.15</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">poids_atterrissage</span><span class="p">,</span> <span class="n">choix_avion</span><span class="p">,</span>
+                         <span class="n">meteo</span><span class="p">,</span> <span class="n">piste</span><span class="p">,</span> <span class="n">vitesse_vent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="n">facteur_de_charge</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">H_OBS</span> <span class="o">=</span> <span class="n">hauteur_obstacle</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coef_TR</span> <span class="o">=</span> <span class="n">coef_transition</span>
+
+<div class="viewcode-block" id="Militaire.calcul_V_TR">
+<a class="viewcode-back" href="../../../modules/classes.avions.html#classes.avions.militaire.Militaire.calcul_V_TR">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">calcul_V_TR</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calcule la vitesse de transition pendant l&#39;arrondi.</span>
+
+<span class="sd">               :return: Vitesse de transition (ft/s)</span>
+<span class="sd">               :rtype: float</span>
+<span class="sd">               &quot;&quot;&quot;</span>
+        <span class="n">V_stall</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcul_V_stall</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">coef_TR</span> <span class="o">*</span> <span class="n">V_stall</span></div>
+
+
+<div class="viewcode-block" id="Militaire.calcul_R">
+<a class="viewcode-back" href="../../../modules/classes.avions.html#classes.avions.militaire.Militaire.calcul_R">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">calcul_R</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calcule le rayon de la trajectoire circulaire pendant l&#39;arrondi.</span>
+
+<span class="sd">                :return: Rayon de la trajectoire circulaire (ft)</span>
+<span class="sd">                :rtype: float</span>
+<span class="sd">                &quot;&quot;&quot;</span>
+        <span class="n">V_TR</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcul_V_TR</span><span class="p">()</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">V_TR</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="Militaire.calcul_H_TR">
+<a class="viewcode-back" href="../../../modules/classes.avions.html#classes.avions.militaire.Militaire.calcul_H_TR">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">calcul_H_TR</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calcule la hauteur perdue pendant la phase de transition.</span>
+
+<span class="sd">                :return: Hauteur perdue durant la transition (ft)</span>
+<span class="sd">                :rtype: float</span>
+<span class="sd">                &quot;&quot;&quot;</span>
+        <span class="n">R</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcul_R</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">R</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">cos</span><span class="p">(</span><span class="n">radians</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">angle_de_descente</span><span class="p">)))</span></div>
+
+
+<div class="viewcode-block" id="Militaire.calcul_S_A">
+<a class="viewcode-back" href="../../../modules/classes.avions.html#classes.avions.militaire.Militaire.calcul_S_A">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">calcul_S_A</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calcule la distance horizontale de la phase d&#39;approche.</span>
+
+<span class="sd">                :return: Distance d&#39;approche (ft)</span>
+<span class="sd">                :rtype: float</span>
+<span class="sd">                &quot;&quot;&quot;</span>
+        <span class="n">H_TR</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcul_H_TR</span><span class="p">()</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">H_TR</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">H_OBS</span><span class="p">)</span> <span class="o">/</span> <span class="n">tan</span><span class="p">(</span><span class="n">radians</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">angle_de_descente</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="Militaire.calcul_S_TR">
+<a class="viewcode-back" href="../../../modules/classes.avions.html#classes.avions.militaire.Militaire.calcul_S_TR">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">calcul_S_TR</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calcule la distance horizontale de la phase de transition.</span>
+
+<span class="sd">                :return: Distance de transition (ft)</span>
+<span class="sd">                :rtype: float</span>
+<span class="sd">                &quot;&quot;&quot;</span>
+        <span class="n">R</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcul_R</span><span class="p">()</span>
+        <span class="k">return</span> <span class="o">-</span><span class="n">R</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">radians</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">angle_de_descente</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="Militaire.calcul_S_LA">
+<a class="viewcode-back" href="../../../modules/classes.avions.html#classes.avions.militaire.Militaire.calcul_S_LA">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">calcul_S_LA</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calcule la distance totale d&#39;atterrissage avec marge de sécurité.</span>
+
+<span class="sd">                Applique un facteur de sécurité de 1.6 selon les normes aéronautiques.</span>
+
+<span class="sd">                :return: Distance totale d&#39;atterrissage avec marge (ft)</span>
+<span class="sd">                :rtype: float</span>
+<span class="sd">                &quot;&quot;&quot;</span>
+        <span class="n">S_A</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcul_S_A</span><span class="p">()</span>
+        <span class="n">S_TR</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcul_S_TR</span><span class="p">()</span>
+        <span class="n">S_FR</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcul_S_FR</span><span class="p">()</span>
+        <span class="n">S_B</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calcul_S_B</span><span class="p">()</span>
+        <span class="k">return</span> <span class="mf">1.6</span><span class="o">*</span><span class="p">(</span><span class="n">S_A</span><span class="o">+</span><span class="n">S_TR</span><span class="o">+</span><span class="n">S_FR</span><span class="o">+</span><span class="n">S_B</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Droits d'auteur 2025, Loranchet Pierrick - Berteaud Kilian - Chenuet Alexis.</p>
+  </div>
+
+  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
+    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

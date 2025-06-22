@@ -34,26 +34,58 @@ class Militaire(Avion):
         self.coef_TR = coef_transition
 
     def calcul_V_TR(self):
+        """Calcule la vitesse de transition pendant l'arrondi.
+
+               :return: Vitesse de transition (ft/s)
+               :rtype: float
+               """
         V_stall = self.calcul_V_stall()
         return self.coef_TR * V_stall
 
     def calcul_R(self):
+        """Calcule le rayon de la trajectoire circulaire pendant l'arrondi.
+
+                :return: Rayon de la trajectoire circulaire (ft)
+                :rtype: float
+                """
         V_TR = self.calcul_V_TR()
         return (V_TR ** 2) / (self.g * (self.n - 1))
 
     def calcul_H_TR(self):
+        """Calcule la hauteur perdue pendant la phase de transition.
+
+                :return: Hauteur perdue durant la transition (ft)
+                :rtype: float
+                """
         R = self.calcul_R()
         return R * (1 - cos(radians(self.angle_de_descente)))
 
     def calcul_S_A(self):
+        """Calcule la distance horizontale de la phase d'approche.
+
+                :return: Distance d'approche (ft)
+                :rtype: float
+                """
         H_TR = self.calcul_H_TR()
         return (H_TR - self.H_OBS) / tan(radians(self.angle_de_descente))
 
     def calcul_S_TR(self):
+        """Calcule la distance horizontale de la phase de transition.
+
+                :return: Distance de transition (ft)
+                :rtype: float
+                """
         R = self.calcul_R()
         return -R * sin(radians(self.angle_de_descente))
 
     def calcul_S_LA(self):
+        """Calcule la distance totale d'atterrissage avec marge de sécurité.
+
+                Applique un facteur de sécurité de 1.6 selon les normes aéronautiques.
+
+                :return: Distance totale d'atterrissage avec marge (ft)
+                :rtype: float
+                """
         S_A = self.calcul_S_A()
         S_TR = self.calcul_S_TR()
         S_FR = self.calcul_S_FR()

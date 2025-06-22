@@ -1,0 +1,190 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>classes.meteos.fonctions_meteo &mdash; Documentation Simulation d&#39;atterrissage Juin 2025</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=87a02b47"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/translations.js?v=e6b791cb"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Recherche" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Simulation d'atterrissage
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Rechercher docs" aria-label="Rechercher docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contenu:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Modules</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Simulation d'atterrissage</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Code du module</a></li>
+      <li class="breadcrumb-item active">classes.meteos.fonctions_meteo</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Code source de classes.meteos.fonctions_meteo</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+
+<div class="viewcode-block" id="recuperer_meteo">
+<a class="viewcode-back" href="../../../modules/classes.meteos.html#classes.meteos.fonctions_meteo.recuperer_meteo">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">recuperer_meteo</span><span class="p">(</span><span class="n">latitude</span><span class="p">,</span><span class="n">longitude</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Récupère les données météorologiques actuelles pour des coordonnées géographiques données.</span>
+
+<span class="sd">    Cette fonction interroge l&#39;API Open-Meteo pour obtenir les conditions météo actuelles</span>
+<span class="sd">    et retourne les données pertinentes pour l&#39;aviation, notamment :</span>
+
+<span class="sd">    - Température, pression, vitesse et direction du vent</span>
+<span class="sd">    - Indicateurs de conditions météorologiques critiques (pluie, glace)</span>
+
+<span class="sd">    Args:</span>
+
+<span class="sd">        - latitude (float): Latitude du point à interroger (de -90 à 90)</span>
+<span class="sd">        - longitude (float): Longitude du point à interroger (de -180 à 180)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: Dictionnaire contenant les données météorologiques avec les clés suivantes :</span>
+<span class="sd">            - &quot;T&quot; (float): Température à 2m en °C</span>
+<span class="sd">            - &quot;P&quot; (float): Pression au niveau de la mer en hPa</span>
+<span class="sd">            - &quot;V_vent&quot; (float): Vitesse du vent à 10m en km/h</span>
+<span class="sd">            - &quot;Dir_vent&quot; (float): Direction du vent magnétique (orientation réelle - 15°)</span>
+<span class="sd">            - &quot;pluie&quot; (bool): True si précipitations ou codes météo de pluie détectés</span>
+<span class="sd">            - &quot;glace&quot; (bool): True si température &lt;0°C ou codes météo de gel détectés</span>
+<span class="sd">        str: Message d&#39;erreur si la requête échoue (format &quot;Erreur: [code_statut]&quot;)</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: Si les coordonnées fournies sont hors des plages valides</span>
+<span class="sd">        requests.exceptions.RequestException: Pour les erreurs de connexion ou de timeout</span>
+
+<span class="sd">    Notes:</span>
+<span class="sd">        - Les codes météo (WMO) utilisés pour détecter pluie/glace correspondent à :</span>
+
+<span class="sd">          * Pluie : 51,53,55,61,63,65,80,81,82</span>
+<span class="sd">          * Glace : 56,57,66,67,71-77,85,86</span>
+<span class="sd">        - La direction du vent est ajustée de -15° pour obtenir l&#39;orientation magnétique</span>
+<span class="sd">        - En cas d&#39;absence de données de précipitations/code météo, elles sont initialisées à 0</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># URL de l&#39;API avec les paramètres souhaités</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;https://api.open-meteo.com/v1/forecast&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;?latitude=</span><span class="si">{</span><span class="n">latitude</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;&amp;longitude=</span><span class="si">{</span><span class="n">longitude</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;&amp;current=temperature_2m,pressure_msl,wind_speed_10m,wind_direction_10m,precipitation,weather_code&quot;</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Requête</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+    <span class="c1"># Vérification et affichage</span>
+    <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        <span class="n">current_weather</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;current&#39;</span><span class="p">]</span>
+
+        <span class="c1">#Température en °C</span>
+        <span class="n">temperature</span><span class="o">=</span><span class="n">current_weather</span><span class="p">[</span><span class="s1">&#39;temperature_2m&#39;</span><span class="p">]</span>
+
+        <span class="c1">#Pression en hPa</span>
+        <span class="n">pression</span><span class="o">=</span><span class="n">current_weather</span><span class="p">[</span><span class="s1">&#39;pressure_msl&#39;</span><span class="p">]</span>
+
+        <span class="c1">#Vitesse du vent en km/h</span>
+        <span class="n">vitesse_vent</span><span class="o">=</span><span class="n">current_weather</span><span class="p">[</span><span class="s1">&#39;wind_speed_10m&#39;</span><span class="p">]</span>
+
+        <span class="c1">#Orientation du vent en °</span>
+        <span class="n">orientation_vent</span><span class="o">=</span><span class="n">current_weather</span><span class="p">[</span><span class="s1">&#39;wind_direction_10m&#39;</span><span class="p">]</span>
+        <span class="n">orientation_mag</span><span class="o">=</span><span class="n">orientation_vent</span><span class="o">-</span><span class="mi">15</span>
+        <span class="c1">#Qte de précipitations</span>
+        <span class="n">precipitation</span> <span class="o">=</span> <span class="n">current_weather</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;precipitation&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1">#Code Météo des précipitations</span>
+        <span class="n">weather_code</span> <span class="o">=</span> <span class="n">current_weather</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;weather_code&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1">#Detection Pluie</span>
+        <span class="n">pluie</span> <span class="o">=</span> <span class="n">precipitation</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">weather_code</span> <span class="ow">in</span> <span class="p">{</span><span class="mi">51</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">63</span><span class="p">,</span> <span class="mi">65</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">81</span><span class="p">,</span> <span class="mi">82</span><span class="p">}</span>
+
+        <span class="c1">#Detection Glace</span>
+        <span class="n">glace</span> <span class="o">=</span> <span class="n">temperature</span><span class="o">&lt;</span><span class="mi">0</span> <span class="ow">or</span> <span class="n">weather_code</span> <span class="ow">in</span> <span class="p">{</span><span class="mi">56</span><span class="p">,</span> <span class="mi">57</span><span class="p">,</span><span class="mi">66</span><span class="p">,</span><span class="mi">67</span><span class="p">,</span><span class="mi">71</span><span class="p">,</span><span class="mi">73</span><span class="p">,</span><span class="mi">75</span><span class="p">,</span><span class="mi">77</span><span class="p">,</span><span class="mi">85</span><span class="p">,</span><span class="mi">86</span><span class="p">}</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;T&quot;</span><span class="p">:</span> <span class="n">temperature</span><span class="p">,</span><span class="s2">&quot;P&quot;</span><span class="p">:</span> <span class="n">pression</span><span class="p">,</span><span class="s2">&quot;V_vent&quot;</span><span class="p">:</span> <span class="n">vitesse_vent</span><span class="p">,</span><span class="s2">&quot;Dir_vent&quot;</span><span class="p">:</span> <span class="n">orientation_mag</span><span class="p">,</span><span class="s2">&quot;pluie&quot;</span><span class="p">:</span> <span class="n">pluie</span><span class="p">,</span><span class="s2">&quot;glace&quot;</span><span class="p">:</span><span class="n">glace</span><span class="p">}</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;Erreur:&quot;</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span></div>
+
+
+
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Droits d'auteur 2025, Loranchet Pierrick - Berteaud Kilian - Chenuet Alexis.</p>
+  </div>
+
+  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
+    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
