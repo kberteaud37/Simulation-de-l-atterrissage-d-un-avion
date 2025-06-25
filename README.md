@@ -1,26 +1,31 @@
-# ✈️ Simulation d'atterrissage d'un avion  
+# ✈️ Simulation d'atterrissage d'un avion
 
-**Projet de session MGA802 — Été 2025**  
-Auteurs : Kilian Berteaud, Alexis Chenuet, Pierrick Loranchet  
+**Projet de session MGA802 — Été 2025**
 
----
-
-## 📌 Description  
-
-Application Streamlit pour **simuler un atterrissage** avec :  
-- 🏗️ Données réelles d'aéroports/pistes  
-- 🌦️ Conditions météo dynamiques  
-- ✈️ Modèles d'avion paramétrables  
-- 📊 Analyse complète (distance, freinage, etc.)  
+Auteurs : Kilian Berteaud, Alexis Chenuet, Pierrick Loranchet
 
 ---
 
-## 🚀 Démo en ligne  
-Accédez sans installer :  
-👉 **[simulateur-avion.streamlit.app](https://simulateur-avion.streamlit.app)**  
+## 📌 Description
+
+Application Streamlit pour **simuler un atterrissage** avec :
+- 🏗️ Données réelles d'aéroports/pistes
+- 🌦️ Conditions météo dynamiques
+- ✈️ Modèles d'avion paramétrables
+- 📊 Analyse complète (distance, freinage, etc.)
 
 ---
 
-## 🛠️ Installation  
+## 🚀 Démo en ligne
 
-Voir dans l'onglet "installation" via ce lien : http://localhost:63342/simulation_atterrissage/build/html/index.html
+Accédez sans installer :
+👉 [simulateur-avion.streamlit.app](https://simulateur-avion.streamlit.app)
+
+---
+
+## 📖 Documentation
+
+Pour consulter la documentation complète du projet, ouvrez le fichier `build/html/index.html` dans votre navigateur web après avoir généré la documentation. Pour générer la documentation, utilisez la commande suivante :
+
+```bash
+.\make.bat html
