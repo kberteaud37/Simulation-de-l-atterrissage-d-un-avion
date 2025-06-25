@@ -23,4 +23,4 @@ Accédez sans installer :
 
 ## 🛠️ Installation  
 
-Voir dans l'onglet "installation" via ce lien : http://localhost:63342/simulation_atterrissage/build/html/index.html#
+Voir dans l'onglet "installation" via ce lien : http://localhost:63342/simulation_atterrissage/build/html/index.html
