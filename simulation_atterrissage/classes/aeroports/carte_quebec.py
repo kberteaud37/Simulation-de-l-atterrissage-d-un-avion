@@ -12,7 +12,7 @@ Exemple:
 import folium
 import webbrowser
 import os
-from fonctions_aeroport import *
+from .fonctions_aeroport import *
 
 def creer_carte_quebec():
     """Génère une carte interactive Folium des aéroports du Québec et l'ouvre dans le navigateur.

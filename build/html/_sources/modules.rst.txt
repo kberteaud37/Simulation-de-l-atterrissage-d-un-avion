@@ -6,8 +6,5 @@ Modules
 
    modules/affichages_graphiques
    modules/choix_utilisateur
-   modules/classes_aeroports
-   modules/classes_avions
-   modules/classes_meteos
    modules/classes
    modules/redirection_aeroport

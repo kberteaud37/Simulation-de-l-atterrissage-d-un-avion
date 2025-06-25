@@ -111,19 +111,6 @@ class Piste(Aeroport):
 
         :return: Liste des orientations des deux extrémités de la piste
         :rtype: list[int]
-
-        alphabet_min = string.ascii_lowercase + "-"
-        orientation_piste = ""
-        for lettre in self.n_piste.lower() :
-            if lettre not in alphabet_min :
-                orientation_piste += lettre
-            elif lettre == "-" :
-                orientation_piste += ","
-        orientation_str = orientation_piste.split(",")
-        orientation = []
-        for num in orientation_str :
-            orientation.append(int(num) * 10)
-        return orientation
         """
         return self.n_piste.split("-")
     def afficher_infos_piste(self, pluie=False, glace=False):

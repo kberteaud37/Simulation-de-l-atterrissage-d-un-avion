@@ -1,4 +1,4 @@
-Main module
+Main
 ===========
 
 .. automodule:: main

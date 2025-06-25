@@ -20,8 +20,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Recherche" href="../search.html" />
-    <link rel="next" title="Classes Météos" href="classes.meteos.html" />
-    <link rel="prev" title="Classes Aéroports" href="classes.aeroports.html" /> 
+    <link rel="next" title="Classes Météos" href="classes_meteos.html" />
+    <link rel="prev" title="Classes Aéroports" href="classes_aeroports.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -50,19 +50,32 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../modules.html">Modules</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="affichages_graphiques.html">Affichages_graphiques</a></li>
 <li class="toctree-l2"><a class="reference internal" href="choix_utilisateur.html">choix_utilisateur</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="classes.html">Classes</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="classes.aeroports.html">Classes Aéroports</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Classes Avions</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#module-classes.avions.avion">Avion</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#module-classes.avions.choix_avion">Choix_avion</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#module-classes.avions.commercial">Commercial</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#module-classes.avions.militaire">Militaire</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#module-classes.avions.fonction_avion">fonction_avion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classes_aeroports.html">Classes Aéroports</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Classes Avions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-classes.avions.avion">Avion</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#classes.avions.avion.Avion"><code class="docutils literal notranslate"><span class="pre">Avion</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="classes.meteos.html">Classes Météos</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-classes.avions.choix_avion">Choix_avion</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#classes.avions.choix_avion.ChoixAvion"><code class="docutils literal notranslate"><span class="pre">ChoixAvion</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#module-classes.avions.commercial">Commercial</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#classes.avions.commercial.Commercial"><code class="docutils literal notranslate"><span class="pre">Commercial</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-classes.avions.militaire">Militaire</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#classes.avions.militaire.Militaire"><code class="docutils literal notranslate"><span class="pre">Militaire</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-classes.avions.fonction_avion">fonction_avion</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#classes.avions.fonction_avion.charger_donnees_avions"><code class="docutils literal notranslate"><span class="pre">charger_donnees_avions()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="classes_meteos.html">Classes Météos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classes.html">Classes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="redirection_aeroport.html">Redirection_aeroport</a></li>
 </ul>
 </li>
@@ -83,10 +96,9 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../modules.html">Modules</a></li>
-          <li class="breadcrumb-item"><a href="classes.html">Classes</a></li>
       <li class="breadcrumb-item active">Classes Avions</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/modules/classes.avions.rst.txt" rel="nofollow"> Afficher la source de la page</a>
+            <a href="../_sources/modules/classes_avions.rst.txt" rel="nofollow"> Afficher la source de la page</a>
       </li>
   </ul>
   <hr/>
@@ -411,8 +423,8 @@ aux avions commerciaux selon les normes de l’industrie aéronautique.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>poids_atterrissage</strong> (<em>float</em>) – Poids de l’avion à l’atterrissage (lbs)</p></li>
 <li><p><strong>choix_avion</strong> (<a class="reference internal" href="#classes.avions.choix_avion.ChoixAvion" title="classes.avions.choix_avion.ChoixAvion"><em>ChoixAvion</em></a>) – Objet contenant les caractéristiques techniques de l’avion</p></li>
-<li><p><strong>meteo</strong> (<a class="reference internal" href="classes.meteos.html#classes.meteos.meteo.Meteo" title="classes.meteos.meteo.Meteo"><em>Meteo</em></a>) – Objet contenant les conditions météorologiques</p></li>
-<li><p><strong>piste</strong> (<a class="reference internal" href="classes.aeroports.html#classes.aeroports.piste.Piste" title="classes.aeroports.piste.Piste"><em>Piste</em></a>) – Objet représentant la piste d’atterrissage</p></li>
+<li><p><strong>meteo</strong> (<a class="reference internal" href="classes_meteos.html#classes.meteos.meteo.Meteo" title="classes.meteos.meteo.Meteo"><em>Meteo</em></a>) – Objet contenant les conditions météorologiques</p></li>
+<li><p><strong>piste</strong> (<a class="reference internal" href="classes_aeroports.html#classes.aeroports.piste.Piste" title="classes.aeroports.piste.Piste"><em>Piste</em></a>) – Objet représentant la piste d’atterrissage</p></li>
 <li><p><strong>vitesse_vent</strong> (<em>float</em><em>, </em><em>optional</em>) – Vitesse du vent de face (ft/s), defaults to 0</p></li>
 <li><p><strong>facteur_de_charge</strong> (<em>float</em><em>, </em><em>optional</em>) – Facteur de charge pour les calculs de trajectoire, defaults to 1.35</p></li>
 <li><p><strong>hauteur_obstacle</strong> (<em>float</em><em>, </em><em>optional</em>) – Hauteur de l’obstacle à franchir (ft), defaults to 35</p></li>
@@ -522,8 +534,8 @@ aux avions militaires selon les normes de l’aviation militaire.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>poids_atterrissage</strong> (<em>float</em>) – Poids de l’avion à l’atterrissage (lbs)</p></li>
 <li><p><strong>choix_avion</strong> (<a class="reference internal" href="#classes.avions.choix_avion.ChoixAvion" title="classes.avions.choix_avion.ChoixAvion"><em>ChoixAvion</em></a>) – Objet contenant les caractéristiques techniques de l’avion</p></li>
-<li><p><strong>meteo</strong> (<a class="reference internal" href="classes.meteos.html#classes.meteos.meteo.Meteo" title="classes.meteos.meteo.Meteo"><em>Meteo</em></a>) – Objet contenant les conditions météorologiques</p></li>
-<li><p><strong>piste</strong> (<a class="reference internal" href="classes.aeroports.html#classes.aeroports.piste.Piste" title="classes.aeroports.piste.Piste"><em>Piste</em></a>) – Objet représentant la piste d’atterrissage</p></li>
+<li><p><strong>meteo</strong> (<a class="reference internal" href="classes_meteos.html#classes.meteos.meteo.Meteo" title="classes.meteos.meteo.Meteo"><em>Meteo</em></a>) – Objet contenant les conditions météorologiques</p></li>
+<li><p><strong>piste</strong> (<a class="reference internal" href="classes_aeroports.html#classes.aeroports.piste.Piste" title="classes.aeroports.piste.Piste"><em>Piste</em></a>) – Objet représentant la piste d’atterrissage</p></li>
 <li><p><strong>vitesse_vent</strong> (<em>float</em><em>, </em><em>optional</em>) – Vitesse du vent de face (ft/s), defaults to 0</p></li>
 <li><p><strong>facteur_de_charge</strong> (<em>float</em><em>, </em><em>optional</em>) – Facteur de charge pour les calculs de trajectoire, defaults to 2</p></li>
 <li><p><strong>hauteur_obstacle</strong> (<em>float</em><em>, </em><em>optional</em>) – Hauteur de l’obstacle à franchir (ft), defaults to 50</p></li>
@@ -660,8 +672,8 @@ aux avions militaires selon les normes de l’aviation militaire.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pied de page">
-        <a href="classes.aeroports.html" class="btn btn-neutral float-left" title="Classes Aéroports" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Précédent</a>
-        <a href="classes.meteos.html" class="btn btn-neutral float-right" title="Classes Météos" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="classes_aeroports.html" class="btn btn-neutral float-left" title="Classes Aéroports" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Précédent</a>
+        <a href="classes_meteos.html" class="btn btn-neutral float-right" title="Classes Météos" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

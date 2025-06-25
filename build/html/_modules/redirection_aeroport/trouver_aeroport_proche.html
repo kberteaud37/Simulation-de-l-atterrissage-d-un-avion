@@ -74,11 +74,31 @@
   <h1>Code source de redirection_aeroport.trouver_aeroport_proche</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">scipy.spatial</span><span class="w"> </span><span class="kn">import</span> <span class="n">KDTree</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">classes.aeroports.fonctions_aeroport</span><span class="w"> </span><span class="kn">import</span> <span class="n">recuperer_airports</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">simulation_atterrissage.classes.aeroports.fonctions_aeroport</span><span class="w"> </span><span class="kn">import</span> <span class="n">recuperer_airports</span>
 
 <div class="viewcode-block" id="trouver_aeroport_proche">
 <a class="viewcode-back" href="../../modules/redirection_aeroport.html#redirection_aeroport.trouver_aeroport_proche.trouver_aeroport_proche">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">trouver_aeroport_proche</span><span class="p">(</span><span class="n">exclusions</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Trouve l&#39;aéroport le plus proche en évitant les aéroports exclus.</span>
+
+<span class="sd">    Cette fonction utilise un arbre KD (K-Dimension) pour trouver efficacement l&#39;aéroport</span>
+<span class="sd">    le plus proche (distance orthodromique) qui n&#39;est pas dans la liste d&#39;exclusion.</span>
+
+<span class="sd">    :param exclusions: Liste des aéroports à exclure de la recherche (doit contenir au moins l&#39;aéroport de départ)</span>
+<span class="sd">    :type exclusions: list[Piste]</span>
+<span class="sd">    :return: DataFrame pandas contenant les informations de l&#39;aéroport le plus proche</span>
+<span class="sd">    :rtype: pandas.Series</span>
+<span class="sd">    :raises ValueError:</span>
+<span class="sd">        - Si l&#39;aéroport de départ n&#39;est pas trouvé dans la base de données</span>
+<span class="sd">        - Si tous les aéroports valides sont exclus</span>
+<span class="sd">        - Si la liste d&#39;exclusion est vide</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        - Utilise la formule de distance grand cercle via conversion en radians</span>
+<span class="sd">        - La recherche est optimisée via KDTree pour des performances O(log n)</span>
+<span class="sd">        - Les coordonnées sont converties en radians pour le calcul de distance</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">df_airports</span> <span class="o">=</span> <span class="n">recuperer_airports</span><span class="p">()</span>
     <span class="n">code_depart</span> <span class="o">=</span> <span class="n">exclusions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">code</span>
     <span class="n">a_exclure</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">code</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">exclusions</span><span class="p">)</span>  <span class="c1"># pour éviter les doublons et rendre la recherche rapide</span>

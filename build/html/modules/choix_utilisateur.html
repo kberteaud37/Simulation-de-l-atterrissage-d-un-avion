@@ -50,10 +50,22 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../modules.html">Modules</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="affichages_graphiques.html">Affichages_graphiques</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">choix_utilisateur</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#choisir-avion">choisir_avion</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#choisir-piste">choisir_piste</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#code-aeroport-valide">code_aeroport_valide</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#get-float-input">get_float_input</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-choix_utilisateur.choisir_avion">choisir_avion</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#choix_utilisateur.choisir_avion.choisir_avion"><code class="docutils literal notranslate"><span class="pre">choisir_avion()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-choix_utilisateur.choisir_piste">choisir_piste</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#choix_utilisateur.choisir_piste.choisir_piste"><code class="docutils literal notranslate"><span class="pre">choisir_piste()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-choix_utilisateur.code_aeroport_valide">code_aeroport_valide</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#choix_utilisateur.code_aeroport_valide.code_aeroport_valide"><code class="docutils literal notranslate"><span class="pre">code_aeroport_valide()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-choix_utilisateur.get_float_input">get_float_input</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#choix_utilisateur.get_float_input.get_float_input"><code class="docutils literal notranslate"><span class="pre">get_float_input()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="classes.html">Classes</a></li>
@@ -89,17 +101,72 @@
              
   <section id="choix-utilisateur">
 <h1>choix_utilisateur<a class="headerlink" href="#choix-utilisateur" title="Lien vers cette rubrique"></a></h1>
-<section id="choisir-avion">
-<h2>choisir_avion<a class="headerlink" href="#choisir-avion" title="Lien vers cette rubrique"></a></h2>
+<section id="module-choix_utilisateur.choisir_avion">
+<span id="choisir-avion"></span><h2>choisir_avion<a class="headerlink" href="#module-choix_utilisateur.choisir_avion" title="Lien vers cette rubrique"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="choix_utilisateur.choisir_avion.choisir_avion">
+<span class="sig-prename descclassname"><span class="pre">choix_utilisateur.choisir_avion.</span></span><span class="sig-name descname"><span class="pre">choisir_avion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">avions_filtres</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/choix_utilisateur/choisir_avion.html#choisir_avion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#choix_utilisateur.choisir_avion.choisir_avion" title="Lien vers cette définition"></a></dt>
+<dd><p>Permet à l’utilisateur de choisir un avion parmi une liste ou de créer un avion personnalisé</p>
+<dl class="simple">
+<dt>Args :</dt><dd><p>avions_filtres (DataFrame) : DataFrame contenant les avions disponibles</p>
+</dd>
+<dt>Returns :</dt><dd><p>ChoixAvion : Objet ChoixAvion configuré selon le choix de l’utilisateur</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
-<section id="choisir-piste">
-<h2>choisir_piste<a class="headerlink" href="#choisir-piste" title="Lien vers cette rubrique"></a></h2>
+<section id="module-choix_utilisateur.choisir_piste">
+<span id="choisir-piste"></span><h2>choisir_piste<a class="headerlink" href="#module-choix_utilisateur.choisir_piste" title="Lien vers cette rubrique"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="choix_utilisateur.choisir_piste.choisir_piste">
+<span class="sig-prename descclassname"><span class="pre">choix_utilisateur.choisir_piste.</span></span><span class="sig-name descname"><span class="pre">choisir_piste</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pistes_dispo</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/choix_utilisateur/choisir_piste.html#choisir_piste"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#choix_utilisateur.choisir_piste.choisir_piste" title="Lien vers cette définition"></a></dt>
+<dd><p>Demande à l’utilisateur de choisir une piste valide parmi les options disponibles</p>
+<dl class="simple">
+<dt>Args :</dt><dd><p>pistes_dispo (list) : Liste des pistes disponibles</p>
+</dd>
+<dt>Returns :</dt><dd><p>str : Numéro/identifiant de la piste choisie</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
-<section id="code-aeroport-valide">
-<h2>code_aeroport_valide<a class="headerlink" href="#code-aeroport-valide" title="Lien vers cette rubrique"></a></h2>
+<section id="module-choix_utilisateur.code_aeroport_valide">
+<span id="code-aeroport-valide"></span><h2>code_aeroport_valide<a class="headerlink" href="#module-choix_utilisateur.code_aeroport_valide" title="Lien vers cette rubrique"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="choix_utilisateur.code_aeroport_valide.code_aeroport_valide">
+<span class="sig-prename descclassname"><span class="pre">choix_utilisateur.code_aeroport_valide.</span></span><span class="sig-name descname"><span class="pre">code_aeroport_valide</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">airports_df</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/choix_utilisateur/code_aeroport_valide.html#code_aeroport_valide"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#choix_utilisateur.code_aeroport_valide.code_aeroport_valide" title="Lien vers cette définition"></a></dt>
+<dd><dl class="simple">
+<dt>Args:</dt><dd><p>airports_df (DataFrame): DataFrame contenant les données des aéroports avec une colonne “ident”</p>
+</dd>
+<dt>Returns:</dt><dd><p>str: Code d’aéroport valide</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
-<section id="get-float-input">
-<h2>get_float_input<a class="headerlink" href="#get-float-input" title="Lien vers cette rubrique"></a></h2>
+<section id="module-choix_utilisateur.get_float_input">
+<span id="get-float-input"></span><h2>get_float_input<a class="headerlink" href="#module-choix_utilisateur.get_float_input" title="Lien vers cette rubrique"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="choix_utilisateur.get_float_input.get_float_input">
+<span class="sig-prename descclassname"><span class="pre">choix_utilisateur.get_float_input.</span></span><span class="sig-name descname"><span class="pre">get_float_input</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prompt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/choix_utilisateur/get_float_input.html#get_float_input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#choix_utilisateur.get_float_input.get_float_input" title="Lien vers cette définition"></a></dt>
+<dd><p>Demande à l’utilisateur de saisir une valeur flottante valide.</p>
+<p>Cette fonction continue de demander à l’utilisateur de saisir une valeur jusqu’à ce qu’une
+valeur flottante valide soit entrée. Elle remplace également les virgules par des points
+pour faciliter la conversion en float.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>prompt</strong> (<em>str</em>) – Message affiché à l’utilisateur pour lui demander de saisir une valeur.</p>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>La valeur flottante saisie par l’utilisateur.</p>
+</dd>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 </section>
 

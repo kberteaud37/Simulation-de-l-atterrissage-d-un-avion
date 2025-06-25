@@ -73,17 +73,37 @@
              
   <h1>Code source de redirection_aeroport.calcul_distance_aeroport</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">classes.aeroports.fonctions_aeroport</span><span class="w"> </span><span class="kn">import</span> <span class="n">recuperer_airports</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">simulation_atterrissage.classes.aeroports.fonctions_aeroport</span><span class="w"> </span><span class="kn">import</span> <span class="n">recuperer_airports</span>
 
 <div class="viewcode-block" id="calcul_distance_aeroport">
 <a class="viewcode-back" href="../../modules/redirection_aeroport.html#redirection_aeroport.calcul_distance_aeroport.calcul_distance_aeroport">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">calcul_distance_aeroport</span><span class="p">(</span><span class="n">code_depart</span><span class="p">,</span> <span class="n">code_arrivee</span><span class="p">):</span>
-    <span class="n">df_airports</span> <span class="o">=</span> <span class="n">recuperer_airports</span><span class="p">()</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calcule la distance entre deux aéroports en milles nautiques (NM) en utilisant la formule de Haversine.</span>
 
+<span class="sd">        Cette fonction calcule la distance orthodromique (grand cercle) entre deux aéroports</span>
+<span class="sd">        à partir de leurs coordonnées géographiques, en utilisant la formule mathématique de Haversine.</span>
+
+<span class="sd">        :param code_depart: Code OACI de l&#39;aéroport de départ (ex: &#39;CYUL&#39;)</span>
+<span class="sd">        :type code_depart: str</span>
+<span class="sd">        :param code_arrivee: Code OACI de l&#39;aéroport d&#39;arrivée (ex: &#39;KJFK&#39;)</span>
+<span class="sd">        :type code_arrivee: str</span>
+<span class="sd">        :return: Distance entre les deux aéroports en milles nautiques (NM)</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">        :raises IndexError: Si l&#39;un des codes aéroport n&#39;est pas trouvé dans la base de données</span>
+<span class="sd">        :raises ValueError: Si les codes départ/arrivée sont identiques</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            - 1 mille nautique (NM) = 1.852 km</span>
+<span class="sd">            - Utilise le rayon terrestre moyen de 3440 NM (6,371 km)</span>
+<span class="sd">            - La précision est d&#39;environ ±0.3% en raison de l&#39;hypothèse de sphéricité terrestre</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+    <span class="n">df_airports</span> <span class="o">=</span> <span class="n">recuperer_airports</span><span class="p">()</span>
     <span class="c1"># Récupération des coordonnées</span>
     <span class="n">row_depart</span> <span class="o">=</span> <span class="n">df_airports</span><span class="p">[</span><span class="n">df_airports</span><span class="p">[</span><span class="s2">&quot;ident&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">code_depart</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">row_arrivee</span> <span class="o">=</span> <span class="n">df_airports</span><span class="p">[</span><span class="n">df_airports</span><span class="p">[</span><span class="s2">&quot;ident&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">code_arrivee</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
+    <span class="c1">#Conversion des degrés decimaux en radians</span>
     <span class="n">lat1</span><span class="p">,</span> <span class="n">lon1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">([</span><span class="n">row_depart</span><span class="p">[</span><span class="s2">&quot;latitude_deg&quot;</span><span class="p">],</span> <span class="n">row_depart</span><span class="p">[</span><span class="s2">&quot;longitude_deg&quot;</span><span class="p">]])</span>
     <span class="n">lat2</span><span class="p">,</span> <span class="n">lon2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">([</span><span class="n">row_arrivee</span><span class="p">[</span><span class="s2">&quot;latitude_deg&quot;</span><span class="p">],</span> <span class="n">row_arrivee</span><span class="p">[</span><span class="s2">&quot;longitude_deg&quot;</span><span class="p">]])</span>
 

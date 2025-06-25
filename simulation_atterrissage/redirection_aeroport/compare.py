@@ -1,17 +1,18 @@
-from .. import classes
+from simulation_atterrissage import classes
 from simulation_atterrissage.classes.aeroports.fonctions_aeroport import recuperer_runways
 from .trouver_aeroport_proche import trouver_aeroport_proche
 from .calcul_distance_aeroport import calcul_distance_aeroport
 
-# Fonction qui compare la longueur des pistes avec la distance nécessaire à l'atterrissage
 def compare(monavion, piste, coef_secu=1.67):
     """Compare la longueur des pistes avec la distance nécessaire à l'atterrissage et trouve une solution viable.
 
     Cette fonction effectue une analyse de sécurité pour l'atterrissage en comparant :
+
     - La distance totale nécessaire (approche + transition + freinage) avec coefficient de sécurité
     - La longueur disponible des pistes
 
     Si la piste initiale est trop courte, recherche automatiquement des alternatives :
+
     1. D'abord d'autres pistes du même aéroport
     2. Puis des aéroports voisins si nécessaire
 
@@ -26,8 +27,10 @@ def compare(monavion, piste, coef_secu=1.67):
     :raises RuntimeError: Si aucun aéroport viable n'est trouvé après 20 recherches
 
     Le tuple retourné contient :
+
         - piste (Piste): La piste sélectionnée (peut différer de la piste initiale)
         - logs (list): Liste de messages structurés (type, message) pour le suivi :
+
             - "info": Informations techniques
             - "error": Problèmes détectés
             - "success": Solution trouvée

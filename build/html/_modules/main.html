@@ -93,10 +93,10 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">streamlit</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">st</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">streamlit_folium</span><span class="w"> </span><span class="kn">import</span> <span class="n">st_folium</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">folium</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">classes</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">classes.aeroports.fonctions_aeroport</span><span class="w"> </span><span class="kn">import</span> <span class="n">recuperer_runways</span><span class="p">,</span> <span class="n">recuperer_airports</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">classes.aeroports.aeroport</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">classes.meteos.fonctions_meteo</span><span class="w"> </span><span class="kn">import</span> <span class="n">recuperer_meteo</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">simulation_atterrissage</span><span class="w"> </span><span class="kn">import</span> <span class="n">classes</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">simulation_atterrissage.classes.aeroports</span><span class="w"> </span><span class="kn">import</span> <span class="n">recuperer_runways</span><span class="p">,</span> <span class="n">recuperer_airports</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">simulation_atterrissage.classes.aeroports.aeroport</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">simulation_atterrissage.classes.meteos.fonctions_meteo</span><span class="w"> </span><span class="kn">import</span> <span class="n">recuperer_meteo</span>
 
 <span class="c1"># 🔄 Pour afficher dans Streamlit des print() d&#39;objets avec .afficher_infos()</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">io</span>
@@ -267,7 +267,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">st</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Choix de l&#39;avion&quot;</span><span class="p">)</span>
 
-        <span class="kn">from</span><span class="w"> </span><span class="nn">classes.avions.fonction_avion</span><span class="w"> </span><span class="kn">import</span> <span class="n">charger_donnees_avions</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">simulation_atterrissage.classes.avions.fonction_avion</span><span class="w"> </span><span class="kn">import</span> <span class="n">charger_donnees_avions</span>
 
         <span class="k">try</span><span class="p">:</span>
             <span class="n">choix_avion_df</span> <span class="o">=</span> <span class="n">charger_donnees_avions</span><span class="p">()</span>
@@ -342,11 +342,11 @@
         <span class="n">st</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Résultats de la simulation&quot;</span><span class="p">)</span>
 
         <span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
-        <span class="kn">from</span><span class="w"> </span><span class="nn">classes.avions</span><span class="w"> </span><span class="kn">import</span> <span class="n">Commercial</span><span class="p">,</span> <span class="n">Militaire</span><span class="p">,</span> <span class="n">ChoixAvion</span>
-        <span class="kn">from</span><span class="w"> </span><span class="nn">redirection_aeroport</span><span class="w"> </span><span class="kn">import</span> <span class="n">compare</span>
-        <span class="kn">from</span><span class="w"> </span><span class="nn">classes.meteos</span><span class="w"> </span><span class="kn">import</span> <span class="n">Meteo</span>
-        <span class="kn">from</span><span class="w"> </span><span class="nn">classes.avions.fonction_avion</span><span class="w"> </span><span class="kn">import</span> <span class="n">charger_donnees_avions</span>
-        <span class="kn">from</span><span class="w"> </span><span class="nn">affichages_graphiques</span><span class="w"> </span><span class="kn">import</span> <span class="n">afficher_trajectoire_atterrissage</span><span class="p">,</span> <span class="n">afficher_freinage</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">simulation_atterrissage.classes.avions</span><span class="w"> </span><span class="kn">import</span> <span class="n">Commercial</span><span class="p">,</span> <span class="n">Militaire</span><span class="p">,</span> <span class="n">ChoixAvion</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">simulation_atterrissage.redirection_aeroport</span><span class="w"> </span><span class="kn">import</span> <span class="n">compare</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">simulation_atterrissage.classes.meteos</span><span class="w"> </span><span class="kn">import</span> <span class="n">Meteo</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">simulation_atterrissage.classes.avions.fonction_avion</span><span class="w"> </span><span class="kn">import</span> <span class="n">charger_donnees_avions</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">simulation_atterrissage.affichages_graphiques</span><span class="w"> </span><span class="kn">import</span> <span class="n">afficher_trajectoire_atterrissage</span><span class="p">,</span> <span class="n">afficher_freinage</span>
         <span class="c1"># Récupération des variables de session</span>
         <span class="n">poids</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">poids</span>
         <span class="n">meteo</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">meteo</span>

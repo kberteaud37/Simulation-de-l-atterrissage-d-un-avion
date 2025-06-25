@@ -2,7 +2,6 @@ import numpy as np
 from simulation_atterrissage.classes.aeroports.fonctions_aeroport import recuperer_airports
 
 def calcul_distance_aeroport(code_depart, code_arrivee):
-    df_airports = recuperer_airports()
     """Calcule la distance entre deux aéroports en milles nautiques (NM) en utilisant la formule de Haversine.
 
         Cette fonction calcule la distance orthodromique (grand cercle) entre deux aéroports
@@ -23,6 +22,7 @@ def calcul_distance_aeroport(code_depart, code_arrivee):
             - La précision est d'environ ±0.3% en raison de l'hypothèse de sphéricité terrestre
         """
 
+    df_airports = recuperer_airports()
     # Récupération des coordonnées
     row_depart = df_airports[df_airports["ident"] == code_depart].iloc[0]
     row_arrivee = df_airports[df_airports["ident"] == code_arrivee].iloc[0]

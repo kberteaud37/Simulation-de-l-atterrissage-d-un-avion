@@ -24,4 +24,3 @@ trouver\_aeroport\_proche
    :members:
    :show-inheritance:
    :undoc-members:
-

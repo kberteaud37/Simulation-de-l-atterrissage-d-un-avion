@@ -51,9 +51,18 @@
 <li class="toctree-l2"><a class="reference internal" href="choix_utilisateur.html">choix_utilisateur</a></li>
 <li class="toctree-l2"><a class="reference internal" href="classes.html">Classes</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Redirection_aeroport</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#calcul-distance-aeroport">calcul_distance_aeroport</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#compare">compare</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#trouver-aeroport-proche">trouver_aeroport_proche</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-redirection_aeroport.calcul_distance_aeroport">calcul_distance_aeroport</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#redirection_aeroport.calcul_distance_aeroport.calcul_distance_aeroport"><code class="docutils literal notranslate"><span class="pre">calcul_distance_aeroport()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-redirection_aeroport.compare">compare</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#redirection_aeroport.compare.compare"><code class="docutils literal notranslate"><span class="pre">compare()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-redirection_aeroport.trouver_aeroport_proche">trouver_aeroport_proche</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#redirection_aeroport.trouver_aeroport_proche.trouver_aeroport_proche"><code class="docutils literal notranslate"><span class="pre">trouver_aeroport_proche()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -87,14 +96,136 @@
              
   <section id="redirection-aeroport">
 <h1>Redirection_aeroport<a class="headerlink" href="#redirection-aeroport" title="Lien vers cette rubrique"></a></h1>
-<section id="calcul-distance-aeroport">
-<h2>calcul_distance_aeroport<a class="headerlink" href="#calcul-distance-aeroport" title="Lien vers cette rubrique"></a></h2>
+<section id="module-redirection_aeroport.calcul_distance_aeroport">
+<span id="calcul-distance-aeroport"></span><h2>calcul_distance_aeroport<a class="headerlink" href="#module-redirection_aeroport.calcul_distance_aeroport" title="Lien vers cette rubrique"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="redirection_aeroport.calcul_distance_aeroport.calcul_distance_aeroport">
+<span class="sig-prename descclassname"><span class="pre">redirection_aeroport.calcul_distance_aeroport.</span></span><span class="sig-name descname"><span class="pre">calcul_distance_aeroport</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">code_depart</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">code_arrivee</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/redirection_aeroport/calcul_distance_aeroport.html#calcul_distance_aeroport"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#redirection_aeroport.calcul_distance_aeroport.calcul_distance_aeroport" title="Lien vers cette définition"></a></dt>
+<dd><p>Calcule la distance entre deux aéroports en milles nautiques (NM) en utilisant la formule de Haversine.</p>
+<p>Cette fonction calcule la distance orthodromique (grand cercle) entre deux aéroports
+à partir de leurs coordonnées géographiques, en utilisant la formule mathématique de Haversine.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>code_depart</strong> (<em>str</em>) – Code OACI de l’aéroport de départ (ex: “CYUL”)</p></li>
+<li><p><strong>code_arrivee</strong> (<em>str</em>) – Code OACI de l’aéroport d’arrivée (ex: “KJFK”)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>Distance entre les deux aéroports en milles nautiques (NM)</p>
+</dd>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+<dt class="field-even">Lève<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>IndexError</strong> – Si l’un des codes aéroport n’est pas trouvé dans la base de données</p></li>
+<li><p><strong>ValueError</strong> – Si les codes départ/arrivée sont identiques</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Note:</dt><dd><ul class="simple">
+<li><p>1 mille nautique (NM) = 1.852 km</p></li>
+<li><p>Utilise le rayon terrestre moyen de 3440 NM (6,371 km)</p></li>
+<li><p>La précision est d’environ ±0.3% en raison de l’hypothèse de sphéricité terrestre</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
-<section id="compare">
-<h2>compare<a class="headerlink" href="#compare" title="Lien vers cette rubrique"></a></h2>
+<section id="module-redirection_aeroport.compare">
+<span id="compare"></span><h2>compare<a class="headerlink" href="#module-redirection_aeroport.compare" title="Lien vers cette rubrique"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="redirection_aeroport.compare.compare">
+<span class="sig-prename descclassname"><span class="pre">redirection_aeroport.compare.</span></span><span class="sig-name descname"><span class="pre">compare</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">monavion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">piste</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coef_secu</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.67</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/redirection_aeroport/compare.html#compare"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#redirection_aeroport.compare.compare" title="Lien vers cette définition"></a></dt>
+<dd><p>Compare la longueur des pistes avec la distance nécessaire à l’atterrissage et trouve une solution viable.</p>
+<p>Cette fonction effectue une analyse de sécurité pour l’atterrissage en comparant :</p>
+<ul class="simple">
+<li><p>La distance totale nécessaire (approche + transition + freinage) avec coefficient de sécurité</p></li>
+<li><p>La longueur disponible des pistes</p></li>
+</ul>
+<p>Si la piste initiale est trop courte, recherche automatiquement des alternatives :</p>
+<ol class="arabic simple">
+<li><p>D’abord d’autres pistes du même aéroport</p></li>
+<li><p>Puis des aéroports voisins si nécessaire</p></li>
+</ol>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>monavion</strong> (<a class="reference internal" href="classes.avions.html#classes.avions.avion.Avion" title="classes.avions.avion.Avion"><em>Avion</em></a>) – Objet avion contenant les caractéristiques et méthodes de calcul</p></li>
+<li><p><strong>piste</strong> (<a class="reference internal" href="classes.aeroports.html#classes.aeroports.piste.Piste" title="classes.aeroports.piste.Piste"><em>Piste</em></a>) – Piste d’atterrissage initialement prévue</p></li>
+<li><p><strong>coef_secu</strong> (<em>float</em><em>, </em><em>optional</em>) – Coefficient de sécurité (1.67 par défaut selon normes aéronautiques)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tuple contenant (piste sélectionnée, logs détaillés, distance nécessaire)</p>
+</dd>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+<dt class="field-even">Lève<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – Si aucun aéroport viable n’est trouvé après 20 recherches</p>
+</dd>
+</dl>
+<p>Le tuple retourné contient :</p>
+<blockquote>
+<div><ul>
+<li><p>piste (Piste): La piste sélectionnée (peut différer de la piste initiale)</p></li>
+<li><p>logs (list): Liste de messages structurés (type, message) pour le suivi :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>« info »: Informations techniques</p></li>
+<li><p>« error »: Problèmes détectés</p></li>
+<li><p>« success »: Solution trouvée</p></li>
+<li><p>« text »: Messages de progression</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>distance_necessaire (float): Distance totale requise avec coefficient de sécurité</p></li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
 </section>
-<section id="trouver-aeroport-proche">
-<h2>trouver_aeroport_proche<a class="headerlink" href="#trouver-aeroport-proche" title="Lien vers cette rubrique"></a></h2>
+<section id="module-redirection_aeroport.trouver_aeroport_proche">
+<span id="trouver-aeroport-proche"></span><h2>trouver_aeroport_proche<a class="headerlink" href="#module-redirection_aeroport.trouver_aeroport_proche" title="Lien vers cette rubrique"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="redirection_aeroport.trouver_aeroport_proche.trouver_aeroport_proche">
+<span class="sig-prename descclassname"><span class="pre">redirection_aeroport.trouver_aeroport_proche.</span></span><span class="sig-name descname"><span class="pre">trouver_aeroport_proche</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exclusions</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/redirection_aeroport/trouver_aeroport_proche.html#trouver_aeroport_proche"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#redirection_aeroport.trouver_aeroport_proche.trouver_aeroport_proche" title="Lien vers cette définition"></a></dt>
+<dd><p>Trouve l’aéroport le plus proche en évitant les aéroports exclus.</p>
+<p>Cette fonction utilise un arbre KD (K-Dimension) pour trouver efficacement l’aéroport
+le plus proche (distance orthodromique) qui n’est pas dans la liste d’exclusion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>exclusions</strong> (<em>list</em><em>[</em><a class="reference internal" href="classes.aeroports.html#classes.aeroports.piste.Piste" title="classes.aeroports.piste.Piste"><em>Piste</em></a><em>]</em>) – Liste des aéroports à exclure de la recherche (doit contenir au moins l’aéroport de départ)</p>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame pandas contenant les informations de l’aéroport le plus proche</p>
+</dd>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.Series</p>
+</dd>
+<dt class="field-even">Lève<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – <ul class="simple">
+<li><p>Si l’aéroport de départ n’est pas trouvé dans la base de données</p></li>
+<li><p>Si tous les aéroports valides sont exclus</p></li>
+<li><p>Si la liste d’exclusion est vide</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Note:</dt><dd><ul class="simple">
+<li><p>Utilise la formule de distance grand cercle via conversion en radians</p></li>
+<li><p>La recherche est optimisée via KDTree pour des performances O(log n)</p></li>
+<li><p>Les coordonnées sont converties en radians pour le calcul de distance</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 </section>
 

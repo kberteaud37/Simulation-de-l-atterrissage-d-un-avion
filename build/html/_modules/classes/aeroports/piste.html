@@ -201,19 +201,6 @@
 
 <span class="sd">        :return: Liste des orientations des deux extrémités de la piste</span>
 <span class="sd">        :rtype: list[int]</span>
-
-<span class="sd">        alphabet_min = string.ascii_lowercase + &quot;-&quot;</span>
-<span class="sd">        orientation_piste = &quot;&quot;</span>
-<span class="sd">        for lettre in self.n_piste.lower() :</span>
-<span class="sd">            if lettre not in alphabet_min :</span>
-<span class="sd">                orientation_piste += lettre</span>
-<span class="sd">            elif lettre == &quot;-&quot; :</span>
-<span class="sd">                orientation_piste += &quot;,&quot;</span>
-<span class="sd">        orientation_str = orientation_piste.split(&quot;,&quot;)</span>
-<span class="sd">        orientation = []</span>
-<span class="sd">        for num in orientation_str :</span>
-<span class="sd">            orientation.append(int(num) * 10)</span>
-<span class="sd">        return orientation</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_piste</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">)</span></div>
 

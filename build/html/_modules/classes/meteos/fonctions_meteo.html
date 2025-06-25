@@ -77,40 +77,32 @@
 <div class="viewcode-block" id="recuperer_meteo">
 <a class="viewcode-back" href="../../../modules/classes.meteos.html#classes.meteos.fonctions_meteo.recuperer_meteo">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">recuperer_meteo</span><span class="p">(</span><span class="n">latitude</span><span class="p">,</span><span class="n">longitude</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Récupère les données météorologiques actuelles pour des coordonnées géographiques données.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Récupère les données météorologiques actuelles pour des coordonnées géographiques.</span>
 
-<span class="sd">    Cette fonction interroge l&#39;API Open-Meteo pour obtenir les conditions météo actuelles</span>
-<span class="sd">    et retourne les données pertinentes pour l&#39;aviation, notamment :</span>
+<span class="sd">    Interroge l&#39;API Open-Meteo pour obtenir les conditions météo actuelles nécessaires</span>
+<span class="sd">    à la simulation d&#39;atterrissage, avec conversion des unités et détection des conditions</span>
+<span class="sd">    critiques (pluie, glace).</span>
 
-<span class="sd">    - Température, pression, vitesse et direction du vent</span>
-<span class="sd">    - Indicateurs de conditions météorologiques critiques (pluie, glace)</span>
+<span class="sd">    :param latitude: Latitude du point à interroger (de -90 à 90)</span>
+<span class="sd">    :type latitude: float</span>
+<span class="sd">    :param longitude: Longitude du point à interroger (de -180 à 180)</span>
+<span class="sd">    :type longitude: float</span>
+<span class="sd">    :return: Dictionnaire contenant les données météorologiques formatées</span>
+<span class="sd">    :rtype: dict</span>
+<span class="sd">    :raises ValueError: Si les coordonnées sont hors des plages valides</span>
+<span class="sd">    :raises requests.exceptions.RequestException: Pour les erreurs de connexion</span>
 
-<span class="sd">    Args:</span>
+<span class="sd">    Le dictionnaire retourné contient les clés suivantes:</span>
+<span class="sd">        - &#39;T&#39; (float): Température à 2m en °C</span>
+<span class="sd">        - &#39;P&#39; (float): Pression au niveau de la mer en hPa</span>
+<span class="sd">        - &#39;V_vent&#39; (float): Vitesse du vent à 10m en km/h</span>
+<span class="sd">        - &#39;Dir_vent&#39; (float): Direction du vent magnétique (orientation réelle - 15°)</span>
+<span class="sd">        - &#39;pluie&#39; (bool): True si précipitations détectées</span>
+<span class="sd">        - &#39;glace&#39; (bool): True si conditions glacées détectées</span>
 
-<span class="sd">        - latitude (float): Latitude du point à interroger (de -90 à 90)</span>
-<span class="sd">        - longitude (float): Longitude du point à interroger (de -180 à 180)</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        dict: Dictionnaire contenant les données météorologiques avec les clés suivantes :</span>
-<span class="sd">            - &quot;T&quot; (float): Température à 2m en °C</span>
-<span class="sd">            - &quot;P&quot; (float): Pression au niveau de la mer en hPa</span>
-<span class="sd">            - &quot;V_vent&quot; (float): Vitesse du vent à 10m en km/h</span>
-<span class="sd">            - &quot;Dir_vent&quot; (float): Direction du vent magnétique (orientation réelle - 15°)</span>
-<span class="sd">            - &quot;pluie&quot; (bool): True si précipitations ou codes météo de pluie détectés</span>
-<span class="sd">            - &quot;glace&quot; (bool): True si température &lt;0°C ou codes météo de gel détectés</span>
-<span class="sd">        str: Message d&#39;erreur si la requête échoue (format &quot;Erreur: [code_statut]&quot;)</span>
-
-<span class="sd">    Raises:</span>
-<span class="sd">        ValueError: Si les coordonnées fournies sont hors des plages valides</span>
-<span class="sd">        requests.exceptions.RequestException: Pour les erreurs de connexion ou de timeout</span>
-
-<span class="sd">    Notes:</span>
-<span class="sd">        - Les codes météo (WMO) utilisés pour détecter pluie/glace correspondent à :</span>
-
-<span class="sd">          * Pluie : 51,53,55,61,63,65,80,81,82</span>
-<span class="sd">          * Glace : 56,57,66,67,71-77,85,86</span>
-<span class="sd">        - La direction du vent est ajustée de -15° pour obtenir l&#39;orientation magnétique</span>
-<span class="sd">        - En cas d&#39;absence de données de précipitations/code météo, elles sont initialisées à 0</span>
+<span class="sd">    Les codes météo (WMO) utilisés pour la détection sont:</span>
+<span class="sd">        - Pluie: 51,53,55,61,63,65,80,81,82</span>
+<span class="sd">        - Glace: 56,57,66,67,71-77,85,86</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># URL de l&#39;API avec les paramètres souhaités</span>
     <span class="n">url</span> <span class="o">=</span> <span class="p">(</span>

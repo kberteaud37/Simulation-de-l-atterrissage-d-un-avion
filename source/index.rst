@@ -1,7 +1,7 @@
 .. Simulation d'atterrissage documentation master file
 
 Bienvenue dans la documentation de Simulation d'atterrissage
-===========================================================
+============================================================
 
 Ce projet simule l'atterrissage d'un avion en prenant en compte divers paramètres tels que les conditions météorologiques, les caractéristiques de l'avion, et les spécificités de l'aéroport.
 
@@ -11,5 +11,6 @@ Ce projet simule l'atterrissage d'un avion en prenant en compte divers paramètr
 
    introduction
    installation
+   main
    modules
-   api
+
