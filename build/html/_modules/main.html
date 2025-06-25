@@ -94,7 +94,7 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">streamlit</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">st</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">streamlit_folium</span><span class="w"> </span><span class="kn">import</span> <span class="n">st_folium</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">folium</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">simulation_atterrissage</span><span class="w"> </span><span class="kn">import</span> <span class="n">classes</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">classes</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">simulation_atterrissage.classes.aeroports</span><span class="w"> </span><span class="kn">import</span> <span class="n">recuperer_runways</span><span class="p">,</span> <span class="n">recuperer_airports</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">simulation_atterrissage.classes.aeroports.aeroport</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">simulation_atterrissage.classes.meteos.fonctions_meteo</span><span class="w"> </span><span class="kn">import</span> <span class="n">recuperer_meteo</span>
@@ -111,6 +111,7 @@
 <span class="sd">    Fonction principale pour exécuter l&#39;application Streamlit.</span>
 <span class="sd">    Gère les différentes étapes de la simulation d&#39;atterrissage d&#39;un avion.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="c1"># Initialiser les états de session</span>
     <span class="k">if</span> <span class="s2">&quot;step&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="p">:</span>
         <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">step</span> <span class="o">=</span> <span class="mi">1</span>
@@ -129,13 +130,16 @@
     <span class="n">airports_df</span> <span class="o">=</span> <span class="n">recuperer_airports</span><span class="p">()</span>
 
     <span class="k">if</span> <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">step</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Étape 1 : Choix de l&#39;aéroport et de la piste.</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">markdown</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">                &lt;style&gt;</span>
+<span class="s2">                .stButton &gt; button:first-child {</span>
+<span class="s2">                    position: fixed;</span>
+<span class="s2">                    bottom: 20px;</span>
+<span class="s2">                    right: 20px;</span>
+<span class="s2">                }</span>
+<span class="s2">                &lt;/style&gt;</span>
+<span class="s2">                &quot;&quot;&quot;</span><span class="p">,</span> <span class="n">unsafe_allow_html</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-<span class="sd">        Args:</span>
-<span class="sd">            airports_df (DataFrame): DataFrame contenant les informations des aéroports.</span>
-<span class="sd">            runways_df (DataFrame): DataFrame contenant les informations des pistes.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">st</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Choix de l&#39;aéroport et de la piste&quot;</span><span class="p">)</span>
 
         <span class="n">airport_codes</span> <span class="o">=</span> <span class="n">airports_df</span><span class="p">[</span><span class="s2">&quot;ident&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
@@ -187,12 +191,6 @@
 
     <span class="c1"># === ÉTAPE 2 : Affichage météo ===</span>
     <span class="k">elif</span> <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">step</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Étape 2 : Affichage des données météos</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            meteo_data (DataFrame): DataFrame contenant les informations de la météo.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">st</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Informations météorologiques&quot;</span><span class="p">)</span>
 
         <span class="n">code</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">code_aeroport</span>
@@ -263,9 +261,6 @@
             <span class="n">st</span><span class="o">.</span><span class="n">rerun</span><span class="p">()</span>
 
     <span class="k">elif</span> <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">step</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Étape 3 : Choix de l&#39;avion.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">st</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Choix de l&#39;avion&quot;</span><span class="p">)</span>
 
         <span class="kn">from</span><span class="w"> </span><span class="nn">simulation_atterrissage.classes.avions.fonction_avion</span><span class="w"> </span><span class="kn">import</span> <span class="n">charger_donnees_avions</span>
@@ -337,9 +332,6 @@
             <span class="n">st</span><span class="o">.</span><span class="n">rerun</span><span class="p">()</span>
 
     <span class="k">elif</span> <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">step</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Étape 4 : Résultats de la simulation.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">st</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Résultats de la simulation&quot;</span><span class="p">)</span>
 
         <span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
@@ -426,7 +418,16 @@
 
         <span class="k">with</span> <span class="n">col2</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">st</span><span class="o">.</span><span class="n">button</span><span class="p">(</span><span class="s2">&quot;🛑 Afficher le profil de freinage&quot;</span><span class="p">):</span>
-                <span class="n">afficher_freinage</span><span class="p">(</span><span class="n">avion</span><span class="p">)</span></div>
+                <span class="n">afficher_freinage</span><span class="p">(</span><span class="n">avion</span><span class="p">)</span>
+
+        <span class="c1"># Ajout du bouton &quot;Recommencer&quot;</span>
+        <span class="k">if</span> <span class="n">st</span><span class="o">.</span><span class="n">button</span><span class="p">(</span><span class="s2">&quot;Nouveau scénario&quot;</span><span class="p">):</span>
+            <span class="c1"># Réinitialiser l&#39;état de la session</span>
+            <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">step</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">code_aeroport</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">piste_choisie</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">st</span><span class="o">.</span><span class="n">session_state</span><span class="o">.</span><span class="n">meteo_data</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">st</span><span class="o">.</span><span class="n">rerun</span><span class="p">()</span></div>
 
 
 

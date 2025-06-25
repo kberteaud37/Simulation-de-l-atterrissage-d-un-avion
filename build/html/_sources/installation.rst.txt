@@ -60,6 +60,8 @@ Version hébergée disponible : |badge_streamlit|
    :target: https://simulateur-avion.streamlit.app
    :alt: Open in Streamlit
 
+Attendre l'installation de toutes les dépendances. Une fois complété, l'application se lancera !
+
 Vérification
 ------------
 
