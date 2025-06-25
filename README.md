@@ -77,19 +77,19 @@ streamlit run main.py
 Modèle: A220
 Aéroport: Montréal-Trudeau (CYUL)
 Piste: 24R (2926m)
-Poids: 50 tonnes (atterrissage typique)
+Poids: 110250 lb (atterrissage typique)
 
 ### 2. Mission Militaire (F-18)
 Modèle: F18
 Aéroport: Bagotville (CYBG)
 Piste: 11 (3048m)
-Poids: 12 tonnes (avec armement)
+Poids: 26450 lb (avec armement)
 
 ### 3. Piste Critique (Cessna 172)
 Modèle: Cessna 172
 Aérodrome: Mont-Tremblant (CYFJ)
 Piste: 08 (1219m)
-Poids: 1.1 tonne (pleine charge)
+Poids: 2450 lb (pleine charge)
 
 ### Validation Rapide :
 - Cas 1 (A220) : Doit réussir avec large marge
