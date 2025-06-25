@@ -50,10 +50,8 @@ pip install -e .
 
 # Lancer l'application
 streamlit run main.py
-nsulter la documentation complète du projet, ouvrez le fichier `build/html/index.html` dans votre navigateur web après avoir généré la documentation. Pour générer la documentation, utilisez la commande suivante :
+consulter la documentation complète du projet, ouvrez le fichier `build/html/index.html` dans votre navigateur web après avoir généré la documentation. Pour générer la documentation, utilisez la commande suivante :
 
-```bash
-.\make.bat html
 ```
 
 ### 📦 Méthode 2 : Installation via requirements.txt
