@@ -70,6 +70,26 @@ streamlit run main.py
 
 ---
 
+## 🧪 Tests
+
+### Prérequis
+```bash
+pip install pytest pytest-cov
+```
+
+### Exécution des tests
+```bash
+# Tous les tests avec couverture
+pytest --cov=simulation_atterrissage --cov-report=html tests/
+
+# Test spécifique
+pytest tests/test_avion.py -v
+
+# Générer le rapport de couverture
+open htmlcov/index.html  # Sur Mac/Linux
+start htmlcov/index.html # Sur Windows
+```
+--- 
 
 ## 📚 Références et API
 Ce projet s'appuie sur le cours MEC 671 pour les calculs de performances des avions, offrant une base théorique solide pour les simulations d'atterrissage.
