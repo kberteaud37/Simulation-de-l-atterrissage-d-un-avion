@@ -43,14 +43,14 @@ Prérequis
 ### 📦 Méthode 1 : Comme package (recommandé)
 ```bash
 git clone https://github.com/kberteaud37/Simulation-de-l-atterrissage-d-un-avion.git
-cd Simulation-de-l-atterrissage-d-un-avion
 
 # Installation en mode éditable (+ dépendances)
 pip install -e .
 
 # Lancer l'application
+cd simulation_atterrissage
 streamlit run main.py
-consulter la documentation complète du projet, ouvrez le fichier `build/html/index.html` dans votre navigateur web après avoir généré la documentation. Pour générer la documentation, utilisez la commande suivante :
+consulter la documentation complète du projet, ouvrez le fichier `build/html/index.html` dans votre navigateur web après avoir généré la documentation. 
 
 ```
 
@@ -59,25 +59,17 @@ Si vous préférez installer uniquement les dépendances nécessaires sans le mo
 
 ```bash
 git clone https://github.com/kberteaud37/Simulation-de-l-atterrissage-d-un-avion.git
-cd Simulation-de-l-atterrissage-d-un-avion
 
 # Installation des dépendances
 pip install -r requirements.txt
 
 # Lancer l'application
+cd simulation_atterrissage
 streamlit run main.py
 ```
 
 ---
 
-## 🧪 Tests
-Pour exécuter les tests unitaires et vous assurer que tout fonctionne correctement :
-
-```bash
-pytest
-```
-
----
 
 ## 📚 Références et API
 Ce projet s'appuie sur le cours MEC 671 pour les calculs de performances des avions, offrant une base théorique solide pour les simulations d'atterrissage.
