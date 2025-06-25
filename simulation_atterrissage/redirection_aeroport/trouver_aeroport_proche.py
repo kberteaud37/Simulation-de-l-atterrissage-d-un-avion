@@ -3,6 +3,26 @@ from scipy.spatial import KDTree
 from simulation_atterrissage.classes.aeroports.fonctions_aeroport import recuperer_airports
 
 def trouver_aeroport_proche(exclusions):
+    """Trouve l'aéroport le plus proche en évitant les aéroports exclus.
+
+    Cette fonction utilise un arbre KD (K-Dimension) pour trouver efficacement l'aéroport
+    le plus proche (distance orthodromique) qui n'est pas dans la liste d'exclusion.
+
+    :param exclusions: Liste des aéroports à exclure de la recherche (doit contenir au moins l'aéroport de départ)
+    :type exclusions: list[Piste]
+    :return: DataFrame pandas contenant les informations de l'aéroport le plus proche
+    :rtype: pandas.Series
+    :raises ValueError:
+        - Si l'aéroport de départ n'est pas trouvé dans la base de données
+        - Si tous les aéroports valides sont exclus
+        - Si la liste d'exclusion est vide
+
+    Note:
+        - Utilise la formule de distance grand cercle via conversion en radians
+        - La recherche est optimisée via KDTree pour des performances O(log n)
+        - Les coordonnées sont converties en radians pour le calcul de distance
+
+    """
     df_airports = recuperer_airports()
     code_depart = exclusions[0].code
     a_exclure = set(p.code for p in exclusions)  # pour éviter les doublons et rendre la recherche rapide
