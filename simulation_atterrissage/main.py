@@ -34,6 +34,7 @@ def main():
     Fonction principale pour exécuter l'application Streamlit.
     Gère les différentes étapes de la simulation d'atterrissage d'un avion.
     """
+
     # Initialiser les états de session
     if "step" not in st.session_state:
         st.session_state.step = 1
@@ -59,6 +60,16 @@ def main():
             airports_df (DataFrame): DataFrame contenant les informations des aéroports.
             runways_df (DataFrame): DataFrame contenant les informations des pistes.
         """
+        st.markdown("""
+                <style>
+                .stButton > button:first-child {
+                    position: fixed;
+                    bottom: 20px;
+                    right: 20px;
+                }
+                </style>
+                """, unsafe_allow_html=True)
+
         st.title("Choix de l'aéroport et de la piste")
 
         airport_codes = airports_df["ident"].tolist()
@@ -350,6 +361,15 @@ def main():
         with col2:
             if st.button("🛑 Afficher le profil de freinage"):
                 afficher_freinage(avion)
+
+        # Ajout du bouton "Recommencer"
+        if st.button("Nouveau scénario"):
+            # Réinitialiser l'état de la session
+            st.session_state.step = 1
+            st.session_state.code_aeroport = None
+            st.session_state.piste_choisie = None
+            st.session_state.meteo_data = None
+            st.rerun()
 
 
 if __name__ == "__main__":
