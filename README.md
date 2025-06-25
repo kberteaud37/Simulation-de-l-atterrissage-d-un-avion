@@ -70,25 +70,35 @@ streamlit run main.py
 
 ---
 
-## 🧪 Tests
+## 🧪 Tests - Exemples paramétrés
 
-### Prérequis
-```bash
-pip install pytest pytest-cov
-```
+### 1. Vol Commercial (A220)
 
-### Exécution des tests
-```bash
-# Tous les tests avec couverture
-pytest --cov=simulation_atterrissage --cov-report=html tests/
+Modèle: A220
+Aéroport: Montréal-Trudeau (CYUL)
+Piste: 24R (2926m)
+Poids: 50 tonnes (atterrissage typique)
 
-# Test spécifique
-pytest tests/test_avion.py -v
+### 2. Mission Militaire (F-18)
+Modèle: F18
+Aéroport: Bagotville (CYBG)
+Piste: 11 (3048m)
+Poids: 12 tonnes (avec armement)
 
-# Générer le rapport de couverture
-open htmlcov/index.html  # Sur Mac/Linux
-start htmlcov/index.html # Sur Windows
-```
+### 3. Piste Critique (Cessna 172)
+Modèle: Cessna 172
+Aérodrome: Mont-Tremblant (CYFJ)
+Piste: 08 (1219m)
+Poids: 1.1 tonne (pleine charge)
+
+### Validation Rapide :
+- Cas 1 (A220) : Doit réussir avec large marge
+- Cas 2 (F-18) : Doit montrer freinage intense
+- Cas 3 (C172) : Doit déclencher alerte "Piste limite"
+
+> 💡 Pour reproduire : Copier ces paramètres dans l'interface Streamlit
+
+
 --- 
 
 ## 📚 Références et API
