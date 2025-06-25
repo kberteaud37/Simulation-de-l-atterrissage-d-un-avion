@@ -23,13 +23,4 @@ Accédez sans installer :
 
 ## 🛠️ Installation  
 
-### 📦 Méthode 1 : Comme package (recommandé)  
-```bash
-git clone https://github.com/kberteaud37/Simulation-de-l-atterrissage-d-un-avion.git
-cd Simulation-de-l-atterrissage-d-un-avion
-
-# Installation en mode éditable (+ dépendances)
-pip install -e .
-
-# Lancer l'application
-streamlit run main.py
+Voir dans l'onglet "installation" via ce lien : http://localhost:63342/simulation_atterrissage/build/html/index.html#
