@@ -1,40 +1,32 @@
 import requests
 
 def recuperer_meteo(latitude,longitude):
-    """Récupère les données météorologiques actuelles pour des coordonnées géographiques données.
+    """Récupère les données météorologiques actuelles pour des coordonnées géographiques.
 
-    Cette fonction interroge l'API Open-Meteo pour obtenir les conditions météo actuelles
-    et retourne les données pertinentes pour l'aviation, notamment :
+    Interroge l'API Open-Meteo pour obtenir les conditions météo actuelles nécessaires
+    à la simulation d'atterrissage, avec conversion des unités et détection des conditions
+    critiques (pluie, glace).
 
-    - Température, pression, vitesse et direction du vent
-    - Indicateurs de conditions météorologiques critiques (pluie, glace)
+    :param latitude: Latitude du point à interroger (de -90 à 90)
+    :type latitude: float
+    :param longitude: Longitude du point à interroger (de -180 à 180)
+    :type longitude: float
+    :return: Dictionnaire contenant les données météorologiques formatées
+    :rtype: dict
+    :raises ValueError: Si les coordonnées sont hors des plages valides
+    :raises requests.exceptions.RequestException: Pour les erreurs de connexion
 
-    Args:
+    Le dictionnaire retourné contient les clés suivantes:
+        - 'T' (float): Température à 2m en °C
+        - 'P' (float): Pression au niveau de la mer en hPa
+        - 'V_vent' (float): Vitesse du vent à 10m en km/h
+        - 'Dir_vent' (float): Direction du vent magnétique (orientation réelle - 15°)
+        - 'pluie' (bool): True si précipitations détectées
+        - 'glace' (bool): True si conditions glacées détectées
 
-        - latitude (float): Latitude du point à interroger (de -90 à 90)
-        - longitude (float): Longitude du point à interroger (de -180 à 180)
-
-    Returns:
-        dict: Dictionnaire contenant les données météorologiques avec les clés suivantes :
-            - "T" (float): Température à 2m en °C
-            - "P" (float): Pression au niveau de la mer en hPa
-            - "V_vent" (float): Vitesse du vent à 10m en km/h
-            - "Dir_vent" (float): Direction du vent magnétique (orientation réelle - 15°)
-            - "pluie" (bool): True si précipitations ou codes météo de pluie détectés
-            - "glace" (bool): True si température <0°C ou codes météo de gel détectés
-        str: Message d'erreur si la requête échoue (format "Erreur: [code_statut]")
-
-    Raises:
-        ValueError: Si les coordonnées fournies sont hors des plages valides
-        requests.exceptions.RequestException: Pour les erreurs de connexion ou de timeout
-
-    Notes:
-        - Les codes météo (WMO) utilisés pour détecter pluie/glace correspondent à :
-
-          * Pluie : 51,53,55,61,63,65,80,81,82
-          * Glace : 56,57,66,67,71-77,85,86
-        - La direction du vent est ajustée de -15° pour obtenir l'orientation magnétique
-        - En cas d'absence de données de précipitations/code météo, elles sont initialisées à 0
+    Les codes météo (WMO) utilisés pour la détection sont:
+        - Pluie: 51,53,55,61,63,65,80,81,82
+        - Glace: 56,57,66,67,71-77,85,86
     """
     # URL de l'API avec les paramètres souhaités
     url = (
