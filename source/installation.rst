@@ -50,7 +50,7 @@ Lancement de l'application
 
 .. code-block:: bash
 
-   streamlit run simulation_atterrissage/main.py  # Ou main.py selon votre structure
+   streamlit run simulation_atterrissage/main.py
 
 Accès en ligne (sans installation)
 ---------------------------------
