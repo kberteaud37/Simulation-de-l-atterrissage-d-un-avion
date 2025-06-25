@@ -19,7 +19,7 @@ choisir un avion, et finalement simuler l'atterrissage.
 import streamlit as st
 from streamlit_folium import st_folium
 import folium
-from simulation_atterrissage import classes
+import classes
 from simulation_atterrissage.classes.aeroports import recuperer_runways, recuperer_airports
 from simulation_atterrissage.classes.aeroports.aeroport import *
 from simulation_atterrissage.classes.meteos.fonctions_meteo import recuperer_meteo
@@ -53,13 +53,6 @@ def main():
     airports_df = recuperer_airports()
 
     if st.session_state.step == 1:
-        """
-        Étape 1 : Choix de l'aéroport et de la piste.
-
-        Args:
-            airports_df (DataFrame): DataFrame contenant les informations des aéroports.
-            runways_df (DataFrame): DataFrame contenant les informations des pistes.
-        """
         st.markdown("""
                 <style>
                 .stButton > button:first-child {
@@ -121,12 +114,6 @@ def main():
 
     # === ÉTAPE 2 : Affichage météo ===
     elif st.session_state.step == 2:
-        """
-        Étape 2 : Affichage des données météos
-
-        Args:
-            meteo_data (DataFrame): DataFrame contenant les informations de la météo.
-        """
         st.title("Informations météorologiques")
 
         code = st.session_state.code_aeroport
@@ -197,9 +184,6 @@ def main():
             st.rerun()
 
     elif st.session_state.step == 3:
-        """
-        Étape 3 : Choix de l'avion.
-        """
         st.title("Choix de l'avion")
 
         from simulation_atterrissage.classes.avions.fonction_avion import charger_donnees_avions
@@ -271,9 +255,6 @@ def main():
             st.rerun()
 
     elif st.session_state.step == 4:
-        """
-        Étape 4 : Résultats de la simulation.
-        """
         st.title("Résultats de la simulation")
 
         import time
