@@ -8,6 +8,5 @@ Ce guide vous aidera à comprendre comment installer, configurer et utiliser la 
 Vous pouvez :
 
 - Exécuter la simulation **en local** (voir la section :ref:`installation <installation>`)
-- Ou accéder directement à la version **en ligne** via Streamlit Cloud (lien fourni ci-dessous si disponible)
 
 Pour commencer, assurez-vous de lire la section :ref:`installation <installation>` pour configurer votre environnement.

@@ -16,13 +16,6 @@ Application Streamlit pour **simuler un atterrissage** avec :
 
 ---
 
-## 🚀 Démo en ligne
-
-Accédez sans installer :
-👉 [simulateur-avion.streamlit.app](https://simulateur-avion.streamlit.app)
-
----
-
 ## 📖 Documentation
 
 Pour consulter la documentation complète du projet, ouvrez le fichier `build/html/index.html` dans votre navigateur web après avoir généré la documentation. Pour générer la documentation, utilisez la commande suivante :
