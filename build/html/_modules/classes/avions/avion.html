@@ -44,6 +44,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../main.html">Main</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Modules</a></li>
 </ul>
 
@@ -76,7 +77,7 @@
 
 
 <div class="viewcode-block" id="Avion">
-<a class="viewcode-back" href="../../../modules/classes.avions.html#classes.avions.avion.Avion">[docs]</a>
+<a class="viewcode-back" href="../../../modules/classes_avions.html#classes.avions.avion.Avion">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Avion</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Classe représentant un avion pour la simulation d&#39;atterrissage.</span>
 
@@ -121,7 +122,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">T_sol</span> <span class="o">=</span> <span class="mi">0</span>
 
 <div class="viewcode-block" id="Avion.calcul_A_eff">
-<a class="viewcode-back" href="../../../modules/classes.avions.html#classes.avions.avion.Avion.calcul_A_eff">[docs]</a>
+<a class="viewcode-back" href="../../../modules/classes_avions.html#classes.avions.avion.Avion.calcul_A_eff">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">calcul_A_eff</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calcule l&#39;allongement effectif de l&#39;aile.</span>
 
@@ -131,7 +132,7 @@
 
 
 <div class="viewcode-block" id="Avion.calcul_k_eff">
-<a class="viewcode-back" href="../../../modules/classes.avions.html#classes.avions.avion.Avion.calcul_k_eff">[docs]</a>
+<a class="viewcode-back" href="../../../modules/classes_avions.html#classes.avions.avion.Avion.calcul_k_eff">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">calcul_k_eff</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calcule le coefficient d&#39;efficacité de traînée induite.</span>
 
@@ -143,7 +144,7 @@
 
 
 <div class="viewcode-block" id="Avion.calcul_V_stall">
-<a class="viewcode-back" href="../../../modules/classes.avions.html#classes.avions.avion.Avion.calcul_V_stall">[docs]</a>
+<a class="viewcode-back" href="../../../modules/classes_avions.html#classes.avions.avion.Avion.calcul_V_stall">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">calcul_V_stall</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calcule la vitesse de décrochage de l&#39;avion.</span>
 
@@ -154,7 +155,7 @@
 
 
 <div class="viewcode-block" id="Avion.calcul_V_TD">
-<a class="viewcode-back" href="../../../modules/classes.avions.html#classes.avions.avion.Avion.calcul_V_TD">[docs]</a>
+<a class="viewcode-back" href="../../../modules/classes_avions.html#classes.avions.avion.Avion.calcul_V_TD">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">calcul_V_TD</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calcule la vitesse à l&#39;atterrissage (touchdown).</span>
 
@@ -166,7 +167,7 @@
 
 
 <div class="viewcode-block" id="Avion.calcul_S_FR">
-<a class="viewcode-back" href="../../../modules/classes.avions.html#classes.avions.avion.Avion.calcul_S_FR">[docs]</a>
+<a class="viewcode-back" href="../../../modules/classes_avions.html#classes.avions.avion.Avion.calcul_S_FR">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">calcul_S_FR</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calcule la distance de roulement libre avant freinage.</span>
 
@@ -178,7 +179,7 @@
 
 
 <div class="viewcode-block" id="Avion.calcul_f1">
-<a class="viewcode-back" href="../../../modules/classes.avions.html#classes.avions.avion.Avion.calcul_f1">[docs]</a>
+<a class="viewcode-back" href="../../../modules/classes_avions.html#classes.avions.avion.Avion.calcul_f1">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">calcul_f1</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calcule le terme f1 utilisé dans le calcul de la distance de freinage.</span>
 
@@ -189,7 +190,7 @@
 
 
 <div class="viewcode-block" id="Avion.calcul_f2">
-<a class="viewcode-back" href="../../../modules/classes.avions.html#classes.avions.avion.Avion.calcul_f2">[docs]</a>
+<a class="viewcode-back" href="../../../modules/classes_avions.html#classes.avions.avion.Avion.calcul_f2">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">calcul_f2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calcule le terme f2 utilisé dans le calcul de la distance de freinage.</span>
 
@@ -201,7 +202,7 @@
 
 
 <div class="viewcode-block" id="Avion.calcul_S_B">
-<a class="viewcode-back" href="../../../modules/classes.avions.html#classes.avions.avion.Avion.calcul_S_B">[docs]</a>
+<a class="viewcode-back" href="../../../modules/classes_avions.html#classes.avions.avion.Avion.calcul_S_B">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">calcul_S_B</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calcule la distance de freinage complète.</span>
 
@@ -215,7 +216,7 @@
 
 
 <div class="viewcode-block" id="Avion.calcul_deceleration">
-<a class="viewcode-back" href="../../../modules/classes.avions.html#classes.avions.avion.Avion.calcul_deceleration">[docs]</a>
+<a class="viewcode-back" href="../../../modules/classes_avions.html#classes.avions.avion.Avion.calcul_deceleration">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">calcul_deceleration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">distance</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calcule la décélération moyenne sur une distance donnée.</span>
 

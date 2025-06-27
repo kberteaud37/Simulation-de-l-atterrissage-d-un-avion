@@ -52,16 +52,6 @@ Lancement de l'application
 
    streamlit run simulation_atterrissage/main.py
 
-Accès en ligne (sans installation)
-----------------------------------
-Version hébergée disponible : |badge_streamlit|
-
-.. |badge_streamlit| image:: https://static.streamlit.io/badges/streamlit_badge_black_white.svg
-   :target: https://simulateur-avion.streamlit.app
-   :alt: Open in Streamlit
-
-Attendre l'installation de toutes les dépendances. Une fois complété, l'application se lancera !
-
 Vérification
 ------------
 

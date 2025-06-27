@@ -44,6 +44,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../main.html">Main</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Modules</a></li>
 </ul>
 
@@ -76,7 +77,7 @@
 
 
 <div class="viewcode-block" id="ChoixAvion">
-<a class="viewcode-back" href="../../../modules/classes.avions.html#classes.avions.choix_avion.ChoixAvion">[docs]</a>
+<a class="viewcode-back" href="../../../modules/classes_avions.html#classes.avions.choix_avion.ChoixAvion">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">ChoixAvion</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Classe pour la gestion et la sélection des caractéristiques techniques des avions.</span>
 
@@ -132,7 +133,7 @@
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Avion </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="si">}</span><span class="s2"> non trouvé dans la base de données&quot;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ChoixAvion.hauteur">
-<a class="viewcode-back" href="../../../modules/classes.avions.html#classes.avions.choix_avion.ChoixAvion.hauteur">[docs]</a>
+<a class="viewcode-back" href="../../../modules/classes_avions.html#classes.avions.choix_avion.ChoixAvion.hauteur">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">hauteur</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">en_pieds</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Retourne la hauteur de l&#39;aile de l&#39;avion.</span>
 
@@ -149,7 +150,7 @@
 
 
 <div class="viewcode-block" id="ChoixAvion.surface">
-<a class="viewcode-back" href="../../../modules/classes.avions.html#classes.avions.choix_avion.ChoixAvion.surface">[docs]</a>
+<a class="viewcode-back" href="../../../modules/classes_avions.html#classes.avions.choix_avion.ChoixAvion.surface">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">surface</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">en_pieds_carres</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Retourne la surface alaire de l&#39;avion.</span>
 
@@ -166,7 +167,7 @@
 
 
 <div class="viewcode-block" id="ChoixAvion.allongement">
-<a class="viewcode-back" href="../../../modules/classes.avions.html#classes.avions.choix_avion.ChoixAvion.allongement">[docs]</a>
+<a class="viewcode-back" href="../../../modules/classes_avions.html#classes.avions.choix_avion.ChoixAvion.allongement">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">allongement</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Retourne l&#39;allongement de l&#39;aile (ratio envergure/surface).</span>
 
@@ -179,7 +180,7 @@
 
 
 <div class="viewcode-block" id="ChoixAvion.portance">
-<a class="viewcode-back" href="../../../modules/classes.avions.html#classes.avions.choix_avion.ChoixAvion.portance">[docs]</a>
+<a class="viewcode-back" href="../../../modules/classes_avions.html#classes.avions.choix_avion.ChoixAvion.portance">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">portance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Retourne le coefficient de portance maximal à l&#39;atterrissage.</span>
 
@@ -192,7 +193,7 @@
 
 
 <div class="viewcode-block" id="ChoixAvion.trainee_train">
-<a class="viewcode-back" href="../../../modules/classes.avions.html#classes.avions.choix_avion.ChoixAvion.trainee_train">[docs]</a>
+<a class="viewcode-back" href="../../../modules/classes_avions.html#classes.avions.choix_avion.ChoixAvion.trainee_train">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">trainee_train</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Retourne le coefficient de traînée du train d&#39;atterrissage.</span>
 
@@ -205,7 +206,7 @@
 
 
 <div class="viewcode-block" id="ChoixAvion.trainee_volets">
-<a class="viewcode-back" href="../../../modules/classes.avions.html#classes.avions.choix_avion.ChoixAvion.trainee_volets">[docs]</a>
+<a class="viewcode-back" href="../../../modules/classes_avions.html#classes.avions.choix_avion.ChoixAvion.trainee_volets">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">trainee_volets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Retourne l&#39;incrément de traînée dû aux volets.</span>
 
@@ -218,7 +219,7 @@
 
 
 <div class="viewcode-block" id="ChoixAvion.type_avion">
-<a class="viewcode-back" href="../../../modules/classes.avions.html#classes.avions.choix_avion.ChoixAvion.type_avion">[docs]</a>
+<a class="viewcode-back" href="../../../modules/classes_avions.html#classes.avions.choix_avion.ChoixAvion.type_avion">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">type_avion</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Détermine le type d&#39;avion (Commercial ou Militaire).</span>
 
