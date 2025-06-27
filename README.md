@@ -18,7 +18,7 @@ Application Streamlit pour **simuler un atterrissage** avec :
 
 ## 📖 Documentation
 
-Pour consulter la documentation complète du projet, ouvrez le fichier `build/html/index.html` dans votre navigateur web après avoir généré la documentation. Pour générer la documentation, utilisez la commande suivante :
+Pour consulter la documentation complète du projet, ouvrez le fichier `build/html/index.html` dans votre navigateur web après avoir généré la documentation. Si elle n'y est pas, utilisez la commande suivante :
 
 ```bash
 .\make.bat html
